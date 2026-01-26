@@ -1,0 +1,14 @@
+{ "columns":25,
+ "image":"..\/image\/map\/tree-1.png",
+ "imageheight":1024,
+ "imagewidth":1024,
+ "margin":0,
+ "name":"tree-1",
+ "spacing":0,
+ "tilecount":625,
+ "tiledversion":"1.11.2",
+ "tileheight":40,
+ "tilewidth":40,
+ "type":"tileset",
+ "version":"1.10"
+}

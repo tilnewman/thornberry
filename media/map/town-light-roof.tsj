@@ -1,0 +1,15 @@
+{ "columns":12,
+ "image":"..\/image\/map\/town-light-roof.png",
+ "imageheight":512,
+ "imagewidth":512,
+ "margin":0,
+ "name":"town-light-roof",
+ "spacing":0,
+ "tilecount":144,
+ "tiledversion":"1.11.2",
+ "tileheight":40,
+ "tilewidth":40,
+ "transparentcolor":"#4b637f",
+ "type":"tileset",
+ "version":"1.10"
+}
