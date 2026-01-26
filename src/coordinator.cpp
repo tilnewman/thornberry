@@ -97,6 +97,9 @@ namespace thornberry
 
     void Coordinator::teardown()
     {
+        m_soundPlayerUPtr->stopAll();
+        m_musicPlayerUPtr->stopAll();
+
         if (m_renderWindow.isOpen())
         {
             m_renderWindow.close();
@@ -108,6 +111,8 @@ namespace thornberry
         m_avatarUPtr.reset();
         m_fontManagerUPtr.reset();
         m_framerateUPtr.reset();
+        m_soundPlayerUPtr.reset();
+        m_musicPlayerUPtr.reset();
 
         MapTextureManager::instance().teardown();
         util::SfmlDefaults::instance().teardown();
