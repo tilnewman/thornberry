@@ -31,10 +31,13 @@ namespace thornberry
             const sf::FloatRect & t_mapRect,
             const std::size_t t_frameCount,
             const sf::Vector2i & t_cellSize,
-            const float t_timeBetweenFramesSec);
+            const float t_timeBetweenFramesSec,
+            const std::filesystem::path & t_texturePath,
+            const TextureSetting t_textureSetting);
 
         virtual ~AnimLayerBase() override = default;
 
+        void postLevelLoadSetup(const Context & t_context) override;
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
         void move(const sf::Vector2f & t_move) override;
         void update(const Context & t_context, const float t_frameTimeSec) override;
@@ -47,12 +50,6 @@ namespace thornberry
             const sf::Vector2f &) override
         {}
 
-      protected:
-        virtual void setup(
-            const Context & t_context,
-            const std::filesystem::path & t_path,
-            const TextureSetting t_textureSetting);
-
       private:
         sf::FloatRect m_offscreenRect;
         sf::Texture m_texture;
@@ -62,6 +59,8 @@ namespace thornberry
         float m_elapsedSec;
         float m_timeBetweenFramesSec;
         sf::Vector2i m_cellSize;
+        std::filesystem::path m_texturePath;
+        TextureSetting m_textureSetting;
     };
 
 } // namespace mapdisplay

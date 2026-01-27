@@ -70,17 +70,24 @@ namespace thornberry
             const LayerGroup layerGroup,
             const nlohmann::json & t_layerJson);
 
+        void parsePickupLayer(
+            const Context & t_context,
+            const LayerGroup layerGroup,
+            const nlohmann::json & t_layerJson);
+
         template <typename Layer_t>
         void appendRectLayer(
             const Context & t_context, const LayerGroup layerGroup, const sf::FloatRect & t_rect)
         {
             if (layerGroup == LayerGroup::Lower)
             {
-                t_context.level.appendToLowerTileLayers(std::make_unique<Layer_t>(t_rect));
+                t_context.level.appendToLowerTileLayers(
+                    std::make_unique<Layer_t>(t_context, t_rect));
             }
             else
             {
-                t_context.level.appendToUpperTileLayers(std::make_unique<Layer_t>(t_rect));
+                t_context.level.appendToUpperTileLayers(
+                    std::make_unique<Layer_t>(t_context, t_rect));
             }
         }
 

@@ -5,6 +5,7 @@
 
 #include "anim-layer-campfire.hpp"
 #include "anim-layer-candleflame.hpp"
+#include "anim-layer-heart.hpp"
 #include "check-macros.hpp"
 #include "config.hpp"
 #include "map-textures.hpp"
@@ -248,6 +249,10 @@ namespace thornberry
             {
                 parseWalkSoundEffectLayer(t_context, layerJson);
             }
+            else if (layerName == "pickup")
+            {
+                parsePickupLayer(t_context, layerGroup, layerJson);
+            }
             else
             {
                 std::cout << "LevelFileLoader::parseLayers()  While parsing level file \""
@@ -349,6 +354,27 @@ namespace thornberry
                 std::cout << "LevelFileLoader::parseAnimationLayer()  While parsing level file \""
                           << m_pathStr << "\".  Ignored unknown animation layer named \"" << name
                           << "\".\n";
+            }
+        }
+    }
+
+    void LevelFileLoader::parsePickupLayer(
+        const Context & t_context, const LayerGroup layerGroup, const nlohmann::json & t_layerJson)
+    {
+        for (const nlohmann::json & objJson : t_layerJson["objects"])
+        {
+            // const std::string name{ objJson["name"] };
+            const sf::FloatRect rect{ parseAndScaleRect(t_context, objJson) };
+
+            if (layerGroup == LayerGroup::Lower)
+            {
+                t_context.level.appendToLowerTileLayers(
+                    std::make_unique<AnimLayerHeart>(t_context, rect));
+            }
+            else
+            {
+                t_context.level.appendToUpperTileLayers(
+                    std::make_unique<AnimLayerHeart>(t_context, rect));
             }
         }
     }

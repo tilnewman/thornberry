@@ -16,10 +16,9 @@ namespace thornberry
     class AnimLayerCandleflame : public AnimLayerBase
     {
       public:
-        AnimLayerCandleflame(const sf::FloatRect & t_mapRect);
+        AnimLayerCandleflame(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerCandleflame() override = default;
 
-        void postLevelLoadSetup(const Context & t_context) override;
         void dumpInfo() const override;
     };
 

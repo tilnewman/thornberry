@@ -16,10 +16,9 @@ namespace thornberry
     class AnimLayerCampfire : public AnimLayerBase
     {
       public:
-        AnimLayerCampfire(const sf::FloatRect & t_mapRect);
+        AnimLayerCampfire(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerCampfire() override = default;
 
-        void postLevelLoadSetup(const Context & t_context) override;
         void dumpInfo() const override;
     };
 

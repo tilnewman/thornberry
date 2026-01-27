@@ -1535,6 +1535,50 @@
         }, 
         {
          "draworder":"topdown",
+         "id":39,
+         "name":"pickup",
+         "objects":[
+                {
+                 "height":40,
+                 "id":103,
+                 "name":"heart",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":40,
+                 "x":1940,
+                 "y":2460
+                }, 
+                {
+                 "height":40,
+                 "id":104,
+                 "name":"heart",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":40,
+                 "x":1980,
+                 "y":2460
+                }, 
+                {
+                 "height":40,
+                 "id":105,
+                 "name":"heart",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":40,
+                 "x":2059,
+                 "y":2459
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":5,
          "name":"collision",
          "objects":[
@@ -1670,8 +1714,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":39,
- "nextobjectid":103,
+ "nextlayerid":40,
+ "nextobjectid":106,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

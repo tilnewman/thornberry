@@ -16,15 +16,19 @@ namespace thornberry
         const sf::FloatRect & t_mapRect,
         const std::size_t t_frameCount,
         const sf::Vector2i & t_cellSize,
-        const float t_timeBetweenFramesSec)
+        const float t_timeBetweenFramesSec,
+        const std::filesystem::path & t_texturePath,
+        const TextureSetting t_textureSetting)
         : m_offscreenRect{ t_mapRect } // see postLoadSetup() for conversion from map to offscreen
         , m_texture{}
         , m_sprite{ m_texture }
         , m_frameIndex{ 0 }
         , m_frameCount{ t_frameCount }
         , m_elapsedSec{ 0.0f }
-        , m_timeBetweenFramesSec{t_timeBetweenFramesSec}
+        , m_timeBetweenFramesSec{ t_timeBetweenFramesSec }
         , m_cellSize{ t_cellSize }
+        , m_texturePath{ t_texturePath }
+        , m_textureSetting{ t_textureSetting }
     {}
 
     void AnimLayerBase::move(const sf::Vector2f & t_move)
@@ -54,15 +58,12 @@ namespace thornberry
         }
     }
 
-    void AnimLayerBase::setup(
-        const Context & t_context,
-        const std::filesystem::path & t_path,
-        const TextureSetting t_textureSetting)
+    void AnimLayerBase::postLevelLoadSetup(const Context & t_context)
     {
         m_offscreenRect.position += t_context.level.mapToOffscreenOffset();
 
-        util::TextureLoader::load(m_texture, t_path);
-        m_texture.setSmooth((t_textureSetting == TextureSetting::Smooth) ? true : false);
+        util::TextureLoader::load(m_texture, m_texturePath);
+        m_texture.setSmooth((m_textureSetting == TextureSetting::Smooth) ? true : false);
 
         m_sprite.setTexture(m_texture);
         m_sprite.setTextureRect({ { 0, 0 }, m_cellSize });
@@ -71,4 +72,4 @@ namespace thornberry
         m_frameIndex = t_context.random.zeroToOneLessThan(m_frameCount);
     }
 
-} // namespace mapdisplay
+} // namespace thornberry
