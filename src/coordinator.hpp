@@ -11,6 +11,7 @@
 #include "indirect-level.hpp"
 #include "level-file-loader.hpp"
 #include "music-player.hpp"
+#include "pickup-image-manager.hpp"
 #include "random.hpp"
 #include "screen-layout.hpp"
 #include "sound-player.hpp"
@@ -55,6 +56,7 @@ namespace thornberry
         std::unique_ptr<FrameRateDisplay> m_framerateUPtr;
         std::unique_ptr<util::SoundPlayer> m_soundPlayerUPtr;
         std::unique_ptr<util::MusicPlayer> m_musicPlayerUPtr;
+        std::unique_ptr<PickupImageManager> m_pickupImageManagerUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 

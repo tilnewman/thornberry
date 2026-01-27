@@ -19,6 +19,7 @@ namespace thornberry
     class LevelFileLoader;
     class Avatar;
     class FontManager;
+    class PickupImageManager;
 
     //
     struct Context
@@ -32,7 +33,8 @@ namespace thornberry
             Avatar & t_avatar,
             FontManager & t_fontManager,
             util::SoundPlayer & t_soundPlayer,
-            util::MusicPlayer & t_musicPlayer)
+            util::MusicPlayer & t_musicPlayer,
+            PickupImageManager & t_pickupImageManager)
             : config{ t_config }
             , screen_layout{ t_screenLayout }
             , random{ t_random }
@@ -42,6 +44,7 @@ namespace thornberry
             , font{ t_fontManager }
             , sfx{ t_soundPlayer }
             , music{ t_musicPlayer }
+            , pickup_image{t_pickupImageManager}
         {}
 
         const Config & config;
@@ -53,6 +56,7 @@ namespace thornberry
         FontManager & font;
         util::SoundPlayer & sfx;
         util::MusicPlayer & music;
+        PickupImageManager & pickup_image;
     };
 
 } // namespace thornberry

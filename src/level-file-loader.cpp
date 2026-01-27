@@ -5,7 +5,7 @@
 
 #include "anim-layer-campfire.hpp"
 #include "anim-layer-candleflame.hpp"
-#include "anim-layer-heart.hpp"
+#include "anim-layer-pickup.hpp"
 #include "check-macros.hpp"
 #include "config.hpp"
 #include "map-textures.hpp"
@@ -363,18 +363,30 @@ namespace thornberry
     {
         for (const nlohmann::json & objJson : t_layerJson["objects"])
         {
-            // const std::string name{ objJson["name"] };
+            const std::string name{ objJson["name"] };
+            const Pickup pickup{ pickupFromString(name) };
+
+            if (pickup == Pickup::Count)
+            {
+                std::cout << "LevelFileLoader::parsePickupLayer()  While parsing level file \""
+                          << m_pathStr
+                          << "\".  Found a pickup with an unknown name that will be ignored: \""
+                          << name << "\".\n";
+
+                continue;
+            }
+
             const sf::FloatRect rect{ parseAndScaleRect(t_context, objJson) };
 
             if (layerGroup == LayerGroup::Lower)
             {
                 t_context.level.appendToLowerTileLayers(
-                    std::make_unique<AnimLayerHeart>(t_context, rect));
+                    std::make_unique<AnimLayerPickup>(pickup, rect));
             }
             else
             {
                 t_context.level.appendToUpperTileLayers(
-                    std::make_unique<AnimLayerHeart>(t_context, rect));
+                    std::make_unique<AnimLayerPickup>(pickup, rect));
             }
         }
     }
