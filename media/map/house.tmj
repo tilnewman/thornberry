@@ -153,6 +153,28 @@
                  "width":95.5725848943715,
                  "x":246.720679400702,
                  "y":94.3316484176745
+                }, 
+                {
+                 "height":40,
+                 "id":52,
+                 "name":"hanging-lamp",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":80,
+                 "x":120,
+                 "y":80
+                }, 
+                {
+                 "height":40,
+                 "id":53,
+                 "name":"hanging-lamp",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":80,
+                 "x":400,
+                 "y":80
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -723,7 +745,7 @@
          "y":0
         }],
  "nextlayerid":24,
- "nextobjectid":51,
+ "nextobjectid":54,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

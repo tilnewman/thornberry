@@ -5,6 +5,7 @@
 
 #include "anim-layer-campfire.hpp"
 #include "anim-layer-candleflame.hpp"
+#include "anim-layer-hanging-lamp.hpp"
 #include "anim-layer-pickup.hpp"
 #include "check-macros.hpp"
 #include "config.hpp"
@@ -348,6 +349,10 @@ namespace thornberry
             else if (name == "candle-flame-pixel")
             {
                 appendRectLayer<AnimLayerCandleflame>(t_context, t_layerGroup, rect);
+            }
+            else if (name == "hanging-lamp")
+            {
+                appendRectLayer<AnimLayerHangingLamp>(t_context, t_layerGroup, rect);
             }
             else
             {
