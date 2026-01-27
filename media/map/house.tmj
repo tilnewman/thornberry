@@ -157,7 +157,7 @@
                 {
                  "height":40,
                  "id":52,
-                 "name":"hanging-lamp",
+                 "name":"lamp-hanging",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -168,13 +168,79 @@
                 {
                  "height":40,
                  "id":53,
-                 "name":"hanging-lamp",
+                 "name":"lamp-hanging",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":80,
                  "x":400,
                  "y":80
+                }, 
+                {
+                 "height":44,
+                 "id":54,
+                 "name":"lamp-goblet-large",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31,
+                 "x":96,
+                 "y":130
+                }, 
+                {
+                 "height":38,
+                 "id":55,
+                 "name":"lamp-goblet-medium",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":27,
+                 "x":128,
+                 "y":136
+                }, 
+                {
+                 "height":32,
+                 "id":56,
+                 "name":"lamp-goblet-small",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26,
+                 "x":160,
+                 "y":142
+                }, 
+                {
+                 "height":52,
+                 "id":60,
+                 "name":"lamp-single",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":19,
+                 "x":122,
+                 "y":214
+                }, 
+                {
+                 "height":39,
+                 "id":61,
+                 "name":"lamp-wide",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":35,
+                 "x":96,
+                 "y":293
+                }, 
+                {
+                 "height":39,
+                 "id":62,
+                 "name":"lamp-tripple",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":35,
+                 "x":157,
+                 "y":293
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -745,7 +811,7 @@
          "y":0
         }],
  "nextlayerid":24,
- "nextobjectid":54,
+ "nextobjectid":63,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

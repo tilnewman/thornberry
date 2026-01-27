@@ -5,7 +5,7 @@
 
 #include "anim-layer-campfire.hpp"
 #include "anim-layer-candleflame.hpp"
-#include "anim-layer-hanging-lamp.hpp"
+#include "anim-layer-lamp.hpp"
 #include "anim-layer-pickup.hpp"
 #include "check-macros.hpp"
 #include "config.hpp"
@@ -350,9 +350,33 @@ namespace thornberry
             {
                 appendRectLayer<AnimLayerCandleflame>(t_context, t_layerGroup, rect);
             }
-            else if (name == "hanging-lamp")
+            else if (name == "lamp-hanging")
             {
-                appendRectLayer<AnimLayerHangingLamp>(t_context, t_layerGroup, rect);
+                appendRectLayer<AnimLayerLampHanging>(t_context, t_layerGroup, rect);
+            }
+            else if (name == "lamp-goblet-large")
+            {
+                appendRectLayer<AnimLayerLampGobletLarge>(t_context, t_layerGroup, rect);
+            }
+            else if (name == "lamp-goblet-medium")
+            {
+                appendRectLayer<AnimLayerLampGobletMedium>(t_context, t_layerGroup, rect);
+            }
+            else if (name == "lamp-goblet-small")
+            {
+                appendRectLayer<AnimLayerLampGobletSmall>(t_context, t_layerGroup, rect);
+            }
+            else if (name == "lamp-single")
+            {
+                appendRectLayer<AnimLayerLampSingle>(t_context, t_layerGroup, rect);
+            }
+            else if (name == "lamp-tripple")
+            {
+                appendRectLayer<AnimLayerLampTripple>(t_context, t_layerGroup, rect);
+            }
+            else if (name == "lamp-wide")
+            {
+                appendRectLayer<AnimLayerLampWide>(t_context, t_layerGroup, rect);
             }
             else
             {
