@@ -18,8 +18,6 @@ namespace thornberry
       public:
         AnimLayerCandleflame(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerCandleflame() override = default;
-
-        void dumpInfo() const override;
     };
 
 } // namespace thornberry

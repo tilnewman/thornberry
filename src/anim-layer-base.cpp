@@ -9,17 +9,21 @@
 #include "random.hpp"
 #include "texture-loader.hpp"
 
+#include <iostream>
+
 namespace thornberry
 {
 
     AnimLayerBase::AnimLayerBase(
+        const std::string & t_name,
         const sf::FloatRect & t_mapRect,
         const std::size_t t_frameCount,
         const sf::Vector2i & t_cellSize,
         const float t_timeBetweenFramesSec,
         const std::filesystem::path & t_texturePath,
         const TextureSetting t_textureSetting)
-        : m_offscreenRect{ t_mapRect } // see postLoadSetup() for conversion from map to offscreen
+        : m_name{ t_name }
+        , m_offscreenRect{ t_mapRect } // see postLoadSetup() for conversion from map to offscreen
         , m_texture{}
         , m_sprite{ m_texture }
         , m_frameIndex{ 0 }
@@ -71,5 +75,7 @@ namespace thornberry
 
         m_frameIndex = t_context.random.zeroToOneLessThan(m_frameCount);
     }
+
+    void AnimLayerBase::dumpInfo() const { std::cout << '\t' << m_name << '\n'; }
 
 } // namespace thornberry

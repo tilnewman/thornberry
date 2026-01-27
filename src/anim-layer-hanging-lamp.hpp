@@ -18,8 +18,6 @@ namespace thornberry
       public:
         AnimLayerHangingLamp(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerHangingLamp() override = default;
-
-        void dumpInfo() const override;
     };
 
 } // namespace thornberry

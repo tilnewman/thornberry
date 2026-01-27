@@ -12,6 +12,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include <filesystem>
+#include <string>
 
 namespace thornberry
 {
@@ -28,6 +29,7 @@ namespace thornberry
     {
       public:
         AnimLayerBase(
+            const std::string & t_name,
             const sf::FloatRect & t_mapRect,
             const std::size_t t_frameCount,
             const sf::Vector2i & t_cellSize,
@@ -41,6 +43,7 @@ namespace thornberry
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
         void move(const sf::Vector2f & t_move) override;
         void update(const Context & t_context, const float t_frameTimeSec) override;
+        void dumpInfo() const override;
         void interactWithPlayer(const Context &, const sf::FloatRect &) override {}
 
         // animation layers have no tiles
@@ -52,6 +55,7 @@ namespace thornberry
         {}
 
       private:
+        std::string m_name;
         sf::FloatRect m_offscreenRect;
         sf::Texture m_texture;
         sf::Sprite m_sprite;

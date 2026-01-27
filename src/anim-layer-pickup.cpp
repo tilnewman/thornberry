@@ -102,6 +102,8 @@ namespace thornberry
             pickup.offscreen_rect.position += t_move;
             pickup.sprite.move(t_move);
         }
+
+        //don't move the animations
     }
 
     void AnimLayerPickup::update(const Context &, const float t_elapsedSec)

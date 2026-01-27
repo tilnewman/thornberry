@@ -18,8 +18,6 @@ namespace thornberry
       public:
         AnimLayerCampfire(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerCampfire() override = default;
-
-        void dumpInfo() const override;
     };
 
 } // namespace thornberry

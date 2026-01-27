@@ -6,14 +6,13 @@
 #include "config.hpp"
 #include "context.hpp"
 
-#include <iostream>
-
 namespace thornberry
 {
 
     AnimLayerHangingLamp::AnimLayerHangingLamp(
         const Context & t_context, const sf::FloatRect & t_mapRect)
         : AnimLayerBase(
+              "AnimLayerHangingLamp",
               t_mapRect,
               4,
               { 64, 32 },
@@ -22,6 +21,6 @@ namespace thornberry
               TextureSetting::Smooth)
     {}
 
-    void AnimLayerHangingLamp::dumpInfo() const { std::cout << "\tAnimLayerHangingLamp\n"; }
+    
 
 } // namespace thornberry

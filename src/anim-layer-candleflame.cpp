@@ -14,6 +14,7 @@ namespace thornberry
     AnimLayerCandleflame::AnimLayerCandleflame(
         const Context & t_context, const sf::FloatRect & t_mapRect)
         : AnimLayerBase(
+              "AnimLayerCandleflame",
               t_mapRect,
               8,
               { 16, 32 },
@@ -22,7 +23,5 @@ namespace thornberry
                "candle-flame-pixel.png"),
               TextureSetting::Smooth)
     {}
-
-    void AnimLayerCandleflame::dumpInfo() const { std::cout << "\tAnimLayerCandleflame\n"; }
 
 } // namespace thornberry
