@@ -6,8 +6,6 @@
 #include "config.hpp"
 #include "context.hpp"
 
-#include <iostream>
-
 namespace thornberry
 {
 

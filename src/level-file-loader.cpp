@@ -3,6 +3,7 @@
 //
 #include "level-file-loader.hpp"
 
+#include "anim-layer-campfire.hpp"
 #include "anim-layer-candleflame.hpp"
 #include "anim-layer-fire.hpp"
 #include "anim-layer-lamp.hpp"
@@ -345,6 +346,10 @@ namespace thornberry
             if (name == "fire")
             {
                 appendRectLayer<AnimLayerFire>(t_context, t_layerGroup, rect);
+            }
+            else if (name == "campfire")
+            {
+                appendRectLayer<AnimLayerCampfire>(t_context, t_layerGroup, rect);
             }
             else if (name == "candle-flame-pixel")
             {

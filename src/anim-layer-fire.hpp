@@ -1,5 +1,5 @@
-#ifndef ANIM_LAYER_FIRE_LAYER_HPP_INLCUDED
-#define ANIM_LAYER_FIRE_LAYER_HPP_INLCUDED
+#ifndef ANIM_LAYER_FIRE_HPP_INLCUDED
+#define ANIM_LAYER_FIRE_HPP_INLCUDED
 //
 // anim-layer-fire.hpp
 //
@@ -21,4 +21,4 @@ namespace thornberry
 
 } // namespace thornberry
 
-#endif // ANIM_LAYER_FIRE_LAYER_HPP_INLCUDED
+#endif // ANIM_LAYER_FIRE_HPP_INLCUDED

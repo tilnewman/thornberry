@@ -1,5 +1,5 @@
-#ifndef ANIM_LAYER_LAMP_LAYER_HPP_INLCUDED
-#define ANIM_LAYER_LAMP_LAYER_HPP_INLCUDED
+#ifndef ANIM_LAYER_LAMP_HPP_INLCUDED
+#define ANIM_LAYER_LAMP_HPP_INLCUDED
 //
 // anim-layer-lamp.hpp
 //
@@ -58,4 +58,4 @@ namespace thornberry
 
 } // namespace thornberry
 
-#endif // ANIM_LAYER_LAMP_LAYER_HPP_INLCUDED
+#endif // ANIM_LAYER_LAMP_HPP_INLCUDED
