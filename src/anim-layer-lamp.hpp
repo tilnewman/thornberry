@@ -13,57 +13,45 @@ namespace thornberry
     struct Context;
 
     //
-    class AnimLayerLampHanging : public AnimLayerBase
+
+    struct AnimLayerLampHanging : public AnimLayerBase
     {
-      public:
         AnimLayerLampHanging(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerLampHanging() override = default;
     };
 
-    //
-    class AnimLayerLampGobletLarge : public AnimLayerBase
+    struct AnimLayerLampGobletLarge : public AnimLayerBase
     {
-      public:
         AnimLayerLampGobletLarge(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerLampGobletLarge() override = default;
     };
 
-    //
-    class AnimLayerLampGobletMedium : public AnimLayerBase
+    struct AnimLayerLampGobletMedium : public AnimLayerBase
     {
-      public:
         AnimLayerLampGobletMedium(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerLampGobletMedium() override = default;
     };
 
-    //
-    class AnimLayerLampGobletSmall : public AnimLayerBase
+    struct AnimLayerLampGobletSmall : public AnimLayerBase
     {
-      public:
         AnimLayerLampGobletSmall(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerLampGobletSmall() override = default;
     };
 
-    //
-    class AnimLayerLampSingle : public AnimLayerBase
+    struct AnimLayerLampSingle : public AnimLayerBase
     {
-      public:
         AnimLayerLampSingle(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerLampSingle() override = default;
     };
 
-    //
-    class AnimLayerLampTripple : public AnimLayerBase
+    struct AnimLayerLampTripple : public AnimLayerBase
     {
-      public:
         AnimLayerLampTripple(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerLampTripple() override = default;
     };
 
-    //
-    class AnimLayerLampWide : public AnimLayerBase
+    struct AnimLayerLampWide : public AnimLayerBase
     {
-      public:
         AnimLayerLampWide(const Context & t_context, const sf::FloatRect & t_mapRect);
         virtual ~AnimLayerLampWide() override = default;
     };
