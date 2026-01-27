@@ -1,7 +1,7 @@
 //
-// anim-layer-campfire.cpp
+// anim-layer-fire.cpp
 //
-#include "anim-layer-campfire.hpp"
+#include "anim-layer-fire.hpp"
 
 #include "config.hpp"
 #include "context.hpp"
@@ -11,14 +11,14 @@
 namespace thornberry
 {
 
-    AnimLayerCampfire::AnimLayerCampfire(const Context & t_context, const sf::FloatRect & t_mapRect)
+    AnimLayerFire::AnimLayerFire(const Context & t_context, const sf::FloatRect & t_mapRect)
         : AnimLayerBase(
-              "AnimLayerCampfire",
+              "AnimLayerFire",
               t_mapRect,
               40,
               { 64, 64 },
               0.05f,
-              (t_context.config.media_path / "image" / "animation" / "campfire" / "campfire.png"),
+              (t_context.config.media_path / "image" / "animation" / "fire" / "fire.png"),
               TextureSetting::Smooth)
     {}
 
