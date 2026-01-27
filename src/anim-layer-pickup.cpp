@@ -9,7 +9,9 @@
 #include "pickup-image-manager.hpp"
 #include "random.hpp"
 #include "sfml-defaults.hpp"
+#include "sound-player.hpp"
 
+#include <algorithm>
 #include <iostream>
 
 namespace thornberry
@@ -98,6 +100,30 @@ namespace thornberry
         }
     }
 
-    void AnimLayerPickup::interactWithPlayer(const Context &, const sf::FloatRect &) {}
+    void AnimLayerPickup::interactWithPlayer(
+        const Context & t_context, const sf::FloatRect & t_avatarMapRect)
+    {
+        // convert from map to offscreen coordinates
+        sf::FloatRect avatarOffscreenRect{ t_avatarMapRect };
+        avatarOffscreenRect.position += t_context.level.mapToOffscreenOffset();
+
+        bool willAnyBeRemoved{ false };
+        for (const PickupOffscreen & pickup : m_pickups)
+        {
+            if (avatarOffscreenRect.findIntersection(pickup.offscreen_rect).has_value())
+            {
+                // TODO perform all interactors with player (pickups will be changing things...)
+                t_context.sfx.play("pickup");
+                willAnyBeRemoved = true;
+            }
+        }
+
+        if (willAnyBeRemoved)
+        {
+            std::erase_if(m_pickups, [&](const PickupOffscreen & pickup) {
+                return avatarOffscreenRect.findIntersection(pickup.offscreen_rect).has_value();
+            });
+        }
+    }
 
 } // namespace thornberry
