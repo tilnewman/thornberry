@@ -41,6 +41,7 @@ namespace thornberry
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
         void move(const sf::Vector2f & t_move) override;
         void update(const Context & t_context, const float t_frameTimeSec) override;
+        void interactWithPlayer(const Context &, const sf::FloatRect &) override {}
 
         // animation layers have no tiles
         void appendVerts(
@@ -63,6 +64,6 @@ namespace thornberry
         TextureSetting m_textureSetting;
     };
 
-} // namespace mapdisplay
+} // namespace thornberry
 
 #endif // ANIM_LAYER_BASE_HPP_INCLUDED

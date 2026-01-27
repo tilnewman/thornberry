@@ -361,12 +361,17 @@ namespace thornberry
     void LevelFileLoader::parsePickupLayer(
         const Context & t_context, const LayerGroup layerGroup, const nlohmann::json & t_layerJson)
     {
+        std::vector<PickupParse> parses;
+        parses.reserve(16); // just a guess
+
         for (const nlohmann::json & objJson : t_layerJson["objects"])
         {
+            PickupParse parse;
             const std::string name{ objJson["name"] };
-            const Pickup pickup{ pickupFromString(name) };
+            parse.pickup   = pickupFromString(name);
+            parse.map_rect = parseAndScaleRect(t_context, objJson);
 
-            if (pickup == Pickup::Count)
+            if (Pickup::Count == parse.pickup)
             {
                 std::cout << "LevelFileLoader::parsePickupLayer()  While parsing level file \""
                           << m_pathStr
@@ -376,18 +381,16 @@ namespace thornberry
                 continue;
             }
 
-            const sf::FloatRect rect{ parseAndScaleRect(t_context, objJson) };
+            parses.emplace_back(parse);
+        }
 
-            if (layerGroup == LayerGroup::Lower)
-            {
-                t_context.level.appendToLowerTileLayers(
-                    std::make_unique<AnimLayerPickup>(pickup, rect));
-            }
-            else
-            {
-                t_context.level.appendToUpperTileLayers(
-                    std::make_unique<AnimLayerPickup>(pickup, rect));
-            }
+        if (layerGroup == LayerGroup::Lower)
+        {
+            t_context.level.appendToLowerTileLayers(std::make_unique<AnimLayerPickup>(parses));
+        }
+        else
+        {
+            t_context.level.appendToUpperTileLayers(std::make_unique<AnimLayerPickup>(parses));
         }
     }
 

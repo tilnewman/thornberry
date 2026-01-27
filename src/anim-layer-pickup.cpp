@@ -15,60 +15,89 @@
 namespace thornberry
 {
 
-    AnimLayerPickup::AnimLayerPickup(const Pickup t_pickup, const sf::FloatRect & t_mapRect)
-        : m_pickup{ t_pickup }
-        , m_offscreenRect{ t_mapRect }
-        , m_sprite{ util::SfmlDefaults::instance().texture() }
-        , m_frameIndex{ 0 }
+    PickupOffscreen::PickupOffscreen(
+        const Pickup t_pickup,
+        const sf::FloatRect & t_offscreenRect,
+        const std::size_t t_frameIndex,
+        const sf::Texture & t_texture)
+        : pickup{ t_pickup }
+        , offscreen_rect{ t_offscreenRect }
+        , frame_index{ t_frameIndex }
+        , elapsed_sec{ 0.0f }
+        , sprite{ t_texture }
+    {}
+
+    AnimLayerPickup::AnimLayerPickup(const std::vector<PickupParse> & t_parsedPickups)
+        : m_parsedPickups{ t_parsedPickups }
         , m_frameCount{ 10 }
-        , m_elapsedSec{ 0.0f }
-        , m_timeBetweenFramesSec{ 0.125f }
+        , m_timeBetweenFramesSec{ 0.1f }
         , m_cellSize{ 32, 32 }
+        , m_pickups{}
     {}
 
     void AnimLayerPickup::postLevelLoadSetup(const Context & t_context)
     {
-        m_offscreenRect.position += t_context.level.mapToOffscreenOffset();
+        m_pickups.reserve(m_parsedPickups.size());
 
-        const sf::Texture & texture{ t_context.pickup_image.get(m_pickup) };
+        for (const PickupParse & parse : m_parsedPickups)
+        {
+            // convert map coordinates to offscreen coordinates
+            sf::FloatRect offscreenRect{ parse.map_rect };
+            offscreenRect.position += t_context.level.mapToOffscreenOffset();
 
-        m_sprite.setTexture(texture);
-        m_sprite.setTextureRect({ { 0, 0 }, m_cellSize });
-        util::scaleAndCenterInside(m_sprite, m_offscreenRect);
+            PickupOffscreen & offscreenPickup{ m_pickups.emplace_back(
+                parse.pickup,
+                offscreenRect,
+                t_context.random.zeroToOneLessThan(m_frameCount),
+                t_context.pickup_image.get(parse.pickup)) };
 
-        m_frameIndex = t_context.random.zeroToOneLessThan(m_frameCount);
+            offscreenPickup.sprite.setTextureRect({ { 0, 0 }, m_cellSize });
+            util::scaleAndCenterInside(offscreenPickup.sprite, offscreenRect);
+        }
     }
 
     void AnimLayerPickup::dumpInfo() const
     {
-        std::cout << "\tAnimLayerPickup " << toString(m_pickup) << "\n";
+        std::cout << "\tAnimLayerPickup x" << m_pickups.size() << "\n";
     }
 
     void AnimLayerPickup::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        t_target.draw(m_sprite, t_states);
+        for (const PickupOffscreen & pickup : m_pickups)
+        {
+            t_target.draw(pickup.sprite, t_states);
+        }
     }
 
     void AnimLayerPickup::move(const sf::Vector2f & t_move)
     {
-        m_offscreenRect.position += t_move;
-        m_sprite.move(t_move);
+        for (PickupOffscreen & pickup : m_pickups)
+        {
+            pickup.offscreen_rect.position += t_move;
+            pickup.sprite.move(t_move);
+        }
     }
 
     void AnimLayerPickup::update(const Context &, const float t_elapsedSec)
     {
-        m_elapsedSec += t_elapsedSec;
-        if (m_elapsedSec > m_timeBetweenFramesSec)
+        for (PickupOffscreen & pickup : m_pickups)
         {
-            m_elapsedSec -= m_timeBetweenFramesSec;
-
-            if (++m_frameIndex >= m_frameCount)
+            pickup.elapsed_sec += t_elapsedSec;
+            if (pickup.elapsed_sec > m_timeBetweenFramesSec)
             {
-                m_frameIndex = 0;
-            }
+                pickup.elapsed_sec -= m_timeBetweenFramesSec;
 
-            m_sprite.setTextureRect(util::cellRect(m_frameIndex, { 320u, 32u }, m_cellSize));
+                if (++pickup.frame_index >= m_frameCount)
+                {
+                    pickup.frame_index = 0;
+                }
+
+                pickup.sprite.setTextureRect(
+                    util::cellRect(pickup.frame_index, { 320u, 32u }, m_cellSize));
+            }
         }
     }
+
+    void AnimLayerPickup::interactWithPlayer(const Context &, const sf::FloatRect &) {}
 
 } // namespace thornberry

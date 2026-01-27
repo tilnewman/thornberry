@@ -28,6 +28,9 @@ namespace thornberry
         virtual void dumpInfo() const                                                   = 0;
         virtual void update(const Context & t_context, const float t_elapsedSec)        = 0;
 
+        virtual void interactWithPlayer(
+            const Context & t_context, const sf::FloatRect & t_avatarMapRect) = 0;
+
         virtual void appendVerts(
             const sf::IntRect & t_mapTileRange,
             const sf::Vector2i & t_mapTileCount,
@@ -48,6 +51,9 @@ namespace thornberry
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
         void dumpInfo() const override;
         void update(const Context &, const float) override {}
+
+        // most tile layers do not interact with the player/avatar
+        void interactWithPlayer(const Context &, const sf::FloatRect &) override {}
 
         void appendVerts(
             const sf::IntRect & t_mapTileRange,

@@ -353,11 +353,11 @@ namespace thornberry
 
     bool IndirectLevel::avatarMove(
         const Context & t_context,
-        const sf::FloatRect & t_avatarRectOrig,
+        const sf::FloatRect & t_avatarMapRect,
         const sf::Vector2f & t_move)
     {
         // start with map coordinates for collision and transition detection
-        sf::FloatRect avatarRect{ t_avatarRectOrig };
+        sf::FloatRect avatarRect{ t_avatarMapRect };
         avatarRect.position += t_move;
 
         if (doesIntersetWithCollision(avatarRect))
@@ -381,6 +381,17 @@ namespace thornberry
             stopWalkSound(t_context);
             return false;
         }
+
+        // allow the avatar to interact with animation layers
+        // for (auto & layerUPtr : m_lowerTileLayers)
+        // {
+        //     layerUPtr->interactWithPlayer(t_context, avatarRect);
+        // }
+        // 
+        // for (auto & layerUPtr : m_upperTileLayers)
+        // {
+        //     layerUPtr->interactWithPlayer(t_context, avatarRect);
+        // }
 
         // this avatarRect needs to still be in map coordinates for this
         playWalkSound(t_context, avatarRect);
