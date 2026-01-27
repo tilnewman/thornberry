@@ -1716,15 +1716,15 @@
                  "y":2300
                 }, 
                 {
-                 "height":328,
+                 "height":322,
                  "id":114,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":578,
-                 "x":1572,
-                 "y":1727
+                 "width":573,
+                 "x":1574,
+                 "y":1733
                 }],
          "opacity":1,
          "type":"objectgroup",
