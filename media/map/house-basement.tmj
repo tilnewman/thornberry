@@ -248,6 +248,28 @@
         }, 
         {
          "draworder":"topdown",
+         "id":27,
+         "name":"pickup",
+         "objects":[
+                {
+                 "height":40,
+                 "id":63,
+                 "name":"heart",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":40,
+                 "x":480,
+                 "y":280
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":24,
          "name":"animation",
          "objects":[
@@ -471,8 +493,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":27,
- "nextobjectid":63,
+ "nextlayerid":28,
+ "nextobjectid":64,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
