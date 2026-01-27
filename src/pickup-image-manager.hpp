@@ -28,6 +28,7 @@ namespace thornberry
         CrystalPurple,
         CrystalTeal,
         Heart,
+        Star,
         Count
     };
 
@@ -45,7 +46,8 @@ namespace thornberry
 			case Pickup::CrystalGreen:      { return "crystal-green"; }
 			case Pickup::CrystalPurple:     { return "crystal-purple"; }
 			case Pickup::CrystalTeal:       { return "crystal-teal"; }
-			case Pickup::Heart:      		{ return "heart"; }  
+			case Pickup::Heart:      		{ return "heart"; }
+            case Pickup::Star:      		{ return "star"; }  
             case Pickup::Count:
 			default:						{ return "Error_Unknown_Pickup"; }
 		}
@@ -65,6 +67,7 @@ namespace thornberry
         else if (t_str == "crystal-purple") { return Pickup::CrystalPurple; }
         else if (t_str == "crystal-teal")   { return Pickup::CrystalTeal; }
         else if (t_str == "heart")          { return Pickup::Heart; }
+        else if (t_str == "star")           { return Pickup::Star; }
         else                                { return Pickup::Count; }
         // clang-format on
     }
