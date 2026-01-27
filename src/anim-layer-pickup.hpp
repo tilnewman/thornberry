@@ -6,6 +6,7 @@
 #include "indirect-tile-layer.hpp"
 #include "pickup-image-manager.hpp"
 
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -40,6 +41,17 @@ namespace thornberry
     };
 
     //
+    struct PickupAnimation
+    {
+        PickupAnimation(const sf::Sprite & t_sprite, const sf::Vector2i & t_cellSize);
+
+        float elapsed_sec;
+        sf::Sprite sprite;
+        bool is_alive;
+        sf::Color color;
+    };
+
+    //
     class AnimLayerPickup : public IIndirectTileLayer
     {
       public:
@@ -70,6 +82,7 @@ namespace thornberry
         float m_timeBetweenFramesSec;
         sf::Vector2i m_cellSize;
         std::vector<PickupOffscreen> m_pickups;
+        std::vector<PickupAnimation> m_animations;
     };
 
 } // namespace thornberry

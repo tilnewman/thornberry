@@ -9,6 +9,7 @@
 #include "pickup-image-manager.hpp"
 #include "random.hpp"
 #include "sfml-defaults.hpp"
+#include "sfml-util.hpp"
 #include "sound-player.hpp"
 
 #include <algorithm>
@@ -29,17 +30,34 @@ namespace thornberry
         , sprite{ t_texture }
     {}
 
+    PickupAnimation::PickupAnimation(const sf::Sprite & t_sprite, const sf::Vector2i & t_cellSize)
+        : elapsed_sec{ 0.0f }
+        , sprite{ t_sprite }
+        , is_alive{ true }
+        , color{ sf::Color::White }
+    {
+        sprite.setTextureRect({ { 0, 0 }, t_cellSize });
+        util::setOriginToCenter(sprite);
+
+        const sf::Vector2f centerPos{ sprite.getPosition() +
+                                      (sprite.getGlobalBounds().size * 0.5f) };
+
+        sprite.setPosition(centerPos);
+    }
+
     AnimLayerPickup::AnimLayerPickup(const std::vector<PickupParse> & t_parsedPickups)
         : m_parsedPickups{ t_parsedPickups }
         , m_frameCount{ 10 }
         , m_timeBetweenFramesSec{ 0.1f }
         , m_cellSize{ 32, 32 }
         , m_pickups{}
+        , m_animations{}
     {}
 
     void AnimLayerPickup::postLevelLoadSetup(const Context & t_context)
     {
         m_pickups.reserve(m_parsedPickups.size());
+        m_animations.reserve(8); // just a guess
 
         for (const PickupParse & parse : m_parsedPickups)
         {
@@ -68,6 +86,12 @@ namespace thornberry
         for (const PickupOffscreen & pickup : m_pickups)
         {
             t_target.draw(pickup.sprite, t_states);
+        }
+
+        t_states.blendMode = sf::BlendAdd;
+        for (const PickupAnimation & animation : m_animations)
+        {
+            t_target.draw(animation.sprite, t_states);
         }
     }
 
@@ -98,6 +122,36 @@ namespace thornberry
                     util::cellRect(pickup.frame_index, { 320u, 32u }, m_cellSize));
             }
         }
+
+        bool willAnyAnimationsBeRemoved{ false };
+        for (PickupAnimation & anim : m_animations)
+        {
+            anim.elapsed_sec += t_elapsedSec;
+            const float durationSec{ 0.5f };
+            if (anim.elapsed_sec < durationSec)
+            {
+                const float scale{ util::map(anim.elapsed_sec, 0.0f, durationSec, 1.0f, 3.0f) };
+                anim.sprite.setScale({ scale * scale, scale * scale });
+
+                const std::uint8_t alpha{ static_cast<std::uint8_t>(
+                    util::map(anim.elapsed_sec, 0.0f, durationSec, 255, 0)) };
+
+                sf::Color color{ anim.color };
+                color.a = alpha;
+                anim.sprite.setColor(color);
+            }
+            else
+            {
+                willAnyAnimationsBeRemoved = true;
+                anim.is_alive              = false;
+            }
+        }
+
+        if (willAnyAnimationsBeRemoved)
+        {
+            std::erase_if(
+                m_animations, [](const PickupAnimation & anim) { return !anim.is_alive; });
+        }
     }
 
     void AnimLayerPickup::interactWithPlayer(
@@ -114,6 +168,11 @@ namespace thornberry
             {
                 // TODO perform all interactors with player (pickups will be changing things...)
                 t_context.sfx.play("pickup");
+
+                // spawn animation
+                m_animations.emplace_back(pickup.sprite, m_cellSize);
+
+                // flag that some PickupOffscreens will be erased
                 willAnyBeRemoved = true;
             }
         }
