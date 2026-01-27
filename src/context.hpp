@@ -20,6 +20,7 @@ namespace thornberry
     class Avatar;
     class FontManager;
     class PickupImageManager;
+    class SmokeParticleEffects;
 
     //
     struct Context
@@ -34,7 +35,8 @@ namespace thornberry
             FontManager & t_fontManager,
             util::SoundPlayer & t_soundPlayer,
             util::MusicPlayer & t_musicPlayer,
-            PickupImageManager & t_pickupImageManager)
+            PickupImageManager & t_pickupImageManager,
+            SmokeParticleEffects & t_smokeParticleEffects)
             : config{ t_config }
             , screen_layout{ t_screenLayout }
             , random{ t_random }
@@ -45,6 +47,7 @@ namespace thornberry
             , sfx{ t_soundPlayer }
             , music{ t_musicPlayer }
             , pickup_image{t_pickupImageManager}
+            , smoke{t_smokeParticleEffects}
         {}
 
         const Config & config;
@@ -57,6 +60,7 @@ namespace thornberry
         util::SoundPlayer & sfx;
         util::MusicPlayer & music;
         PickupImageManager & pickup_image;
+        SmokeParticleEffects & smoke;
     };
 
 } // namespace thornberry

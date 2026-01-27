@@ -5,6 +5,7 @@
 
 #include "config.hpp"
 #include "context.hpp"
+#include "smoke-particle.hpp"
 
 namespace thornberry
 {
@@ -19,5 +20,11 @@ namespace thornberry
               (t_context.config.media_path / "image" / "animation" / "campfire" / "campfire.png"),
               TextureSetting::Smooth)
     {}
+
+    void AnimLayerCampfire::postLevelLoadSetup(const Context & t_context)
+    {
+        AnimLayerBase::postLevelLoadSetup(t_context);
+        t_context.smoke.add(t_context, m_offscreenRect);
+    }
 
 } // namespace thornberry

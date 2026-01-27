@@ -54,7 +54,7 @@ namespace thornberry
             const sf::Vector2f &) override
         {}
 
-      private:
+      protected:
         std::string m_name;
         sf::FloatRect m_offscreenRect;
         sf::Texture m_texture;

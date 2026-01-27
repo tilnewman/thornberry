@@ -9,6 +9,7 @@
 #include "level-file-loader.hpp"
 #include "music-player.hpp"
 #include "screen-layout.hpp"
+#include "smoke-particle.hpp"
 #include "sound-player.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -201,11 +202,12 @@ namespace thornberry
         drawLowerLayers(m_renderTexture, m_renderStates);
         t_context.avatar.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
         drawUpperLayers(m_renderTexture, m_renderStates);
+        t_context.smoke.draw(m_renderTexture, m_renderStates);
 
         m_renderTexture.display();
     }
 
-    void IndirectLevel::handleEvent(const Context &, const sf::Event & t_event)
+    void IndirectLevel::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
         {
@@ -220,7 +222,7 @@ namespace thornberry
                 {
                     --m_offscreenTileRange.position.y;
                     m_didOffscreenVertsChange = true;
-                    moveAllLayers({ 0.0f, m_screenTileSize.y });
+                    moveAll(t_context, { 0.0f, m_screenTileSize.y });
                 }
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
@@ -229,7 +231,7 @@ namespace thornberry
                 {
                     ++m_offscreenTileRange.position.y;
                     m_didOffscreenVertsChange = true;
-                    moveAllLayers({ 0.0f, -m_screenTileSize.y });
+                    moveAll(t_context, { 0.0f, -m_screenTileSize.y });
                 }
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::Left)
@@ -238,7 +240,7 @@ namespace thornberry
                 {
                     --m_offscreenTileRange.position.x;
                     m_didOffscreenVertsChange = true;
-                    moveAllLayers({ m_screenTileSize.x, 0.0f });
+                    moveAll(t_context, { m_screenTileSize.x, 0.0f });
                 }
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::Right)
@@ -247,10 +249,16 @@ namespace thornberry
                 {
                     ++m_offscreenTileRange.position.x;
                     m_didOffscreenVertsChange = true;
-                    moveAllLayers({ -m_screenTileSize.x, 0.0f });
+                    moveAll(t_context, { -m_screenTileSize.x, 0.0f });
                 }
             }
         }
+    }
+
+    void IndirectLevel::moveAll(const Context & t_context, const sf::Vector2f & t_move)
+    {
+        moveAllLayers(t_move);
+        t_context.smoke.move(t_move);
     }
 
     void IndirectLevel::draw(
@@ -411,7 +419,7 @@ namespace thornberry
                     --m_offscreenTileRange.position.x;
                     m_didOffscreenVertsChange = true;
                     m_offscreenDrawRect.position.x += m_screenTileSize.x;
-                    moveAllLayers({ m_screenTileSize.x, 0.0f });
+                    moveAll(t_context, { m_screenTileSize.x, 0.0f });
                 }
             }
         }
@@ -429,7 +437,7 @@ namespace thornberry
                     ++m_offscreenTileRange.position.x;
                     m_didOffscreenVertsChange = true;
                     m_offscreenDrawRect.position.x -= m_screenTileSize.x;
-                    moveAllLayers({ -m_screenTileSize.x, 0.0f });
+                    moveAll(t_context, { -m_screenTileSize.x, 0.0f });
                 }
             }
         }
@@ -446,7 +454,7 @@ namespace thornberry
                     --m_offscreenTileRange.position.y;
                     m_didOffscreenVertsChange = true;
                     m_offscreenDrawRect.position.y += m_screenTileSize.y;
-                    moveAllLayers({ 0.0f, m_screenTileSize.y });
+                    moveAll(t_context, { 0.0f, m_screenTileSize.y });
                 }
             }
         }
@@ -464,7 +472,7 @@ namespace thornberry
                     ++m_offscreenTileRange.position.y;
                     m_didOffscreenVertsChange = true;
                     m_offscreenDrawRect.position.y -= m_screenTileSize.y;
-                    moveAllLayers({ 0.0f, -m_screenTileSize.y });
+                    moveAll(t_context, { 0.0f, -m_screenTileSize.y });
                 }
             }
         }

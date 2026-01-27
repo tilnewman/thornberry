@@ -30,6 +30,7 @@ namespace thornberry
         , m_soundPlayerUPtr{}
         , m_musicPlayerUPtr{}
         , m_pickupImageManagerUPtr{}
+        , m_smokeParticleEffectsUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -50,16 +51,17 @@ namespace thornberry
         util::SfmlDefaults::instance().setup();
         MapTextureManager::instance().setup();
 
-        m_randomUPtr             = std::make_unique<util::Random>();
-        m_screenLayoutUPtr       = std::make_unique<ScreenLayout>();
-        m_levelUPtr              = std::make_unique<IndirectLevel>();
-        m_levelFileLoaderUPtr    = std::make_unique<LevelFileLoader>();
-        m_avatarUPtr             = std::make_unique<Avatar>();
-        m_fontManagerUPtr        = std::make_unique<FontManager>();
-        m_framerateUPtr          = std::make_unique<FrameRateDisplay>();
-        m_soundPlayerUPtr        = std::make_unique<util::SoundPlayer>(*m_randomUPtr);
-        m_musicPlayerUPtr        = std::make_unique<util::MusicPlayer>();
-        m_pickupImageManagerUPtr = std::make_unique<PickupImageManager>();
+        m_randomUPtr               = std::make_unique<util::Random>();
+        m_screenLayoutUPtr         = std::make_unique<ScreenLayout>();
+        m_levelUPtr                = std::make_unique<IndirectLevel>();
+        m_levelFileLoaderUPtr      = std::make_unique<LevelFileLoader>();
+        m_avatarUPtr               = std::make_unique<Avatar>();
+        m_fontManagerUPtr          = std::make_unique<FontManager>();
+        m_framerateUPtr            = std::make_unique<FrameRateDisplay>();
+        m_soundPlayerUPtr          = std::make_unique<util::SoundPlayer>(*m_randomUPtr);
+        m_musicPlayerUPtr          = std::make_unique<util::MusicPlayer>();
+        m_pickupImageManagerUPtr   = std::make_unique<PickupImageManager>();
+        m_smokeParticleEffectsUPtr = std::make_unique<SmokeParticleEffects>();
 
         m_contextUPtr = std::make_unique<Context>(
             m_config,
@@ -71,13 +73,15 @@ namespace thornberry
             *m_fontManagerUPtr,
             *m_soundPlayerUPtr,
             *m_musicPlayerUPtr,
-            *m_pickupImageManagerUPtr);
+            *m_pickupImageManagerUPtr,
+            *m_smokeParticleEffectsUPtr);
 
         m_soundPlayerUPtr->setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayerUPtr->loadAll();
 
         m_musicPlayerUPtr->setup((m_config.media_path / "music").string());
 
+        m_smokeParticleEffectsUPtr->setup(m_config);
         m_pickupImageManagerUPtr->setup(m_config);
         m_screenLayoutUPtr->setup(m_config);
         m_fontManagerUPtr->setup(m_config);
@@ -118,6 +122,7 @@ namespace thornberry
         m_soundPlayerUPtr.reset();
         m_musicPlayerUPtr.reset();
         m_pickupImageManagerUPtr.reset();
+        m_smokeParticleEffectsUPtr.reset();
 
         MapTextureManager::instance().teardown();
         util::SfmlDefaults::instance().teardown();
@@ -156,6 +161,7 @@ namespace thornberry
     {
         m_levelUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_avatarUPtr->update(*m_contextUPtr, t_elapsedSec);
+        m_smokeParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_framerateUPtr->update(*m_contextUPtr, t_elapsedSec);
     }
 

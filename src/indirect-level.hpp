@@ -157,6 +157,8 @@ namespace thornberry
         [[nodiscard]] const sf::FloatRect
             makeFootstepAvatarRect(const sf::FloatRect & t_avatarRect) const;
 
+        void moveAll(const Context & t_context, const sf::Vector2f & t_move);
+
       private:
         std::string m_name;
         sf::Vector2i m_mapTileCount;
