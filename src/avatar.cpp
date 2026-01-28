@@ -358,14 +358,12 @@ namespace thornberry
         // clang-format off
         switch (t_anim)
         {
-            case AvatarAnim::None:
             case AvatarAnim::Walk:      return 0.1f;
-
             case AvatarAnim::Do:        return 0.17f;
-
-            case AvatarAnim::Thank:     
+            case AvatarAnim::Thank:     return 3.0f;
             case AvatarAnim::FistBump:  return 0.75f;
-            
+
+            case AvatarAnim::None:
             case AvatarAnim::Blink:
             default:                    return 0.15f;
         }

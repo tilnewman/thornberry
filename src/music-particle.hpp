@@ -40,9 +40,11 @@ namespace thornberry
         MusicAnimation(const sf::FloatRect & t_offscreenRect);
 
         sf::FloatRect offscreen_rect;
-        float elapsed_sec;
+        float emit_elapsed_sec;
         float time_between_emit_sec;
+        float age_elapsed_sec;
         std::vector<MusicParticle> particles;
+        bool is_alive;
     };
 
     //

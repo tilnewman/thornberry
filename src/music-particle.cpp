@@ -8,6 +8,7 @@
 #include "context.hpp"
 #include "indirect-level.hpp"
 #include "random.hpp"
+#include "screen-layout.hpp"
 #include "sfml-util.hpp"
 #include "texture-loader.hpp"
 
@@ -33,7 +34,12 @@ namespace thornberry
         sprite.setColor(colors::randomVibrant(t_context.random));
         util::setOriginToCenter(sprite);
 
-        const sf::FloatRect spawnRect{ util::scaleRectInPlaceCopy(t_offscreenRect, 0.75f) };
+        const float scale{ t_context.screen_layout.calScaleBasedOnResolution(t_context, 0.25f) };
+        sprite.setScale({ scale, scale });
+
+        sf::FloatRect spawnRect{ util::scaleRectInPlaceCopy(t_offscreenRect, 0.75f) };
+        spawnRect.size.y *= 0.3f;
+
         sprite.setPosition(spawnRect.position);
 
         sprite.move(
@@ -41,12 +47,18 @@ namespace thornberry
               t_context.random.fromTo(0.0f, spawnRect.size.y) });
     }
 
+    //
+
     MusicAnimation::MusicAnimation(const sf::FloatRect & t_offscreenRect)
         : offscreen_rect{ t_offscreenRect }
-        , elapsed_sec{ 0.0f }
+        , emit_elapsed_sec{ 0.0f }
         , time_between_emit_sec{ 0.0f }
+        , age_elapsed_sec{ 0.0f }
         , particles{}
+        , is_alive{ true }
     {}
+
+    //
 
     MusicParticleManager::MusicParticleManager()
         : m_texture{}
@@ -74,21 +86,31 @@ namespace thornberry
 
     void MusicParticleManager::update(const Context & t_context, const float t_elapsedSec)
     {
+        bool didAnyAnimationsDie{ false };
         for (MusicAnimation & anim : m_animations)
         {
-            anim.elapsed_sec += t_elapsedSec;
-            if (anim.elapsed_sec > anim.time_between_emit_sec)
+            anim.age_elapsed_sec += t_elapsedSec;
+            if (anim.age_elapsed_sec > 5.0f)
             {
-                anim.elapsed_sec -= anim.time_between_emit_sec;
-                anim.time_between_emit_sec = t_context.random.fromTo(0.1f, 0.3f);
+                anim.is_alive       = false;
+                didAnyAnimationsDie = true;
+            }
+            else if (anim.age_elapsed_sec < 3.0f)
+            {
+                anim.emit_elapsed_sec += t_elapsedSec;
+                if (anim.emit_elapsed_sec > anim.time_between_emit_sec)
+                {
+                    anim.emit_elapsed_sec -= anim.time_between_emit_sec;
+                    anim.time_between_emit_sec = t_context.random.fromTo(0.1f, 0.3f);
 
-                anim.particles.emplace_back(
-                    t_context,
-                    m_texture,
-                    randomNoteRect(t_context),
-                    anim.offscreen_rect,
-                    t_context.random.fromTo(1.0f, 2.0f),
-                    t_context.random.fromTo(100.0f, 200.0f));
+                    anim.particles.emplace_back(
+                        t_context,
+                        m_texture,
+                        randomNoteRect(t_context),
+                        anim.offscreen_rect,
+                        t_context.random.fromTo(1.0f, 2.0f),
+                        t_context.random.fromTo(100.0f, 150.0f));
+                }
             }
 
             bool didAnyParticlesDie{ false };
@@ -103,6 +125,24 @@ namespace thornberry
                 else
                 {
                     particle.sprite.move({ 0.0f, -(particle.speed * t_elapsedSec) });
+
+                    sf::Color color{ particle.sprite.getColor() };
+
+                    const std::uint8_t alpha{ static_cast<std::uint8_t>(
+                        util::map(particle.elapsed_sec, 0.0f, particle.age_limit_sec, 192, 0)) };
+
+                    color.a = alpha;
+                    particle.sprite.setColor(color);
+
+                    const float scaleMax{ t_context.screen_layout.calScaleBasedOnResolution(
+                        t_context, 0.25f) };
+
+                    const float scaleMin{ 0.05f };
+
+                    const float scale{ util::map(
+                        particle.elapsed_sec, 0.0f, particle.age_limit_sec, scaleMax, scaleMin) };
+
+                    particle.sprite.setScale({ scale, scale });
                 }
             }
 
@@ -110,6 +150,11 @@ namespace thornberry
             {
                 std::erase_if(anim.particles, [](const MusicParticle & p) { return !p.is_alive; });
             }
+        }
+
+        if (didAnyAnimationsDie)
+        {
+            std::erase_if(m_animations, [](const MusicAnimation & a) { return !a.is_alive; });
         }
     }
 
