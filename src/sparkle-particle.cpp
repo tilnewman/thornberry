@@ -90,10 +90,6 @@ namespace thornberry
 
         for (const SparkleAnimation & anim : m_animations)
         {
-            // TODO?
-            // Check if anim.offscreen_rect intersects with the offscreen texture
-            // to prevent drawing particles that are not visible.
-
             for (const SparkleParticle & particle : anim.particles)
             {
                 t_target.draw(particle.sprite, t_states);
@@ -111,16 +107,22 @@ namespace thornberry
                 anim.elpased_sec -= anim.time_between_emit;
                 anim.time_between_emit = t_context.random.fromTo(0.2f, 0.8f);
 
-                float rotationSpeed{ t_context.random.fromTo(50.0f, 100.0f) };
-                if (t_context.random.boolean())
+                // only emit particles if they will be visible
+                if (t_context.level.offscreenRect()
+                        .findIntersection(anim.offscreen_rect)
+                        .has_value())
                 {
-                    rotationSpeed *= -1.0f;
+                    float rotationSpeed{ t_context.random.fromTo(50.0f, 100.0f) };
+                    if (t_context.random.boolean())
+                    {
+                        rotationSpeed *= -1.0f;
+                    }
+
+                    const float ageLimitSec{ t_context.random.fromTo(0.75f, 1.25f) };
+
+                    anim.particles.emplace_back(
+                        t_context, m_texture, anim.offscreen_rect, ageLimitSec, rotationSpeed);
                 }
-
-                const float ageLimitSec{ t_context.random.fromTo(0.75f, 1.25f) };
-
-                anim.particles.emplace_back(
-                    t_context, m_texture, anim.offscreen_rect, ageLimitSec, rotationSpeed);
             }
 
             bool didAnyParticlesDie{ false };

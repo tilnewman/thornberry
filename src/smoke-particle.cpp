@@ -5,6 +5,7 @@
 
 #include "config.hpp"
 #include "context.hpp"
+#include "indirect-level.hpp"
 #include "random.hpp"
 #include "screen-layout.hpp"
 #include "sfml-util.hpp"
@@ -94,17 +95,28 @@ namespace thornberry
                 anim.elapsed_sec -= anim.time_between_emit_sec;
                 anim.time_between_emit_sec = t_context.random.fromTo(0.05f, 0.15f);
 
-                float rotationSpeed{ t_context.random.fromTo(50.0f, 100.0f) };
-                if (t_context.random.boolean())
+                // only emit particles if they will be visible
+                if (t_context.level.offscreenRect()
+                        .findIntersection(anim.offscreen_rect)
+                        .has_value())
                 {
-                    rotationSpeed *= -1.0f;
+                    float rotationSpeed{ t_context.random.fromTo(50.0f, 100.0f) };
+                    if (t_context.random.boolean())
+                    {
+                        rotationSpeed *= -1.0f;
+                    }
+
+                    const float ageLimitSec{ t_context.random.fromTo(0.75f, 1.5f) };
+                    const float speed{ t_context.random.fromTo(50.0f, 100.0f) };
+
+                    anim.particles.emplace_back(
+                        t_context,
+                        m_texture,
+                        anim.offscreen_rect,
+                        rotationSpeed,
+                        ageLimitSec,
+                        speed);
                 }
-
-                const float ageLimitSec{ t_context.random.fromTo(0.75f, 1.5f) };
-                const float speed{ t_context.random.fromTo(50.0f, 100.0f) };
-
-                anim.particles.emplace_back(
-                    t_context, m_texture, anim.offscreen_rect, rotationSpeed, ageLimitSec, speed);
             }
 
             bool didAnyParticlesDie{ false };
@@ -151,10 +163,6 @@ namespace thornberry
     {
         for (const SmokeAnimation & anim : m_animations)
         {
-            // TODO?
-            // Check if anim.offscreen_rect intersects with the offscreen texture
-            // to prevent drawing particles that are not visible.
-
             for (const SmokeParticle & particle : anim.particles)
             {
                 t_target.draw(particle.sprite, t_states);
@@ -178,6 +186,18 @@ namespace thornberry
                 particle.sprite.move(t_move);
             }
         }
+    }
+
+    std::size_t SmokeParticleEffects::particleCount() const
+    {
+        std::size_t count{ 0 };
+
+        for (const SmokeAnimation & anim : m_animations)
+        {
+            count += anim.particles.size();
+        }
+
+        return count;
     }
 
 } // namespace thornberry

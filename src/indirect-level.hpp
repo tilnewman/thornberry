@@ -97,6 +97,8 @@ namespace thornberry
         [[nodiscard]] std::vector<Transition> & transitions() { return m_transitions; }
         [[nodiscard]] std::vector<WalkSound> & walkSounds() { return m_walkSounds; }
 
+        [[nodiscard]] const sf::FloatRect offscreenRect() const { return m_offscreenDrawRect; }
+
         void appendToLowerTileLayers(std::unique_ptr<IIndirectTileLayer> t_uptr)
         {
             m_lowerTileLayers.emplace_back(std::move(t_uptr));

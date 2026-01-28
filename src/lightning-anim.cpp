@@ -54,10 +54,6 @@ namespace thornberry
     {
         for (const LightningAnimation & anim : m_animations)
         {
-            // TODO?
-            // Check if anim.offscreen_rect intersects with the offscreen texture
-            // to prevent drawing particles that are not visible.
-
             t_target.draw(anim.sprite, t_states);
         }
     }
@@ -66,6 +62,12 @@ namespace thornberry
     {
         for (LightningAnimation & anim : m_animations)
         {
+            // only track time and discharg if it's visible
+            if (!t_context.level.offscreenRect().findIntersection(anim.offscreen_rect).has_value())
+            {
+                continue;
+            }
+
             anim.elapsed_sec += t_elapsedSec;
 
             if (LightningState::Wait == anim.state)

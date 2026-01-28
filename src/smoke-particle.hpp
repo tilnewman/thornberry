@@ -58,6 +58,7 @@ namespace thornberry
         void add(const Context & t_context, const sf::FloatRect & t_offscreenRect);
         void move(const sf::Vector2f & t_move);
         void clear() { m_animations.clear(); }
+        [[nodiscard]] std::size_t particleCount() const;
 
       private:
         sf::Texture m_texture;
