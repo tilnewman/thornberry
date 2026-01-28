@@ -112,7 +112,7 @@ namespace thornberry
                         .findIntersection(anim.offscreen_rect)
                         .has_value())
                 {
-                    float rotationSpeed{ t_context.random.fromTo(50.0f, 100.0f) };
+                    float rotationSpeed{ t_context.random.fromTo(20.0f, 50.0f) };
                     if (t_context.random.boolean())
                     {
                         rotationSpeed *= -1.0f;
