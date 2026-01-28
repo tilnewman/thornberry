@@ -221,6 +221,28 @@
         }, 
         {
          "draworder":"topdown",
+         "id":27,
+         "name":"animation",
+         "objects":[
+                {
+                 "height":39,
+                 "id":71,
+                 "name":"sparkle",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":38,
+                 "x":523,
+                 "y":241
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":5,
          "name":"collision",
          "objects":[
@@ -400,8 +422,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":27,
- "nextobjectid":71,
+ "nextlayerid":28,
+ "nextobjectid":72,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
