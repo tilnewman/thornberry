@@ -22,10 +22,16 @@ namespace thornberry
         SmokeParticle(
             const Context & t_context,
             const sf::Texture & t_texture,
-            const sf::Vector2f & t_position);
+            const sf::FloatRect & t_offscreenRect,
+            const float t_rotationSpeed,
+            const float t_ageLimitSec,
+            const float t_speed);
 
         sf::Sprite sprite;
+        float speed;
         float elapsed_sec;
+        float age_limit_sec;
+        float rotation_speed;
         bool is_alive;
     };
 
@@ -51,9 +57,7 @@ namespace thornberry
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const sf::FloatRect & t_offscreenRect);
         void move(const sf::Vector2f & t_move);
-
-      private:
-        float randomTimeBetweenEmit(const Context & t_context) const;
+        void clear() { m_animations.clear(); }
 
       private:
         sf::Texture m_texture;

@@ -92,6 +92,8 @@ namespace thornberry
 
         m_moveMapRectRight = { { util::right(innerMapRect), mapRect.position.y },
                                { (mapRect.size.x - innerMapRect.size.x) * 0.5f, mapRect.size.y } };
+
+        t_context.smoke.clear();
     }
 
     void IndirectLevel::setLevelDetails(
