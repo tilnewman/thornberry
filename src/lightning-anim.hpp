@@ -28,12 +28,14 @@ namespace thornberry
         LightningAnimation(
             const Context & t_context,
             const sf::Texture & t_texture,
-            const sf::FloatRect & t_offscreenRect);
+            const sf::FloatRect & t_offscreenRect,
+            const sf::Vector2i & t_cellSize);
 
         sf::Sprite sprite;
         float elapsed_sec;
         LightningState state;
         sf::FloatRect offscreen_rect;
+        std::size_t frame_index;
     };
 
     //
@@ -53,6 +55,7 @@ namespace thornberry
       private:
         sf::Texture m_texture;
         std::vector<LightningAnimation> m_animations;
+        sf::Vector2i m_cellSize;
     };
 
 } // namespace thornberry

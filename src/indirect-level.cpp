@@ -207,10 +207,10 @@ namespace thornberry
 
         drawLowerLayers(m_renderTexture, m_renderStates);
         t_context.sparkle.draw(m_renderTexture, m_renderStates);
+        t_context.lightning.draw(m_renderTexture, m_renderStates);
         t_context.avatar.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
         drawUpperLayers(m_renderTexture, m_renderStates);
         t_context.smoke.draw(m_renderTexture, m_renderStates);
-        t_context.lightning.draw(m_renderTexture, m_renderStates);
 
         m_renderTexture.display();
     }
