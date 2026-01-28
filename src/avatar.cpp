@@ -4,6 +4,7 @@
 #include "avatar.hpp"
 
 #include "alpha-masking.hpp"
+#include "color-range.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "indirect-level.hpp"
@@ -31,6 +32,10 @@ namespace thornberry
         , m_sprite{ m_texture }
         , m_shadowTexture{}
         , m_shadowSprite{ m_shadowTexture }
+        , m_hurtEnableTimerSec{ 0.0f }
+        , m_isHurtAnimating{ false }
+        , m_hurtColorCycleTimeSec{ 0.0f }
+        , m_isHurtColorWhite{ true }
     {}
 
     void Avatar::setup(const Context & t_context)
@@ -86,6 +91,40 @@ namespace thornberry
         updateBlinking(t_context, t_elapsedSec);
         updateWalkPosition(t_context, t_elapsedSec);
         updateAnimation(t_context, t_elapsedSec);
+        updateHurtAnimation(t_context, t_elapsedSec);
+    }
+
+    void Avatar::updateHurtAnimation(const Context &, const float t_elapsedSec)
+    {
+        m_hurtEnableTimerSec += t_elapsedSec;
+        if (m_hurtEnableTimerSec > 1.0f)
+        {
+            m_isHurtAnimating = false;
+            m_sprite.setColor(sf::Color::White);
+        }
+
+        if (m_isHurtAnimating)
+        {
+            m_hurtColorCycleTimeSec += t_elapsedSec;
+            const float colorCycleDurationSec{ 0.1f };
+            if (m_hurtColorCycleTimeSec < colorCycleDurationSec)
+            {
+                const float cycleRatio{ m_hurtColorCycleTimeSec / colorCycleDurationSec };
+                if (m_isHurtColorWhite)
+                {
+                    m_sprite.setColor(colors::blend(cycleRatio, sf::Color::White, sf::Color::Red));
+                }
+                else
+                {
+                    m_sprite.setColor(colors::blend(cycleRatio, sf::Color::Red, sf::Color::White));
+                }
+            }
+            else
+            {
+                m_hurtColorCycleTimeSec = 0.0f;
+                m_isHurtColorWhite      = !m_isHurtColorWhite;
+            }
+        }
     }
 
     void Avatar::updateBlinking(const Context & t_context, const float t_elapsedSec)
@@ -229,18 +268,21 @@ namespace thornberry
                 m_isAnimating = true;
                 m_anim        = AvatarAnim::Thank;
                 setAnim();
+                t_context.level.stopWalkSound(t_context);
             }
             else if (keyPressedPtr->scancode == sf::Keyboard::Scancode::D)
             {
                 m_isAnimating = true;
                 m_anim        = AvatarAnim::Do;
                 setAnim();
+                t_context.level.stopWalkSound(t_context);
             }
             else if (keyPressedPtr->scancode == sf::Keyboard::Scancode::F)
             {
                 m_isAnimating = true;
                 m_anim        = AvatarAnim::FistBump;
                 setAnim();
+                t_context.level.stopWalkSound(t_context);
             }
         }
         else if (const auto * keyRelPtr = t_event.getIf<sf::Event::KeyReleased>())
@@ -413,6 +455,15 @@ namespace thornberry
         util::scaleRectInPlace(rect, { 0.4f, 0.775f });
         rect.position.y += (rect.size.y * 0.1375f);
         return rect;
+    }
+
+    void Avatar::startHurtAnimation()
+    {
+        m_isHurtAnimating       = true;
+        m_hurtEnableTimerSec    = 0.0f;
+        m_hurtColorCycleTimeSec = 0.0f;
+        m_isHurtColorWhite      = true;
+        m_sprite.setColor(sf::Color::Red);
     }
 
 } // namespace thornberry

@@ -56,10 +56,13 @@ namespace thornberry
             sf::RenderTarget & t_target,
             sf::RenderStates t_states) const;
 
+        void startHurtAnimation();
+
       private:
         void updateBlinking(const Context & t_context, const float t_elapsedSec);
         void updateWalkPosition(const Context & t_context, const float t_elapsedSec);
         void updateAnimation(const Context & t_context, const float t_elapsedSec);
+        void updateHurtAnimation(const Context & t_context, const float t_elapsedSec);
         void setAnim();
         void updateSprite();
 
@@ -87,6 +90,11 @@ namespace thornberry
         sf::Sprite m_sprite;
         sf::Texture m_shadowTexture;
         sf::Sprite m_shadowSprite;
+
+        float m_hurtEnableTimerSec;
+        bool m_isHurtAnimating;
+        float m_hurtColorCycleTimeSec;
+        bool m_isHurtColorWhite;
     };
 
 } // namespace thornberry
