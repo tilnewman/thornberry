@@ -13,6 +13,7 @@
 #include "map-textures.hpp"
 #include "screen-layout.hpp"
 #include "sfml-util.hpp"
+#include "sparkle-particle.hpp"
 
 #include <filesystem>
 #include <fstream>
@@ -382,6 +383,10 @@ namespace thornberry
             else if (name == "lamp-wide")
             {
                 appendRectLayer<AnimLayerLampWide>(t_context, t_layerGroup, rect);
+            }
+            else if (name == "sparkle")
+            {
+                t_context.sparkle.add(t_context, rect);
             }
             else
             {

@@ -11,6 +11,7 @@
 #include "screen-layout.hpp"
 #include "smoke-particle.hpp"
 #include "sound-player.hpp"
+#include "sparkle-particle.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -94,6 +95,7 @@ namespace thornberry
                                { (mapRect.size.x - innerMapRect.size.x) * 0.5f, mapRect.size.y } };
 
         t_context.smoke.clear();
+        t_context.sparkle.clear();
     }
 
     void IndirectLevel::setLevelDetails(
@@ -202,6 +204,7 @@ namespace thornberry
         m_renderTexture.clear(sf::Color::Black);
 
         drawLowerLayers(m_renderTexture, m_renderStates);
+        t_context.sparkle.draw(m_renderTexture, m_renderStates);
         t_context.avatar.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
         drawUpperLayers(m_renderTexture, m_renderStates);
         t_context.smoke.draw(m_renderTexture, m_renderStates);
@@ -261,6 +264,7 @@ namespace thornberry
     {
         moveAllLayers(t_move);
         t_context.smoke.move(t_move);
+        t_context.sparkle.move(t_move);
     }
 
     void IndirectLevel::draw(
@@ -507,6 +511,8 @@ namespace thornberry
         {
             layerUPtr->postLevelLoadSetup(t_context);
         }
+
+        t_context.sparkle.postLevelLoadSetup(t_context);
     }
 
     void IndirectLevel::moveAllLayers(const sf::Vector2f & t_move)

@@ -153,6 +153,17 @@
                  "width":95.5725848943715,
                  "x":246.720679400702,
                  "y":94.3316484176745
+                }, 
+                {
+                 "height":43,
+                 "id":64,
+                 "name":"sparkle",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":37,
+                 "x":403,
+                 "y":288
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -723,7 +734,7 @@
          "y":0
         }],
  "nextlayerid":24,
- "nextobjectid":63,
+ "nextobjectid":65,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

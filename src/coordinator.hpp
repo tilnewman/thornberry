@@ -16,6 +16,7 @@
 #include "screen-layout.hpp"
 #include "smoke-particle.hpp"
 #include "sound-player.hpp"
+#include "sparkle-particle.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -59,6 +60,7 @@ namespace thornberry
         std::unique_ptr<util::MusicPlayer> m_musicPlayerUPtr;
         std::unique_ptr<PickupImageManager> m_pickupImageManagerUPtr;
         std::unique_ptr<SmokeParticleEffects> m_smokeParticleEffectsUPtr;
+        std::unique_ptr<SparkleParticleEffects> m_sparkleParticleEffectsUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 

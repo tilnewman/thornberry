@@ -81,7 +81,7 @@ namespace thornberry
     void SmokeParticleEffects::setup(const Config & t_config)
     {
         util::TextureLoader::load(
-            m_texture, (t_config.media_path / "image" / "particle" / "smoke.png"), true);
+            m_texture, (t_config.media_path / "image" / "particle" / "smoke.png"));
     }
 
     void SmokeParticleEffects::update(const Context & t_context, const float t_elapsedSec)
