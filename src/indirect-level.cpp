@@ -8,6 +8,7 @@
 #include "context.hpp"
 #include "level-file-loader.hpp"
 #include "lightning-anim.hpp"
+#include "music-particle.hpp"
 #include "music-player.hpp"
 #include "screen-layout.hpp"
 #include "smoke-particle.hpp"
@@ -208,7 +209,10 @@ namespace thornberry
         drawLowerLayers(m_renderTexture, m_renderStates);
         t_context.sparkle.draw(m_renderTexture, m_renderStates);
         t_context.lightning.draw(m_renderTexture, m_renderStates);
+        t_context.musical_note.draw(m_renderTexture, m_renderStates);
+
         t_context.avatar.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
+
         drawUpperLayers(m_renderTexture, m_renderStates);
         t_context.smoke.draw(m_renderTexture, m_renderStates);
 

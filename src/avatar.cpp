@@ -8,9 +8,11 @@
 #include "config.hpp"
 #include "context.hpp"
 #include "indirect-level.hpp"
+#include "music-particle.hpp"
 #include "random.hpp"
 #include "screen-layout.hpp"
 #include "sfml-util.hpp"
+#include "sound-player.hpp"
 #include "texture-loader.hpp"
 
 #include <iostream>
@@ -269,6 +271,9 @@ namespace thornberry
                 m_anim        = AvatarAnim::Thank;
                 setAnim();
                 t_context.level.stopWalkSound(t_context);
+
+                t_context.sfx.play("flute");
+                t_context.musical_note.add(t_context, collisionMapRect());
             }
             else if (keyPressedPtr->scancode == sf::Keyboard::Scancode::D)
             {

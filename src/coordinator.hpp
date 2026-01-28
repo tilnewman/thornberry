@@ -11,6 +11,7 @@
 #include "indirect-level.hpp"
 #include "level-file-loader.hpp"
 #include "lightning-anim.hpp"
+#include "music-particle.hpp"
 #include "music-player.hpp"
 #include "pickup-image-manager.hpp"
 #include "random.hpp"
@@ -63,6 +64,7 @@ namespace thornberry
         std::unique_ptr<SmokeParticleEffects> m_smokeParticleEffectsUPtr;
         std::unique_ptr<SparkleParticleEffects> m_sparkleParticleEffectsUPtr;
         std::unique_ptr<LightningAnimationManager> m_lightningAnimationManagerUPtr;
+        std::unique_ptr<MusicParticleManager> m_musicParticleManagerUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 

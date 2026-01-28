@@ -23,6 +23,7 @@ namespace thornberry
     class SmokeParticleEffects;
     class SparkleParticleEffects;
     class LightningAnimationManager;
+    class MusicParticleManager;
 
     //
     struct Context
@@ -40,7 +41,8 @@ namespace thornberry
             PickupImageManager & t_pickupImageManager,
             SmokeParticleEffects & t_smokeParticleEffects,
             SparkleParticleEffects & t_sparkleParticleEffects,
-            LightningAnimationManager & t_lightningAnimationManager)
+            LightningAnimationManager & t_lightningAnimationManager,
+            MusicParticleManager & t_musicParticleManager)
             : config{ t_config }
             , screen_layout{ t_screenLayout }
             , random{ t_random }
@@ -54,6 +56,7 @@ namespace thornberry
             , smoke{ t_smokeParticleEffects }
             , sparkle{ t_sparkleParticleEffects }
             , lightning{ t_lightningAnimationManager }
+            , musical_note{ t_musicParticleManager }
         {}
 
         const Config & config;
@@ -69,6 +72,7 @@ namespace thornberry
         SmokeParticleEffects & smoke;
         SparkleParticleEffects & sparkle;
         LightningAnimationManager & lightning;
+        MusicParticleManager & musical_note;
     };
 
 } // namespace thornberry
