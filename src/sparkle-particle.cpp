@@ -7,6 +7,7 @@
 #include "context.hpp"
 #include "indirect-level.hpp"
 #include "random.hpp"
+#include "screen-layout.hpp"
 #include "sfml-util.hpp"
 #include "texture-loader.hpp"
 
@@ -58,6 +59,8 @@ namespace thornberry
         sprite.move(
             { t_context.random.fromTo(0.0f, t_offscreenRect.size.x),
               t_context.random.fromTo(0.0f, t_offscreenRect.size.y) });
+
+        sprite.scale({ 0.0f, 0.0f });
     }
 
     //
@@ -127,6 +130,31 @@ namespace thornberry
                 if (particle.elapsed_sec < particle.age_limit_sec)
                 {
                     particle.sprite.rotate(sf::degrees(particle.rotation_speed * t_elapsedSec));
+
+                    const float scaleMax{ t_context.screen_layout.calScaleBasedOnResolution(
+                        t_context, 0.5f) };
+
+                    const float ageLimitHalfSec{ particle.age_limit_sec * 0.5f };
+                    if (particle.elapsed_sec < ageLimitHalfSec)
+                    {
+                        // growing
+                        const float scale{ util::map(
+                            particle.elapsed_sec, 0.0f, ageLimitHalfSec, 0.0f, scaleMax) };
+
+                        particle.sprite.setScale({ scale, scale });
+                    }
+                    else
+                    {
+                        // shrinking
+                        const float scale{ util::map(
+                            (particle.elapsed_sec - ageLimitHalfSec),
+                            0.0f,
+                            ageLimitHalfSec,
+                            scaleMax,
+                            0.0f) };
+
+                        particle.sprite.setScale({ scale, scale });
+                    }
                 }
                 else
                 {
