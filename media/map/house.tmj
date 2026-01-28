@@ -153,6 +153,17 @@
                  "width":95.5725848943715,
                  "x":246.720679400702,
                  "y":94.3316484176745
+                }, 
+                {
+                 "height":109,
+                 "id":65,
+                 "name":"lightning-trap",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":44,
+                 "x":617,
+                 "y":176
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -723,7 +734,7 @@
          "y":0
         }],
  "nextlayerid":24,
- "nextobjectid":65,
+ "nextobjectid":66,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

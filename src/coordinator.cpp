@@ -32,6 +32,7 @@ namespace thornberry
         , m_pickupImageManagerUPtr{}
         , m_smokeParticleEffectsUPtr{}
         , m_sparkleParticleEffectsUPtr{}
+        , m_lightningAnimationManagerUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -64,6 +65,7 @@ namespace thornberry
         m_pickupImageManagerUPtr     = std::make_unique<PickupImageManager>();
         m_smokeParticleEffectsUPtr   = std::make_unique<SmokeParticleEffects>();
         m_sparkleParticleEffectsUPtr = std::make_unique<SparkleParticleEffects>();
+        m_lightningAnimationManagerUPtr = std::make_unique<LightningAnimationManager>();
 
         m_contextUPtr = std::make_unique<Context>(
             m_config,
@@ -77,13 +79,15 @@ namespace thornberry
             *m_musicPlayerUPtr,
             *m_pickupImageManagerUPtr,
             *m_smokeParticleEffectsUPtr,
-            *m_sparkleParticleEffectsUPtr);
+            *m_sparkleParticleEffectsUPtr,
+            *m_lightningAnimationManagerUPtr);
 
         m_soundPlayerUPtr->setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayerUPtr->loadAll();
 
         m_musicPlayerUPtr->setup((m_config.media_path / "music").string());
 
+        m_lightningAnimationManagerUPtr->setup(m_config);
         m_sparkleParticleEffectsUPtr->setup(m_config);
         m_smokeParticleEffectsUPtr->setup(m_config);
         m_pickupImageManagerUPtr->setup(m_config);
@@ -128,6 +132,7 @@ namespace thornberry
         m_pickupImageManagerUPtr.reset();
         m_smokeParticleEffectsUPtr.reset();
         m_sparkleParticleEffectsUPtr.reset();
+        m_lightningAnimationManagerUPtr.reset();
 
         MapTextureManager::instance().teardown();
         util::SfmlDefaults::instance().teardown();
@@ -168,6 +173,7 @@ namespace thornberry
         m_avatarUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_smokeParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_sparkleParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
+        m_lightningAnimationManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_framerateUPtr->update(*m_contextUPtr, t_elapsedSec);
     }
 

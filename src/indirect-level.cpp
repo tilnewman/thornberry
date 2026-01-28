@@ -7,6 +7,7 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "level-file-loader.hpp"
+#include "lightning-anim.hpp"
 #include "music-player.hpp"
 #include "screen-layout.hpp"
 #include "smoke-particle.hpp"
@@ -96,6 +97,7 @@ namespace thornberry
 
         t_context.smoke.clear();
         t_context.sparkle.clear();
+        t_context.lightning.clear();
     }
 
     void IndirectLevel::setLevelDetails(
@@ -208,6 +210,7 @@ namespace thornberry
         t_context.avatar.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
         drawUpperLayers(m_renderTexture, m_renderStates);
         t_context.smoke.draw(m_renderTexture, m_renderStates);
+        t_context.lightning.draw(m_renderTexture, m_renderStates);
 
         m_renderTexture.display();
     }
@@ -265,6 +268,7 @@ namespace thornberry
         moveAllLayers(t_move);
         t_context.smoke.move(t_move);
         t_context.sparkle.move(t_move);
+        t_context.lightning.move(t_move);
     }
 
     void IndirectLevel::draw(
@@ -513,6 +517,7 @@ namespace thornberry
         }
 
         t_context.sparkle.postLevelLoadSetup(t_context);
+        t_context.lightning.postLevelLoadSetup(t_context);
     }
 
     void IndirectLevel::moveAllLayers(const sf::Vector2f & t_move)

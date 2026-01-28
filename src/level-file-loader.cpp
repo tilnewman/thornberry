@@ -10,6 +10,7 @@
 #include "anim-layer-pickup.hpp"
 #include "check-macros.hpp"
 #include "config.hpp"
+#include "lightning-anim.hpp"
 #include "map-textures.hpp"
 #include "screen-layout.hpp"
 #include "sfml-util.hpp"
@@ -387,6 +388,10 @@ namespace thornberry
             else if (name == "sparkle")
             {
                 t_context.sparkle.add(t_context, rect);
+            }
+            else if (name == "lightning-trap")
+            {
+                t_context.lightning.add(t_context, rect);
             }
             else
             {
