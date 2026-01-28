@@ -53,6 +53,9 @@ namespace thornberry
         void move(const sf::Vector2f & t_move);
 
       private:
+        void interactWithPlayer(const Context & t_context, const sf::FloatRect & t_offscreenRect);
+
+      private:
         sf::Texture m_texture;
         std::vector<LightningAnimation> m_animations;
         sf::Vector2i m_cellSize;

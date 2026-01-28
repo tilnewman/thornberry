@@ -157,7 +157,7 @@ namespace thornberry
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up))
         {
             const sf::Vector2f move{ 0.0f, -walkAmount };
-            if (t_context.level.avatarMove(t_context, collisionRect(), move))
+            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
@@ -167,7 +167,7 @@ namespace thornberry
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down))
         {
             const sf::Vector2f move{ 0.0f, walkAmount };
-            if (t_context.level.avatarMove(t_context, collisionRect(), move))
+            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
@@ -177,7 +177,7 @@ namespace thornberry
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left))
         {
             const sf::Vector2f move{ -walkAmount, 0.0f };
-            if (t_context.level.avatarMove(t_context, collisionRect(), move))
+            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
@@ -187,7 +187,7 @@ namespace thornberry
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right))
         {
             const sf::Vector2f move{ walkAmount, 0.0f };
-            if (t_context.level.avatarMove(t_context, collisionRect(), move))
+            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
@@ -449,7 +449,7 @@ namespace thornberry
         // clang-format on
     }
 
-    const sf::FloatRect Avatar::collisionRect() const
+    const sf::FloatRect Avatar::collisionMapRect() const
     {
         sf::FloatRect rect{ m_sprite.getGlobalBounds() };
         util::scaleRectInPlace(rect, { 0.4f, 0.775f });

@@ -161,6 +161,8 @@ namespace thornberry
 
         void moveAll(const Context & t_context, const sf::Vector2f & t_move);
 
+        void interactWithAll(const Context & t_context, const sf::FloatRect & t_avatarMapRect);
+
       private:
         std::string m_name;
         sf::Vector2i m_mapTileCount;

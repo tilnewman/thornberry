@@ -401,14 +401,7 @@ namespace thornberry
         }
 
         // allow the avatar to interact with animation layers (pickups, etc...)
-        for (auto & layerUPtr : m_lowerTileLayers)
-        {
-            layerUPtr->interactWithPlayer(t_context, avatarRect);
-        }
-        for (auto & layerUPtr : m_upperTileLayers)
-        {
-            layerUPtr->interactWithPlayer(t_context, avatarRect);
-        }
+        interactWithAll(t_context, avatarRect);
 
         // this avatarRect needs to still be in map coordinates for this
         playWalkSound(t_context, avatarRect);
@@ -488,6 +481,20 @@ namespace thornberry
         }
 
         return true;
+    }
+
+    void IndirectLevel::interactWithAll(
+        const Context & t_context, const sf::FloatRect & t_avatarMapRect)
+    {
+        for (auto & layerUPtr : m_lowerTileLayers)
+        {
+            layerUPtr->interactWithPlayer(t_context, t_avatarMapRect);
+        }
+
+        for (auto & layerUPtr : m_upperTileLayers)
+        {
+            layerUPtr->interactWithPlayer(t_context, t_avatarMapRect);
+        }
     }
 
     bool IndirectLevel::doesIntersetWithCollision(const sf::FloatRect & t_rect) const

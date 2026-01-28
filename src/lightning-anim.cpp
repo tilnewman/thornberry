@@ -3,6 +3,7 @@
 //
 #include "lightning-anim.hpp"
 
+#include "avatar.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "indirect-level.hpp"
@@ -79,6 +80,7 @@ namespace thornberry
                     anim.frame_index = 0;
                     anim.sprite.setTextureRect({ { 0, 0 }, m_cellSize });
                     t_context.sfx.play("electricity");
+                    interactWithPlayer(t_context, anim.offscreen_rect);
                 }
             }
             else
@@ -114,6 +116,22 @@ namespace thornberry
         {
             anim.offscreen_rect.position += t_move;
             anim.sprite.move(t_move);
+        }
+    }
+
+    void LightningAnimationManager::interactWithPlayer(
+        const Context & t_context, const sf::FloatRect & t_offscreenRect)
+    {
+        sf::FloatRect avatarOffscreenRect{ t_context.avatar.collisionMapRect() };
+        avatarOffscreenRect.position += t_context.level.mapToOffscreenOffset();
+
+        sf::FloatRect lightningOffscreenRect{ t_offscreenRect };
+        lightningOffscreenRect.size.y *= 0.4f;
+
+        if (avatarOffscreenRect.findIntersection(lightningOffscreenRect).has_value())
+        {
+            t_context.avatar.startHurtAnimation();
+            // TODO play hurt sfx and actually hurt the player
         }
     }
 

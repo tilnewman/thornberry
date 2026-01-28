@@ -58,6 +58,8 @@ namespace thornberry
 
         void startHurtAnimation();
 
+        [[nodiscard]] const sf::FloatRect collisionMapRect() const;
+
       private:
         void updateBlinking(const Context & t_context, const float t_elapsedSec);
         void updateWalkPosition(const Context & t_context, const float t_elapsedSec);
@@ -68,8 +70,7 @@ namespace thornberry
 
         [[nodiscard]] static float timeBetweenFrames(const AvatarAnim t_anim);
         [[nodiscard]] float timeBetweenBlinks(const Context & t_context) const;
-        [[nodiscard]] const sf::FloatRect collisionRect() const;
-
+        
         [[nodiscard]] static sf::Keyboard::Scancode
             scanCodeFromDirection(const AvatarDirection t_dir);
 
