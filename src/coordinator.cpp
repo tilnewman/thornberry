@@ -55,14 +55,14 @@ namespace thornberry
         MapTextureManager::instance().setup();
 
         m_randomUPtr                    = std::make_unique<util::Random>();
+        m_soundPlayerUPtr               = std::make_unique<util::SoundPlayer>(*m_randomUPtr);
+        m_musicPlayerUPtr               = std::make_unique<util::MusicPlayer>();
         m_screenLayoutUPtr              = std::make_unique<ScreenLayout>();
         m_levelUPtr                     = std::make_unique<IndirectLevel>();
         m_levelFileLoaderUPtr           = std::make_unique<LevelFileLoader>();
         m_avatarUPtr                    = std::make_unique<Avatar>();
         m_fontManagerUPtr               = std::make_unique<FontManager>();
         m_framerateUPtr                 = std::make_unique<FrameRateDisplay>();
-        m_soundPlayerUPtr               = std::make_unique<util::SoundPlayer>(*m_randomUPtr);
-        m_musicPlayerUPtr               = std::make_unique<util::MusicPlayer>();
         m_pickupImageManagerUPtr        = std::make_unique<PickupImageManager>();
         m_smokeParticleEffectsUPtr      = std::make_unique<SmokeParticleEffects>();
         m_sparkleParticleEffectsUPtr    = std::make_unique<SparkleParticleEffects>();
@@ -100,7 +100,6 @@ namespace thornberry
         m_framerateUPtr->setup(*m_contextUPtr);
         m_avatarUPtr->setup(*m_contextUPtr);
 
-        // TODO remove after testing
         m_levelUPtr->load(*m_contextUPtr, "thornberry.tmj", "house.tmj");
     }
 
