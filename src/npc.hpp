@@ -7,11 +7,15 @@
 
 namespace thornberry
 {
+    struct Context;
 
+    //
     class Npc : public Avatar
     {
       public:
         Npc();
+
+        void standFacingRandomDirection(const Context & t_context);
     };
 
 } // namespace thornberry

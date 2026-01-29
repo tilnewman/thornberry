@@ -50,6 +50,7 @@ namespace thornberry
             Npc & npc{ m_npcs.emplace_back() };
             npc.setup(t_context, AvatarImage::leather_corporal2_dark);
             npc.setPosition(pickRandomSpawnPosition());
+            npc.standFacingRandomDirection(t_context);
         }
         else if (levelName == "thornberry.tmj")
         {
@@ -66,6 +67,7 @@ namespace thornberry
                         static_cast<std::size_t>(AvatarImage::count))));
 
                 npc.setPosition(pickRandomSpawnPosition());
+                npc.standFacingRandomDirection(t_context);
             }
         }
     }
