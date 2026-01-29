@@ -40,11 +40,10 @@ namespace thornberry
         , m_isHurtColorWhite{ true }
     {}
 
-    void Avatar::setup(const Context & t_context)
+    void Avatar::setup(const Context & t_context, const AvatarImage t_image)
     {
         // setup the avatar image
-        m_image = static_cast<AvatarImage>(
-            t_context.random.zeroToOneLessThan(static_cast<std::size_t>(AvatarImage::count)));
+        m_image = t_image;
 
         util::TextureLoader::load(
             m_texture,

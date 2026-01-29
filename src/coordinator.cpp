@@ -101,10 +101,9 @@ namespace thornberry
         m_screenLayoutUPtr->setup(m_config);
         m_fontManagerUPtr->setup(m_config);
         m_framerateUPtr->setup(*m_contextUPtr);
-        m_playerUPtr->setup(*m_contextUPtr);
-        m_npcManagerUPtr->setup(*m_contextUPtr);
-
-        m_levelUPtr->load(*m_contextUPtr, "thornberry.tmj", "house.tmj");
+        m_playerUPtr->setup(*m_contextUPtr, AvatarImage::puck_female_light);
+        
+        m_levelUPtr->load(*m_contextUPtr, "house.tmj", "thornberry.tmj");
     }
 
     void Coordinator::loop()

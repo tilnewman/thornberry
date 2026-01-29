@@ -1921,23 +1921,23 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":640,
-                 "x":1960,
+                 "width":520,
+                 "x":2080,
                  "y":2400
                 }, 
                 {
-                 "height":360,
+                 "height":240,
                  "id":121,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":320,
-                 "x":1960,
+                 "width":200,
+                 "x":2080,
                  "y":2800
                 }, 
                 {
-                 "height":240,
+                 "height":120,
                  "id":122,
                  "name":"",
                  "rotation":0,
@@ -2058,7 +2058,7 @@
          "y":0
         }],
  "nextlayerid":44,
- "nextobjectid":127,
+ "nextobjectid":130,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

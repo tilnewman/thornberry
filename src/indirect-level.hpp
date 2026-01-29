@@ -148,7 +148,7 @@ namespace thornberry
         [[nodiscard]] const sf::Vector2f
             findEntryTransitionPositionFrom(const std::string & t_fromFilename) const;
 
-        void performPostLoadSetupOnAllLayers(const Context & t_context);
+        void performPostLoadSetupOnAll(const Context & t_context);
 
         void moveAllLayers(const sf::Vector2f & t_move);
 

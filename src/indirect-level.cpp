@@ -9,6 +9,7 @@
 #include "lightning-anim.hpp"
 #include "music-particle.hpp"
 #include "music-player.hpp"
+#include "npc-manager.hpp"
 #include "player.hpp"
 #include "screen-layout.hpp"
 #include "smoke-particle.hpp"
@@ -137,7 +138,7 @@ namespace thornberry
                                      << "\") failed to sf::RenderTexture::resize("
                                      << renderTextureSize << ")!");
 
-        performPostLoadSetupOnAllLayers(t_context);
+        performPostLoadSetupOnAll(t_context);
         // dumpInfo(t_filename);
     }
 
@@ -213,6 +214,7 @@ namespace thornberry
         t_context.sparkle.draw(m_renderTexture, m_renderStates);
         t_context.lightning.draw(m_renderTexture, m_renderStates);
         t_context.musical_note.draw(m_renderTexture, m_renderStates);
+        t_context.npc.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
 
         t_context.player.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
 
@@ -518,7 +520,7 @@ namespace thornberry
         return false;
     }
 
-    void IndirectLevel::performPostLoadSetupOnAllLayers(const Context & t_context)
+    void IndirectLevel::performPostLoadSetupOnAll(const Context & t_context)
     {
         for (auto & layerUPtr : m_lowerTileLayers)
         {
@@ -532,6 +534,7 @@ namespace thornberry
 
         t_context.sparkle.postLevelLoadSetup(t_context);
         t_context.lightning.postLevelLoadSetup(t_context);
+        t_context.npc.postLevelLoadSetup(t_context);
     }
 
     void IndirectLevel::moveAllLayers(const sf::Vector2f & t_move)

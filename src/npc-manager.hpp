@@ -18,8 +18,14 @@ namespace thornberry
       public:
         NpcManager();
 
-        void setup(const Context & t_context);
+        void postLevelLoadSetup(const Context & t_context);
         void update(const Context & t_context, const float t_elapsedSec);
+        void clear() { m_npcs.clear(); }
+
+        void draw(
+            const sf::Vector2f & t_mapToOffscreenOffset,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const;
 
       private:
         std::vector<Npc> m_npcs;

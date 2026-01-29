@@ -45,7 +45,7 @@ namespace thornberry
         Avatar();
 
         void startHurtAnimation();
-        void setup(const Context & t_context);
+        void setup(const Context & t_context, const AvatarImage t_image);
         void setPosition(const sf::Vector2f & t_position);
         void update(const Context & t_context, const float t_elapsedSec);
 
@@ -66,7 +66,6 @@ namespace thornberry
         void updateSprite();
 
         [[nodiscard]] float timeBetweenBlinks(const Context & t_context) const;
-
         [[nodiscard]] static float timeBetweenFrames(const AvatarAnim t_anim);
 
         [[nodiscard]] static sf::Keyboard::Scancode
