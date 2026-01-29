@@ -328,15 +328,15 @@
          "name":"npc-walk-bounds",
          "objects":[
                 {
-                 "height":120,
+                 "height":80,
                  "id":67,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":440,
-                 "x":80,
-                 "y":160
+                 "width":360,
+                 "x":120,
+                 "y":120
                 }, 
                 {
                  "height":320,
@@ -345,53 +345,42 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":160,
-                 "x":80,
-                 "y":160
+                 "width":120,
+                 "x":120,
+                 "y":120
                 }, 
                 {
-                 "height":160,
+                 "height":120,
                  "id":69,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":440,
-                 "x":80,
-                 "y":360
+                 "width":360,
+                 "x":120,
+                 "y":320
                 }, 
                 {
-                 "height":360,
+                 "height":280,
                  "id":70,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":80,
+                 "width":40,
                  "x":440,
                  "y":160
                 }, 
                 {
-                 "height":120,
+                 "height":80,
                  "id":71,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":320,
+                 "width":280,
                  "x":440,
-                 "y":280
-                }, 
-                {
-                 "height":360,
-                 "id":72,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":40,
-                 "x":360,
-                 "y":160
+                 "y":240
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -795,7 +784,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],

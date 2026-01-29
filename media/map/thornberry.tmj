@@ -1915,7 +1915,7 @@
          "name":"npc-walk-bounds",
          "objects":[
                 {
-                 "height":440,
+                 "height":400,
                  "id":120,
                  "name":"",
                  "rotation":0,
@@ -1959,7 +1959,7 @@
                  "y":2760
                 }, 
                 {
-                 "height":320,
+                 "height":280,
                  "id":124,
                  "name":"",
                  "rotation":0,
