@@ -123,8 +123,9 @@ namespace thornberry
             }
 
             // all NPCs and the player are the same size so steal the player's size to make this
-            const sf::FloatRect randomRect(
-                util::scaleRectInPlaceCopy({ *randomPositionOpt, playerRect.size }, 2.0f));
+            sf::FloatRect randomRect({ *randomPositionOpt, playerRect.size });
+            randomRect.position -= (playerRect.size * 0.5f);
+            util::scaleRectInPlace(randomRect, 1.2f);
 
             // check if random position collides with the player
             if (randomRect.findIntersection(playerRect).has_value())
