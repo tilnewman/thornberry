@@ -271,7 +271,7 @@ namespace thornberry
 
     void Avatar::updateSprite()
     {
-        const int cellIndex{ m_animCells.at(m_animIndex) - 1 };
+        const std::size_t cellIndex{ m_animCells.at(m_animIndex) - 1_st };
 
         m_sprite.setTextureRect(
             util::cellRect(cellIndex, m_sprite.getTexture().getSize(), { 64, 64 }));
