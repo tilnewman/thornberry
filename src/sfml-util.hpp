@@ -1051,21 +1051,23 @@ namespace util
         const sf::Vector2u & t_textureSize,
         const sf::Vector2i & t_cellSize)
     {
-        sf::IntRect rect;
+        sf::IntRect rect({ 0, 0 }, t_cellSize );
 
-        rect.position.x =
-            (static_cast<int>(t_cellIndex) % (static_cast<int>(t_textureSize.x) / t_cellSize.x)) *
-            t_cellSize.x;
+        if ((t_textureSize.x > 0) && (t_textureSize.y > 0) && (t_cellSize.x > 0) &&
+            (t_cellSize.y > 0))
+        {
+            rect.position.x = (static_cast<int>(t_cellIndex) %
+                               (static_cast<int>(t_textureSize.x) / t_cellSize.x)) *
+                              t_cellSize.x;
 
-        rect.position.y =
-            (static_cast<int>(t_cellIndex) / (static_cast<int>(t_textureSize.x) / t_cellSize.x)) *
-            t_cellSize.y;
+            rect.position.y = (static_cast<int>(t_cellIndex) /
+                               (static_cast<int>(t_textureSize.x) / t_cellSize.x)) *
+                              t_cellSize.y;
+        }
 
-        rect.size = t_cellSize;
         return rect;
     }
 
-    
     inline const sf::Color hexStringToSfmlColor(const std::string & t_colorStr)
     {
         if ((t_colorStr.size() != 6) && (t_colorStr.size() != 7))
@@ -1087,7 +1089,6 @@ namespace util
                           static_cast<std::uint8_t>(grn),
                           static_cast<std::uint8_t>(blu) };
     }
-
 
 } // namespace util
 

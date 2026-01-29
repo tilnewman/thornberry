@@ -41,7 +41,7 @@ namespace thornberry
     {}
 
     // we have to have this because it might get used by a container like std::vector
-    Avatar::Avatar(const Avatar&& t_otherAvatar)
+    Avatar::Avatar(const Avatar && t_otherAvatar)
         : m_image{ t_otherAvatar.m_image }
         , m_anim{ t_otherAvatar.m_anim }
         , m_direction{ t_otherAvatar.m_direction }
@@ -273,15 +273,9 @@ namespace thornberry
     {
         const int cellIndex{ m_animCells.at(m_animIndex) - 1 };
 
-        //TODO change to use sfml-util::cellRect() instead
-        const sf::Vector2i cellSize{ 64, 64 };
-        const sf::Vector2i cellCount{ sf::Vector2i{ m_sprite.getTexture().getSize() } / cellSize };
+        m_sprite.setTextureRect(
+            util::cellRect(cellIndex, m_sprite.getTexture().getSize(), { 64, 64 }));
 
-        const sf::IntRect textureRect{ { (cellIndex % cellCount.x) * cellSize.x,
-                                         (cellIndex / cellCount.x) * cellSize.y },
-                                       cellSize };
-
-        m_sprite.setTextureRect(textureRect);
         util::setOriginToCenter(m_sprite);
     }
 
