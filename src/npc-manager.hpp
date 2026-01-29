@@ -5,6 +5,7 @@
 //
 #include "npc.hpp"
 
+#include <optional>
 #include <vector>
 
 namespace thornberry
@@ -26,6 +27,12 @@ namespace thornberry
             const sf::Vector2f & t_mapToOffscreenOffset,
             sf::RenderTarget & t_target,
             sf::RenderStates t_states) const;
+
+      private:
+        const std::optional<sf::Vector2f> pickRandomSpawnPosition(const Context & t_context) const;
+
+        const std::optional<sf::Vector2f>
+            findRandomAvailableSpawnPosition(const Context & t_context) const;
 
       private:
         std::vector<Npc> m_npcs;
