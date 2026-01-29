@@ -9,7 +9,13 @@
 namespace thornberry
 {
 
-    Npc::Npc() {}
+    Npc::Npc(const AvatarImage t_image)
+        : Avatar(t_image)
+    {}
+
+    Npc::Npc(const Npc && t_otherNpc)
+        : Avatar(std::move(t_otherNpc))
+    {}
 
     void Npc::standFacingRandomDirection(const Context & t_context)
     {
@@ -17,7 +23,7 @@ namespace thornberry
             { AvatarDirection::Up,
               AvatarDirection::Down,
               AvatarDirection::Left,
-              AvatarDirection::Right}) };
+              AvatarDirection::Right }) };
 
         m_isAnimating = false;
         m_anim        = AvatarAnim::Walk;

@@ -3,6 +3,7 @@
 //
 #include "coordinator.hpp"
 
+#include "avatar-image-manager.hpp"
 #include "map-textures.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
@@ -54,6 +55,7 @@ namespace thornberry
 
         util::SfmlDefaults::instance().setup();
         MapTextureManager::instance().setup();
+        AvatarImageManager::instance().setup(m_config);
 
         m_randomUPtr                    = std::make_unique<util::Random>();
         m_soundPlayerUPtr               = std::make_unique<util::SoundPlayer>(*m_randomUPtr);
@@ -61,7 +63,7 @@ namespace thornberry
         m_screenLayoutUPtr              = std::make_unique<ScreenLayout>();
         m_levelUPtr                     = std::make_unique<IndirectLevel>();
         m_levelFileLoaderUPtr           = std::make_unique<LevelFileLoader>();
-        m_playerUPtr                    = std::make_unique<Player>();
+        m_playerUPtr                    = std::make_unique<Player>(AvatarImage::puck_female_light);
         m_fontManagerUPtr               = std::make_unique<FontManager>();
         m_framerateUPtr                 = std::make_unique<FrameRateDisplay>();
         m_pickupImageManagerUPtr        = std::make_unique<PickupImageManager>();
@@ -101,8 +103,8 @@ namespace thornberry
         m_screenLayoutUPtr->setup(m_config);
         m_fontManagerUPtr->setup(m_config);
         m_framerateUPtr->setup(*m_contextUPtr);
-        m_playerUPtr->setup(*m_contextUPtr, AvatarImage::puck_female_light);
-        
+        m_playerUPtr->setup(*m_contextUPtr);
+
         m_levelUPtr->load(*m_contextUPtr, "house.tmj", "thornberry.tmj");
     }
 

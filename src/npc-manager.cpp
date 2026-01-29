@@ -47,25 +47,24 @@ namespace thornberry
         const std::string levelName{ t_context.level.name() };
         if (levelName == "house.tmj")
         {
-            Npc & npc{ m_npcs.emplace_back() };
-            npc.setup(t_context, AvatarImage::leather_corporal2_dark);
+            Npc & npc{ m_npcs.emplace_back(AvatarImage::leather_corporal2_dark) };
+            npc.setup(t_context);
             npc.setPosition(pickRandomSpawnPosition());
             npc.standFacingRandomDirection(t_context);
         }
         else if (levelName == "thornberry.tmj")
         {
             const std::size_t npcCount{ 20 };
-            m_npcs.reserve(npcCount);
+            //m_npcs.reserve(npcCount);
 
             for (std::size_t counter{ 0 }; counter < npcCount; ++counter)
             {
-                Npc & npc{ m_npcs.emplace_back() };
+                const AvatarImage image{ static_cast<AvatarImage>(
+                    t_context.random.zeroToOneLessThan(
+                        static_cast<std::size_t>(AvatarImage::count))) };
 
-                npc.setup(
-                    t_context,
-                    static_cast<AvatarImage>(t_context.random.zeroToOneLessThan(
-                        static_cast<std::size_t>(AvatarImage::count))));
-
+                Npc & npc{ m_npcs.emplace_back(image) };
+                npc.setup(t_context);
                 npc.setPosition(pickRandomSpawnPosition());
                 npc.standFacingRandomDirection(t_context);
             }

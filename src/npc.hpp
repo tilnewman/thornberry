@@ -13,7 +13,9 @@ namespace thornberry
     class Npc : public Avatar
     {
       public:
-        Npc();
+        Npc(const AvatarImage t_image);
+        Npc(const Npc && t_otherNpc);
+        virtual ~Npc() override = default;
 
         void standFacingRandomDirection(const Context & t_context);
     };

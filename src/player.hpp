@@ -11,7 +11,9 @@ namespace thornberry
     class Player : public Avatar
     {
       public:
-        Player();
+        Player(const AvatarImage t_image);
+        Player(const Player && t_otherPlayer);
+        virtual ~Player() override = default;
 
         void handleEvent(const Context & t_context, const sf::Event & t_event);
     };

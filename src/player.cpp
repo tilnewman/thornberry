@@ -12,7 +12,13 @@
 namespace thornberry
 {
 
-    Player::Player() {}
+    Player::Player(const AvatarImage t_image)
+        : Avatar(t_image)
+    {}
+
+    Player::Player(const Player && t_otherPlayer)
+        : Avatar(std::move(t_otherPlayer))
+    {}
 
     void Player::handleEvent(const Context & t_context, const sf::Event & t_event)
     {

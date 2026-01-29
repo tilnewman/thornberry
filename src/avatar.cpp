@@ -4,6 +4,7 @@
 #include "avatar.hpp"
 
 #include "alpha-masking.hpp"
+#include "avatar-image-manager.hpp"
 #include "color-range.hpp"
 #include "config.hpp"
 #include "context.hpp"
@@ -21,8 +22,9 @@
 namespace thornberry
 {
 
-    Avatar::Avatar()
-        : m_anim{ AvatarAnim::None }
+    Avatar::Avatar(const AvatarImage t_image)
+        : m_image{ t_image }
+        , m_anim{ AvatarAnim::None }
         , m_direction{ AvatarDirection::Right }
         , m_isAnimating{ false }
         , m_animCells{}
@@ -30,27 +32,40 @@ namespace thornberry
         , m_elapsedSec{ 0.0f }
         , m_blinkElapsedSec{ 0.0f }
         , m_timeUntilBlinkSec{ 0.0f }
-        , m_texture{}
-        , m_sprite{ m_texture }
-        , m_shadowTexture{}
-        , m_shadowSprite{ m_shadowTexture }
+        , m_sprite{ AvatarImageManager::instance().acquire(t_image) }
+        , m_shadowSprite{ AvatarImageManager ::instance().shadowTexture() }
         , m_hurtEnableTimerSec{ 0.0f }
         , m_isHurtAnimating{ false }
         , m_hurtColorCycleTimeSec{ 0.0f }
         , m_isHurtColorWhite{ true }
     {}
 
-    void Avatar::setup(const Context & t_context, const AvatarImage t_image)
+    // we have to have this because it might get used by a container like std::vector
+    Avatar::Avatar(const Avatar&& t_otherAvatar)
+        : m_image{ t_otherAvatar.m_image }
+        , m_anim{ t_otherAvatar.m_anim }
+        , m_direction{ t_otherAvatar.m_direction }
+        , m_isAnimating{ t_otherAvatar.m_isAnimating }
+        , m_animCells{ t_otherAvatar.m_animCells }
+        , m_animIndex{ t_otherAvatar.m_animIndex }
+        , m_elapsedSec{ t_otherAvatar.m_elapsedSec }
+        , m_blinkElapsedSec{ t_otherAvatar.m_blinkElapsedSec }
+        , m_timeUntilBlinkSec{ t_otherAvatar.m_timeUntilBlinkSec }
+        , m_sprite{ t_otherAvatar.m_sprite }
+        , m_shadowSprite{ t_otherAvatar.m_shadowSprite }
+        , m_hurtEnableTimerSec{ t_otherAvatar.m_hurtEnableTimerSec }
+        , m_isHurtAnimating{ t_otherAvatar.m_isHurtAnimating }
+        , m_hurtColorCycleTimeSec{ t_otherAvatar.m_hurtColorCycleTimeSec }
+        , m_isHurtColorWhite{ t_otherAvatar.m_isHurtColorWhite }
     {
-        // setup the avatar image
-        m_image = t_image;
+        AvatarImageManager::instance().acquire(m_image);
+    }
 
-        util::TextureLoader::load(
-            m_texture,
-            (t_context.config.media_path / "image" / "avatar" / avatarImageToFilename(m_image)),
-            true);
+    Avatar::~Avatar() { AvatarImageManager::instance().release(m_image); }
 
-        m_sprite.setTexture(m_texture, true);
+    void Avatar::setup(const Context & t_context)
+    {
+        // setup the avatar sprite
         util::setOriginToCenter(m_sprite);
 
         const float avatarScale{ t_context.screen_layout.calScaleBasedOnResolution(
@@ -63,14 +78,7 @@ namespace thornberry
         // start the blink timer
         m_timeUntilBlinkSec = timeBetweenBlinks(t_context);
 
-        // setup the shadow image
-        AlphaMasking::loadAndApplyMasks(
-            m_shadowTexture,
-            (t_context.config.media_path / "image" / "avatar" / "avatar-shadow.png").string(),
-            t_context.config.background_mask_color,
-            true);
-
-        m_shadowSprite.setTexture(m_shadowTexture, true);
+        // setup the shadow sprite
         util::setOriginToCenter(m_shadowSprite);
         const float shadowScale{ avatarScale * 0.7f };
         m_shadowSprite.setScale({ shadowScale, shadowScale });
@@ -265,8 +273,9 @@ namespace thornberry
     {
         const int cellIndex{ m_animCells.at(m_animIndex) - 1 };
 
+        //TODO change to use sfml-util::cellRect() instead
         const sf::Vector2i cellSize{ 64, 64 };
-        const sf::Vector2i cellCount{ sf::Vector2i{ m_texture.getSize() } / cellSize };
+        const sf::Vector2i cellCount{ sf::Vector2i{ m_sprite.getTexture().getSize() } / cellSize };
 
         const sf::IntRect textureRect{ { (cellIndex % cellCount.x) * cellSize.x,
                                          (cellIndex / cellCount.x) * cellSize.y },

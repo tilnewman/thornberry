@@ -42,10 +42,12 @@ namespace thornberry
     class Avatar
     {
       public:
-        Avatar();
+        Avatar(const AvatarImage t_image);
+        Avatar(const Avatar && t_otherAvatar); // see comment in cpp
+        virtual ~Avatar();
 
         void startHurtAnimation();
-        void setup(const Context & t_context, const AvatarImage t_image);
+        void setup(const Context & t_context);
         void setPosition(const sf::Vector2f & t_position);
         void update(const Context & t_context, const float t_elapsedSec);
 
@@ -84,9 +86,7 @@ namespace thornberry
         float m_elapsedSec;
         float m_blinkElapsedSec;
         float m_timeUntilBlinkSec;
-        sf::Texture m_texture;
-        sf::Sprite m_sprite; // position is in map coordinates
-        sf::Texture m_shadowTexture;
+        sf::Sprite m_sprite;       // position is in map coordinates
         sf::Sprite m_shadowSprite; // position is in map coordinates
         float m_hurtEnableTimerSec;
         bool m_isHurtAnimating;
