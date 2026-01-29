@@ -3,7 +3,7 @@
 //
 // coordinator.hpp
 //
-#include "avatar.hpp"
+#include "player.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "font.hpp"
@@ -55,7 +55,7 @@ namespace thornberry
         std::unique_ptr<util::Random> m_randomUPtr;
         std::unique_ptr<IndirectLevel> m_levelUPtr;
         std::unique_ptr<LevelFileLoader> m_levelFileLoaderUPtr;
-        std::unique_ptr<Avatar> m_avatarUPtr;
+        std::unique_ptr<Player> m_playerUPtr;
         std::unique_ptr<FontManager> m_fontManagerUPtr;
         std::unique_ptr<FrameRateDisplay> m_framerateUPtr;
         std::unique_ptr<util::SoundPlayer> m_soundPlayerUPtr;

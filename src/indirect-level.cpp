@@ -3,13 +3,13 @@
 //
 #include "indirect-level.hpp"
 
-#include "avatar.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "level-file-loader.hpp"
 #include "lightning-anim.hpp"
 #include "music-particle.hpp"
 #include "music-player.hpp"
+#include "player.hpp"
 #include "screen-layout.hpp"
 #include "smoke-particle.hpp"
 #include "sound-player.hpp"
@@ -123,7 +123,7 @@ namespace thornberry
 
         const sf::Vector2f entryPos{ findEntryTransitionPositionFrom(t_filenameFrom) };
         setupOffscreenTileRange(t_context, entryPos);
-        t_context.avatar.setPosition(entryPos);
+        t_context.player.setPosition(entryPos);
 
         const sf::Vector2u renderTextureSize{ m_screenTileSize *
                                               sf::Vector2f{ m_offscreenTileRange.size } };
@@ -211,7 +211,7 @@ namespace thornberry
         t_context.lightning.draw(m_renderTexture, m_renderStates);
         t_context.musical_note.draw(m_renderTexture, m_renderStates);
 
-        t_context.avatar.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
+        t_context.player.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
 
         drawUpperLayers(m_renderTexture, m_renderStates);
         t_context.smoke.draw(m_renderTexture, m_renderStates);

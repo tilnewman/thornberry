@@ -3,10 +3,10 @@
 //
 #include "lightning-anim.hpp"
 
-#include "avatar.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "indirect-level.hpp"
+#include "player.hpp"
 #include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "texture-loader.hpp"
@@ -122,7 +122,7 @@ namespace thornberry
     void LightningAnimationManager::interactWithPlayer(
         const Context & t_context, const sf::FloatRect & t_offscreenRect)
     {
-        sf::FloatRect avatarOffscreenRect{ t_context.avatar.collisionMapRect() };
+        sf::FloatRect avatarOffscreenRect{ t_context.player.collisionMapRect() };
         avatarOffscreenRect.position += t_context.level.mapToOffscreenOffset();
 
         sf::FloatRect lightningOffscreenRect{ t_offscreenRect };
@@ -130,7 +130,7 @@ namespace thornberry
 
         if (avatarOffscreenRect.findIntersection(lightningOffscreenRect).has_value())
         {
-            t_context.avatar.startHurtAnimation();
+            t_context.player.startHurtAnimation();
             // TODO play hurt sfx and actually hurt the player
         }
     }

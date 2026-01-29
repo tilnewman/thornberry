@@ -3,10 +3,10 @@
 //
 #include "framerate.hpp"
 
-#include "avatar.hpp"
 #include "context.hpp"
 #include "font.hpp"
 #include "indirect-level.hpp"
+#include "player.hpp"
 #include "screen-layout.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
@@ -43,7 +43,7 @@ namespace thornberry
             str += ", ";
             str += t_context.level.name();
             str += ", ";
-            str += toString(t_context.avatar.image());
+            str += toString(t_context.player.image());
 
             m_text.setString(str);
             util::setOriginToPosition(m_text);

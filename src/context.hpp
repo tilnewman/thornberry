@@ -17,7 +17,7 @@ namespace thornberry
     class ScreenLayout;
     class IndirectLevel;
     class LevelFileLoader;
-    class Avatar;
+    class Player;
     class FontManager;
     class PickupImageManager;
     class SmokeParticleEffects;
@@ -34,7 +34,7 @@ namespace thornberry
             const util::Random & t_random,
             IndirectLevel & t_level,
             LevelFileLoader & t_levelFileLoader,
-            Avatar & t_avatar,
+            Player & t_player,
             FontManager & t_fontManager,
             util::SoundPlayer & t_soundPlayer,
             util::MusicPlayer & t_musicPlayer,
@@ -48,7 +48,7 @@ namespace thornberry
             , random{ t_random }
             , level{ t_level }
             , level_loader{ t_levelFileLoader }
-            , avatar{ t_avatar }
+            , player{ t_player }
             , font{ t_fontManager }
             , sfx{ t_soundPlayer }
             , music{ t_musicPlayer }
@@ -64,7 +64,7 @@ namespace thornberry
         const util::Random & random;
         IndirectLevel & level;
         LevelFileLoader & level_loader;
-        Avatar & avatar;
+        Player & player;
         FontManager & font;
         util::SoundPlayer & sfx;
         util::MusicPlayer & music;

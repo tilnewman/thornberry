@@ -44,12 +44,11 @@ namespace thornberry
       public:
         Avatar();
 
-        [[nodiscard]] inline AvatarImage image() const { return m_image; }
+        [[nodiscard]] inline AvatarImage image() const noexcept { return m_image; }
 
         void setup(const Context & t_context);
         void setPosition(const sf::Vector2f & t_position);
         void update(const Context & t_context, const float t_elapsedSec);
-        void handleEvent(const Context & t_context, const sf::Event & t_event);
 
         void draw(
             const sf::Vector2f & t_positionOffset,
@@ -60,7 +59,7 @@ namespace thornberry
 
         [[nodiscard]] const sf::FloatRect collisionMapRect() const;
 
-      private:
+      protected:
         void updateBlinking(const Context & t_context, const float t_elapsedSec);
         void updateWalkPosition(const Context & t_context, const float t_elapsedSec);
         void updateAnimation(const Context & t_context, const float t_elapsedSec);
@@ -70,14 +69,14 @@ namespace thornberry
 
         [[nodiscard]] static float timeBetweenFrames(const AvatarAnim t_anim);
         [[nodiscard]] float timeBetweenBlinks(const Context & t_context) const;
-        
+
         [[nodiscard]] static sf::Keyboard::Scancode
             scanCodeFromDirection(const AvatarDirection t_dir);
 
         [[nodiscard]] static const std::vector<int>
             animCells(const AvatarAnim t_anim, const AvatarDirection t_direction);
 
-      private:
+      protected:
         AvatarImage m_image;
         AvatarAnim m_anim;
         AvatarDirection m_direction;
@@ -88,10 +87,9 @@ namespace thornberry
         float m_blinkElapsedSec;
         float m_timeUntilBlinkSec;
         sf::Texture m_texture;
-        sf::Sprite m_sprite;
+        sf::Sprite m_sprite; // position is in map coordinates
         sf::Texture m_shadowTexture;
-        sf::Sprite m_shadowSprite;
-
+        sf::Sprite m_shadowSprite; // position is in map coordinates
         float m_hurtEnableTimerSec;
         bool m_isHurtAnimating;
         float m_hurtColorCycleTimeSec;

@@ -24,7 +24,7 @@ namespace thornberry
         , m_randomUPtr{}
         , m_levelUPtr{}
         , m_levelFileLoaderUPtr{}
-        , m_avatarUPtr{}
+        , m_playerUPtr{}
         , m_fontManagerUPtr{}
         , m_framerateUPtr{}
         , m_soundPlayerUPtr{}
@@ -60,7 +60,7 @@ namespace thornberry
         m_screenLayoutUPtr              = std::make_unique<ScreenLayout>();
         m_levelUPtr                     = std::make_unique<IndirectLevel>();
         m_levelFileLoaderUPtr           = std::make_unique<LevelFileLoader>();
-        m_avatarUPtr                    = std::make_unique<Avatar>();
+        m_playerUPtr                    = std::make_unique<Player>();
         m_fontManagerUPtr               = std::make_unique<FontManager>();
         m_framerateUPtr                 = std::make_unique<FrameRateDisplay>();
         m_pickupImageManagerUPtr        = std::make_unique<PickupImageManager>();
@@ -75,7 +75,7 @@ namespace thornberry
             *m_randomUPtr,
             *m_levelUPtr,
             *m_levelFileLoaderUPtr,
-            *m_avatarUPtr,
+            *m_playerUPtr,
             *m_fontManagerUPtr,
             *m_soundPlayerUPtr,
             *m_musicPlayerUPtr,
@@ -98,7 +98,7 @@ namespace thornberry
         m_screenLayoutUPtr->setup(m_config);
         m_fontManagerUPtr->setup(m_config);
         m_framerateUPtr->setup(*m_contextUPtr);
-        m_avatarUPtr->setup(*m_contextUPtr);
+        m_playerUPtr->setup(*m_contextUPtr);
 
         m_levelUPtr->load(*m_contextUPtr, "thornberry.tmj", "house.tmj");
     }
@@ -127,7 +127,7 @@ namespace thornberry
         m_levelUPtr.reset();
         m_levelFileLoaderUPtr.reset();
         m_screenLayoutUPtr.reset();
-        m_avatarUPtr.reset();
+        m_playerUPtr.reset();
         m_fontManagerUPtr.reset();
         m_framerateUPtr.reset();
         m_soundPlayerUPtr.reset();
@@ -167,14 +167,14 @@ namespace thornberry
             }
         }
 
-        m_avatarUPtr->handleEvent(*m_contextUPtr, t_event);
+        m_playerUPtr->handleEvent(*m_contextUPtr, t_event);
         m_levelUPtr->handleEvent(*m_contextUPtr, t_event);
     }
 
     void Coordinator::update(const float t_elapsedSec)
     {
         m_levelUPtr->update(*m_contextUPtr, t_elapsedSec);
-        m_avatarUPtr->update(*m_contextUPtr, t_elapsedSec);
+        m_playerUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_smokeParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_sparkleParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_lightningAnimationManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
