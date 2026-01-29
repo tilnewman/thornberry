@@ -23,6 +23,7 @@ namespace thornberry
         m_anim        = AvatarAnim::Walk;
         m_direction   = direction;
         setAnim();
+        m_anim = AvatarAnim::None;
     }
 
 } // namespace thornberry
