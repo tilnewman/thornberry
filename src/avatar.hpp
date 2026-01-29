@@ -43,13 +43,13 @@ namespace thornberry
     {
       public:
         Avatar(const AvatarImage t_image);
-        Avatar(const Avatar && t_otherAvatar); // see comment in cpp
+        Avatar(Avatar && t_otherAvatar); // see comment in cpp
         virtual ~Avatar();
 
         void startHurtAnimation();
         void setup(const Context & t_context);
         void setPosition(const sf::Vector2f & t_position);
-        void update(const Context & t_context, const float t_elapsedSec);
+        virtual void update(const Context & t_context, const float t_elapsedSec);
 
         void draw(
             const sf::Vector2f & t_positionOffset,

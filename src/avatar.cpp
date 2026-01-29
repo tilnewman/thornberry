@@ -41,7 +41,7 @@ namespace thornberry
     {}
 
     // we have to have this because it might get used by a container like std::vector
-    Avatar::Avatar(const Avatar && t_otherAvatar)
+    Avatar::Avatar(Avatar && t_otherAvatar)
         : m_image{ t_otherAvatar.m_image }
         , m_anim{ t_otherAvatar.m_anim }
         , m_direction{ t_otherAvatar.m_direction }

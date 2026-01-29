@@ -16,7 +16,7 @@ namespace thornberry
         : Avatar(t_image)
     {}
 
-    Player::Player(const Player && t_otherPlayer)
+    Player::Player(Player && t_otherPlayer)
         : Avatar(std::move(t_otherPlayer))
     {}
 

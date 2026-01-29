@@ -5,19 +5,39 @@
 //
 #include "avatar.hpp"
 
+#include <optional>
+
 namespace thornberry
 {
     struct Context;
+
+    //
+    enum class NpcAction
+    {
+        Wait,
+        Walk,
+        Thank,
+        Turn
+    };
 
     //
     class Npc : public Avatar
     {
       public:
         Npc(const AvatarImage t_image);
-        Npc(const Npc && t_otherNpc);
+        Npc(Npc && t_otherNpc);
         virtual ~Npc() override = default;
 
         void standFacingRandomDirection(const Context & t_context);
+        void update(const Context & t_context, const float t_elapsedSec) override;
+
+      private:
+        const std::optional<sf::Vector2f> pickRandomWalkTarget(const Context & t_context) const;
+
+      private:
+        NpcAction m_action;
+        float m_actionElpasedSec;
+        float m_timeUntilActionChangeSec;
     };
 
 } // namespace thornberry

@@ -12,7 +12,7 @@ namespace thornberry
     {
       public:
         Player(const AvatarImage t_image);
-        Player(const Player && t_otherPlayer);
+        Player(Player && t_otherPlayer);
         virtual ~Player() override = default;
 
         void handleEvent(const Context & t_context, const sf::Event & t_event);
