@@ -241,6 +241,10 @@ namespace thornberry
             {
                 parseRectLayer(t_context, layerJson, t_context.level.collisions());
             }
+            else if (layerName == "npc-walk-bounds")
+            {
+                parseRectLayer(t_context, layerJson, t_context.level.npcWalkBounds());
+            }
             else if (layerName == "transition")
             {
                 parseTransitionsLayer(t_context, layerJson);

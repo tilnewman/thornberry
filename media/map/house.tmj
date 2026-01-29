@@ -324,6 +324,83 @@
         }, 
         {
          "draworder":"topdown",
+         "id":24,
+         "name":"npc-walk-bounds",
+         "objects":[
+                {
+                 "height":120,
+                 "id":67,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":440,
+                 "x":80,
+                 "y":160
+                }, 
+                {
+                 "height":320,
+                 "id":68,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":160,
+                 "x":80,
+                 "y":160
+                }, 
+                {
+                 "height":160,
+                 "id":69,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":440,
+                 "x":80,
+                 "y":360
+                }, 
+                {
+                 "height":360,
+                 "id":70,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":80,
+                 "x":440,
+                 "y":160
+                }, 
+                {
+                 "height":120,
+                 "id":71,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":320,
+                 "x":440,
+                 "y":280
+                }, 
+                {
+                 "height":360,
+                 "id":72,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":40,
+                 "x":360,
+                 "y":160
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":false,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":18,
          "name":"animation",
          "objects":[
@@ -722,8 +799,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":24,
- "nextobjectid":67,
+ "nextlayerid":25,
+ "nextobjectid":73,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

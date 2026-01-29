@@ -96,6 +96,7 @@ namespace thornberry
         [[nodiscard]] std::vector<sf::FloatRect> & collisions() { return m_collisions; }
         [[nodiscard]] std::vector<Transition> & transitions() { return m_transitions; }
         [[nodiscard]] std::vector<WalkSound> & walkSounds() { return m_walkSounds; }
+        [[nodiscard]] std::vector<sf::FloatRect> & npcWalkBounds() { return m_npcWalkBounds; }
 
         [[nodiscard]] const sf::FloatRect offscreenRect() const { return m_offscreenDrawRect; }
 
@@ -169,9 +170,10 @@ namespace thornberry
         sf::Vector2i m_textureTileSize;
         sf::Vector2f m_screenTileSize;
         sf::Vector2f m_mapScreenPosOffset;
-        std::vector<sf::FloatRect> m_collisions;
-        std::vector<Transition> m_transitions;
-        std::vector<WalkSound> m_walkSounds;
+        std::vector<sf::FloatRect> m_collisions;    // in map coordinates
+        std::vector<Transition> m_transitions;      // in map coordinates
+        std::vector<WalkSound> m_walkSounds;        // in map coordinates
+        std::vector<sf::FloatRect> m_npcWalkBounds; // in map coordinates
         std::vector<std::unique_ptr<IIndirectTileLayer>> m_lowerTileLayers;
         std::vector<std::unique_ptr<IIndirectTileLayer>> m_upperTileLayers;
 

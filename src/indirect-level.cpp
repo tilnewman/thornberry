@@ -33,6 +33,7 @@ namespace thornberry
         , m_collisions{}
         , m_transitions{}
         , m_walkSounds{}
+        , m_npcWalkBounds{}
         , m_lowerTileLayers{}
         , m_upperTileLayers{}
         , m_offscreenTileRange{}
@@ -55,6 +56,7 @@ namespace thornberry
         m_collisions.reserve(512);
         m_transitions.reserve(8);
         m_walkSounds.reserve(32);
+        m_npcWalkBounds.reserve(32);
     }
 
     void IndirectLevel::reset(const Context & t_context)
@@ -66,6 +68,7 @@ namespace thornberry
         m_collisions.clear();
         m_transitions.clear();
         m_walkSounds.clear();
+        m_npcWalkBounds.clear();
 
         m_isMapRectBigEnoughHoriz = false;
         m_isMapRectBigEnoughVert  = false;

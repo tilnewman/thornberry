@@ -1795,7 +1795,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -1911,6 +1911,94 @@
         }, 
         {
          "draworder":"topdown",
+         "id":43,
+         "name":"npc-walk-bounds",
+         "objects":[
+                {
+                 "height":440,
+                 "id":120,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":640,
+                 "x":1960,
+                 "y":2400
+                }, 
+                {
+                 "height":360,
+                 "id":121,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":320,
+                 "x":1960,
+                 "y":2800
+                }, 
+                {
+                 "height":240,
+                 "id":122,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":760,
+                 "x":2240,
+                 "y":2920
+                }, 
+                {
+                 "height":200,
+                 "id":123,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":680,
+                 "x":2320,
+                 "y":2760
+                }, 
+                {
+                 "height":320,
+                 "id":124,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":360,
+                 "x":2640,
+                 "y":2400
+                }, 
+                {
+                 "height":360,
+                 "id":125,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":240,
+                 "x":2560,
+                 "y":2440
+                }, 
+                {
+                 "height":120,
+                 "id":126,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":160,
+                 "x":2840,
+                 "y":2680
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":29,
          "name":"transition",
          "objects":[
@@ -1969,8 +2057,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":43,
- "nextobjectid":120,
+ "nextlayerid":44,
+ "nextobjectid":127,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
