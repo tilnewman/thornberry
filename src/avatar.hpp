@@ -44,8 +44,7 @@ namespace thornberry
       public:
         Avatar();
 
-        [[nodiscard]] inline AvatarImage image() const noexcept { return m_image; }
-
+        void startHurtAnimation();
         void setup(const Context & t_context);
         void setPosition(const sf::Vector2f & t_position);
         void update(const Context & t_context, const float t_elapsedSec);
@@ -55,9 +54,8 @@ namespace thornberry
             sf::RenderTarget & t_target,
             sf::RenderStates t_states) const;
 
-        void startHurtAnimation();
-
         [[nodiscard]] const sf::FloatRect collisionMapRect() const;
+        [[nodiscard]] inline AvatarImage image() const noexcept { return m_image; }
 
       protected:
         void updateBlinking(const Context & t_context, const float t_elapsedSec);
@@ -67,8 +65,9 @@ namespace thornberry
         void setAnim();
         void updateSprite();
 
-        [[nodiscard]] static float timeBetweenFrames(const AvatarAnim t_anim);
         [[nodiscard]] float timeBetweenBlinks(const Context & t_context) const;
+
+        [[nodiscard]] static float timeBetweenFrames(const AvatarAnim t_anim);
 
         [[nodiscard]] static sf::Keyboard::Scancode
             scanCodeFromDirection(const AvatarDirection t_dir);
