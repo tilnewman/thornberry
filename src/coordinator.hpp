@@ -3,7 +3,6 @@
 //
 // coordinator.hpp
 //
-#include "player.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "font.hpp"
@@ -13,7 +12,9 @@
 #include "lightning-anim.hpp"
 #include "music-particle.hpp"
 #include "music-player.hpp"
+#include "npc-manager.hpp"
 #include "pickup-image-manager.hpp"
+#include "player.hpp"
 #include "random.hpp"
 #include "screen-layout.hpp"
 #include "smoke-particle.hpp"
@@ -65,6 +66,7 @@ namespace thornberry
         std::unique_ptr<SparkleParticleEffects> m_sparkleParticleEffectsUPtr;
         std::unique_ptr<LightningAnimationManager> m_lightningAnimationManagerUPtr;
         std::unique_ptr<MusicParticleManager> m_musicParticleManagerUPtr;
+        std::unique_ptr<NpcManager> m_npcManagerUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 

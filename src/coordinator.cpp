@@ -34,6 +34,7 @@ namespace thornberry
         , m_sparkleParticleEffectsUPtr{}
         , m_lightningAnimationManagerUPtr{}
         , m_musicParticleManagerUPtr{}
+        , m_npcManagerUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -68,6 +69,7 @@ namespace thornberry
         m_sparkleParticleEffectsUPtr    = std::make_unique<SparkleParticleEffects>();
         m_lightningAnimationManagerUPtr = std::make_unique<LightningAnimationManager>();
         m_musicParticleManagerUPtr      = std::make_unique<MusicParticleManager>();
+        m_npcManagerUPtr                = std::make_unique<NpcManager>();
 
         m_contextUPtr = std::make_unique<Context>(
             m_config,
@@ -83,7 +85,8 @@ namespace thornberry
             *m_smokeParticleEffectsUPtr,
             *m_sparkleParticleEffectsUPtr,
             *m_lightningAnimationManagerUPtr,
-            *m_musicParticleManagerUPtr);
+            *m_musicParticleManagerUPtr,
+            *m_npcManagerUPtr);
 
         m_soundPlayerUPtr->setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayerUPtr->loadAll();
@@ -99,6 +102,7 @@ namespace thornberry
         m_fontManagerUPtr->setup(m_config);
         m_framerateUPtr->setup(*m_contextUPtr);
         m_playerUPtr->setup(*m_contextUPtr);
+        m_npcManagerUPtr->setup(*m_contextUPtr);
 
         m_levelUPtr->load(*m_contextUPtr, "thornberry.tmj", "house.tmj");
     }
@@ -137,6 +141,7 @@ namespace thornberry
         m_sparkleParticleEffectsUPtr.reset();
         m_lightningAnimationManagerUPtr.reset();
         m_musicParticleManagerUPtr.reset();
+        m_npcManagerUPtr.reset();
 
         MapTextureManager::instance().teardown();
         util::SfmlDefaults::instance().teardown();
@@ -175,6 +180,7 @@ namespace thornberry
     {
         m_levelUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_playerUPtr->update(*m_contextUPtr, t_elapsedSec);
+        m_npcManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_smokeParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_sparkleParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_lightningAnimationManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
