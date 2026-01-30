@@ -40,7 +40,7 @@ namespace thornberry
         void resetDropSprite();
 
         AcidSpoutState state;
-        sf::FloatRect map_rect;
+        sf::FloatRect offscreen_rect;
         sf::Sprite spout_sprite;
         sf::Sprite drop_sprite;
         sf::Sprite splat_sprite;
@@ -53,6 +53,7 @@ namespace thornberry
         bool is_spout_animating;
         float drop_speed_initial;
         float drop_speed;
+        float interact_elapsed_sec;
     };
 
     //
@@ -68,6 +69,10 @@ namespace thornberry
         void add(const Context & t_context, const sf::FloatRect & t_mapRect);
         void move(const sf::Vector2f & t_move);
         inline void clear() { m_animations.clear(); }
+
+      private:
+        void interactWithPlayer(
+            const Context & t_context, const sf::FloatRect & t_offscreenRect) const;
 
       private:
         sf::Texture m_spoutTexture;

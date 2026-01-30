@@ -6,6 +6,7 @@
 #include "config.hpp"
 #include "context.hpp"
 #include "indirect-level.hpp"
+#include "player.hpp"
 #include "random.hpp"
 #include "sfml-util.hpp"
 #include "texture-loader.hpp"
@@ -22,7 +23,7 @@ namespace thornberry
         const sf::Vector2i & t_spoutCellSize,
         const sf::Vector2i & t_splatCellSize)
         : state{ AcidSpoutState::Wait }
-        , map_rect{ t_mapRect }
+        , offscreen_rect{ t_mapRect }
         , spout_sprite{ t_spoutTexture }
         , drop_sprite{ t_dropTexture }
         , splat_sprite{ t_splatTexture }
@@ -35,6 +36,7 @@ namespace thornberry
         , is_spout_animating{ false }
         , drop_speed_initial{ 20.0f }
         , drop_speed{ drop_speed_initial }
+        , interact_elapsed_sec{ 0.0f }
     {
         // spout sprite
         spout_sprite.setTextureRect(
@@ -63,7 +65,7 @@ namespace thornberry
 
     void AcidSpoutAnimation::resetDropSprite()
     {
-        drop_sprite.setPosition({ drop_sprite.getPosition().x, map_rect.position.y });
+        drop_sprite.setPosition({ drop_sprite.getPosition().x, offscreen_rect.position.y });
     }
 
     //
@@ -104,17 +106,23 @@ namespace thornberry
     {
         for (AcidSpoutAnimation & anim : m_animations)
         {
-            anim.map_rect.position += t_move;
+            anim.offscreen_rect.position += t_move;
             anim.spout_sprite.move(t_move);
             anim.drop_sprite.move(t_move);
             anim.splat_sprite.move(t_move);
         }
     }
 
-    void AcidSpoutAnimationManager::update(const Context &, const float t_elapsedSec)
+    void AcidSpoutAnimationManager::update(const Context & t_context, const float t_elapsedSec)
     {
         for (AcidSpoutAnimation & anim : m_animations)
         {
+            // only track time and drip if it's visible
+            if (!t_context.level.offscreenRect().findIntersection(anim.offscreen_rect).has_value())
+            {
+                continue;
+            }
+
             if (AcidSpoutState::Wait == anim.state)
             {
                 anim.wait_elapsed_sec += t_elapsedSec;
@@ -149,14 +157,22 @@ namespace thornberry
                     }
                 }
 
-                // move the drop sprite
                 anim.drop_sprite.move({ 0.0f, (anim.drop_speed * t_elapsedSec) });
-                anim.drop_speed *= 1.05f;
-                if (util::bottom(anim.drop_sprite) > util::bottom(anim.map_rect))
+                anim.drop_speed += (10.0f * anim.drop_speed * t_elapsedSec);
+                if (util::bottom(anim.drop_sprite) > util::bottom(anim.offscreen_rect))
                 {
                     anim.state = AcidSpoutState::Splat;
                     anim.resetDropSprite();
                     anim.drop_speed = anim.drop_speed_initial;
+                }
+                else
+                {
+                    anim.interact_elapsed_sec += t_elapsedSec;
+                    if (anim.interact_elapsed_sec > 0.5f)
+                    {
+                        anim.interact_elapsed_sec = 0.0f;
+                        interactWithPlayer(t_context, anim.offscreen_rect);
+                    }
                 }
             }
             else if (AcidSpoutState::Splat == anim.state)
@@ -177,6 +193,13 @@ namespace thornberry
                     anim.splat_sprite.setTextureRect(
                         util::cellRect(
                             anim.splat_frame_index, m_splatTexture.getSize(), m_splatCellSize));
+                }
+
+                anim.interact_elapsed_sec += t_elapsedSec;
+                if (anim.interact_elapsed_sec > 0.5f)
+                {
+                    anim.interact_elapsed_sec = 0.0f;
+                    interactWithPlayer(t_context, anim.offscreen_rect);
                 }
             }
         }
@@ -210,6 +233,22 @@ namespace thornberry
             t_context.random.fromTo(2.75f, 4.5f),
             m_spoutCellSize,
             m_splatCellSize);
+    }
+
+    void AcidSpoutAnimationManager::interactWithPlayer(
+        const Context & t_context, const sf::FloatRect & t_offscreenRect) const
+    {
+        sf::FloatRect avatarOffscreenRect{ t_context.player.collisionMapRect() };
+        avatarOffscreenRect.position += t_context.level.mapToOffscreenOffset();
+
+        sf::FloatRect acidOffscreenRect{ t_offscreenRect };
+        acidOffscreenRect.size.y *= 0.4f;
+
+        if (avatarOffscreenRect.findIntersection(acidOffscreenRect).has_value())
+        {
+            t_context.player.startHurtAnimation();
+            // TODO play hurt sfx and actually hurt the player
+        }
     }
 
 } // namespace thornberry
