@@ -18,12 +18,14 @@ namespace thornberry
         const Context &,
         const sf::Texture & t_texture,
         const sf::FloatRect & t_offscreenRect,
-        const sf::Vector2i & t_cellSize)
+        const sf::Vector2i & t_cellSize,
+        const float t_timeBetweenDischarge)
         : sprite{ t_texture }
         , elapsed_sec{ 0.0f }
         , state{ LightningState::Wait }
         , offscreen_rect{ t_offscreenRect }
         , frame_index{ 0 }
+        , time_between_discharge{ t_timeBetweenDischarge }
     {
         sprite.setTextureRect({ { 0, 0 }, t_cellSize });
         util::scaleAndCenterInside(sprite, t_offscreenRect);
@@ -73,7 +75,7 @@ namespace thornberry
 
             if (LightningState::Wait == anim.state)
             {
-                if (anim.elapsed_sec > 3.0f)
+                if (anim.elapsed_sec > anim.time_between_discharge)
                 {
                     anim.elapsed_sec = 0.0f;
                     anim.state       = LightningState::Discharge;
@@ -107,7 +109,8 @@ namespace thornberry
     void LightningAnimationManager::add(
         const Context & t_context, const sf::FloatRect & t_offscreenRect)
     {
-        m_animations.emplace_back(t_context, m_texture, t_offscreenRect, m_cellSize);
+        m_animations.emplace_back(
+            t_context, m_texture, t_offscreenRect, m_cellSize, t_context.random.fromTo(2.5f, 3.5f));
     }
 
     void LightningAnimationManager::move(const sf::Vector2f & t_move)

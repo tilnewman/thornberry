@@ -29,13 +29,15 @@ namespace thornberry
             const Context & t_context,
             const sf::Texture & t_texture,
             const sf::FloatRect & t_offscreenRect,
-            const sf::Vector2i & t_cellSize);
+            const sf::Vector2i & t_cellSize,
+            const float t_timeBetweenDischarge);
 
         sf::Sprite sprite;
         float elapsed_sec;
         LightningState state;
         sf::FloatRect offscreen_rect;
         std::size_t frame_index;
+        float time_between_discharge;
     };
 
     //
