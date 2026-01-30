@@ -6,6 +6,7 @@
 #include "avatar.hpp"
 
 #include <optional>
+#include <vector>
 
 namespace thornberry
 {
@@ -40,6 +41,7 @@ namespace thornberry
         NpcAction m_action;
         float m_actionElpasedSec;
         float m_timeUntilActionChangeSec;
+        std::vector<AvatarDirection> m_walkDirections;
     };
 
 } // namespace thornberry

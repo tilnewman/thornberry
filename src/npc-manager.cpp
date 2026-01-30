@@ -47,7 +47,7 @@ namespace thornberry
         // }
         // else if (levelName == "thornberry.tmj")
         {
-            const std::size_t npcCount{ 100 };
+            const std::size_t npcCount{ 20 };
             m_npcs.reserve(npcCount);
 
             for (std::size_t counter{ 0 }; counter < npcCount; ++counter)

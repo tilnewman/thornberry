@@ -22,6 +22,7 @@ namespace thornberry
         , m_action{ NpcAction::Wait }
         , m_actionElpasedSec{ 0.0f }
         , m_timeUntilActionChangeSec{ 0.0f }
+        , m_walkDirections{}
     {}
 
     Npc::Npc(Npc && t_otherNpc)
@@ -29,6 +30,7 @@ namespace thornberry
         , m_action{ t_otherNpc.m_action }
         , m_actionElpasedSec{ t_otherNpc.m_actionElpasedSec }
         , m_timeUntilActionChangeSec{ t_otherNpc.m_timeUntilActionChangeSec }
+        , m_walkDirections{ t_otherNpc.m_walkDirections }
     {}
 
     void Npc::operator=(const Npc & t_otherNpc)
@@ -37,6 +39,7 @@ namespace thornberry
         m_action                   = t_otherNpc.m_action;
         m_actionElpasedSec         = t_otherNpc.m_actionElpasedSec;
         m_timeUntilActionChangeSec = t_otherNpc.m_timeUntilActionChangeSec;
+        m_walkDirections           = t_otherNpc.m_walkDirections;
     }
 
     void Npc::standFacingRandomDirection(const Context & t_context)
@@ -83,16 +86,48 @@ namespace thornberry
             }
             else // Walk
             {
-                // TODO
-                standFacingRandomDirection(t_context);
+                const auto walkTargetOpt{ pickRandomWalkTarget(t_context) };
+                if (!walkTargetOpt.has_value())
+                {
+                    // if pickRandomTarget() fails, just face a new direction
+                    standFacingRandomDirection(t_context);
+                    return;
+                }
 
-                // const auto walkTargetOpt{ pickRandomWalkTarget(t_context) };
-                // if (!walkTargetOpt.has_value())
-                //{
-                //     // if pickRandomTarget() fails, just face a new direction
-                //     standFacingRandomDirection(t_context);
-                //     return;
-                // }
+                // only walk for a short amount of time
+                m_timeUntilActionChangeSec = t_context.random.fromTo(0.3f, 2.0f);
+
+                const sf::Vector2f npcPosition{ util::center(collisionMapRect()) };
+                m_walkDirections.clear();
+                if (walkTargetOpt->x < npcPosition.x)
+                {
+                    m_walkDirections.push_back(AvatarDirection::Left);
+                }
+                else if (walkTargetOpt->x > npcPosition.x)
+                {
+                    m_walkDirections.push_back(AvatarDirection::Right);
+                }
+
+                if (walkTargetOpt->y < npcPosition.y)
+                {
+                    m_walkDirections.push_back(AvatarDirection::Up);
+                }
+                else if (walkTargetOpt->y < npcPosition.y)
+                {
+                    m_walkDirections.push_back(AvatarDirection::Down);
+                }
+
+                if (m_walkDirections.empty())
+                {
+                    m_walkDirections.push_back(AvatarDirection::Left);
+                }
+
+                t_context.random.shuffle(m_walkDirections);
+
+                m_isAnimating = true;
+                m_anim        = AvatarAnim::Walk;
+                m_direction   = m_walkDirections.front();
+                setAnim();
             }
         }
     }
@@ -134,28 +169,37 @@ namespace thornberry
         const float walkAmount{ t_context.screen_layout.calScaleBasedOnResolution(
             t_context, (t_context.config.avatar_walk_speed * t_elapsedSec)) };
 
-        if (AvatarDirection::Up == m_direction)
+        const auto isWalkingInDirection = [&](const AvatarDirection dir) 
+            {
+            return (
+                std::find(
+                    std::begin(m_walkDirections),
+                    std::end(m_walkDirections),
+                    dir) != std::end(m_walkDirections));
+            };
+
+        if (isWalkingInDirection(AvatarDirection::Up))
         {
             const sf::Vector2f move{ 0.0f, -walkAmount };
             m_sprite.move(move);
             m_shadowSprite.move(move);
         }
 
-        if (AvatarDirection::Down == m_direction)
+        if (isWalkingInDirection(AvatarDirection::Down))
         {
             const sf::Vector2f move{ 0.0f, walkAmount };
             m_sprite.move(move);
             m_shadowSprite.move(move);
         }
 
-        if (AvatarDirection::Left == m_direction)
+        if (isWalkingInDirection(AvatarDirection::Left))
         {
             const sf::Vector2f move{ -walkAmount, 0.0f };
             m_sprite.move(move);
             m_shadowSprite.move(move);
         }
 
-        if (AvatarDirection::Right == m_direction)
+        if (isWalkingInDirection(AvatarDirection::Right))
         {
             const sf::Vector2f move{ walkAmount, 0.0f };
             m_sprite.move(move);
