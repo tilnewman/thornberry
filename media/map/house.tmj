@@ -425,28 +425,6 @@
                  "width":13.3605306045267,
                  "x":302.856037995013,
                  "y":256.476194816959
-                }, 
-                {
-                 "height":120,
-                 "id":73,
-                 "name":"acid-trap",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":36,
-                 "x":604,
-                 "y":177
-                }, 
-                {
-                 "height":120,
-                 "id":74,
-                 "name":"acid-trap",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":36,
-                 "x":641,
-                 "y":177
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -811,7 +789,7 @@
          "y":0
         }],
  "nextlayerid":25,
- "nextobjectid":75,
+ "nextobjectid":76,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
