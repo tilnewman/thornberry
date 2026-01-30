@@ -191,8 +191,7 @@ namespace thornberry
 
         for (const Npc & npc : m_npcs)
         {
-            // check if npc == t_npc (not perfect but close enough)
-            if (npc.collisionMapRect() == t_npc.collisionMapRect())
+            if (& npc == & t_npc)
             {
                 continue;
             }
