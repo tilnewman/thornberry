@@ -221,10 +221,10 @@ namespace thornberry
         t_context.lightning.draw(m_renderTexture, m_renderStates);
         t_context.musical_note.draw(m_renderTexture, m_renderStates);
         t_context.npc.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
-        
+        t_context.acid_spout.draw(m_renderTexture, m_renderStates);
+
         t_context.player.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
 
-        t_context.acid_spout.draw(m_renderTexture, m_renderStates);
         drawUpperLayers(m_renderTexture, m_renderStates);
         t_context.smoke.draw(m_renderTexture, m_renderStates);
 

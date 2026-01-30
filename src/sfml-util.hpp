@@ -1054,7 +1054,8 @@ namespace util
         sf::IntRect rect({ 0, 0 }, t_cellSize );
 
         if ((t_textureSize.x > 0) && (t_textureSize.y > 0) && (t_cellSize.x > 0) &&
-            (t_cellSize.y > 0))
+            (t_cellSize.y > 0) && (static_cast<int>(t_textureSize.x) >= t_cellSize.x) &&
+            (static_cast<int>(t_textureSize.y) >= t_cellSize.y))
         {
             rect.position.x = (static_cast<int>(t_cellIndex) %
                                (static_cast<int>(t_textureSize.x) / t_cellSize.x)) *

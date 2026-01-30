@@ -19,7 +19,8 @@ namespace thornberry
         const sf::Texture & t_dropTexture,
         const sf::Texture & t_splatTexture,
         const float t_timeBetweenDropSec,
-        const sf::Vector2i & t_spoutCellSize)
+        const sf::Vector2i & t_spoutCellSize,
+        const sf::Vector2i & t_splatCellSize)
         : state{ AcidSpoutState::Wait }
         , map_rect{ t_mapRect }
         , spout_sprite{ t_spoutTexture }
@@ -30,13 +31,39 @@ namespace thornberry
         , time_between_drop_sec{ t_timeBetweenDropSec }
         , splat_elapsed_sec{ 0.0f }
         , spout_frame_index{ 0 }
+        , splat_frame_index{ 0 }
         , is_spout_animating{ false }
+        , drop_speed_initial{ 20.0f }
+        , drop_speed{ drop_speed_initial }
     {
+        // spout sprite
         spout_sprite.setTextureRect(
             util::cellRect(spout_frame_index, t_spoutTexture.getSize(), t_spoutCellSize));
 
         util::fitAndCenterInside(spout_sprite, t_mapRect);
         spout_sprite.setPosition({ spout_sprite.getPosition().x, t_mapRect.position.y });
+
+        // drop sprite
+        util::fitAndCenterInside(drop_sprite, t_mapRect);
+        resetDropSprite();
+
+        // splat sprite
+        splat_sprite.setTextureRect(
+            util::cellRect(splat_frame_index, t_splatTexture.getSize(), t_splatCellSize));
+
+        sf::FloatRect splatSizeRect{ t_mapRect };
+        splatSizeRect.position.x -= (splatSizeRect.size.x * 0.5f);
+        splatSizeRect.size.x *= 2.0f;
+        util::fitAndCenterInside(splat_sprite, splatSizeRect);
+
+        splat_sprite.setPosition(
+            { splat_sprite.getPosition().x,
+              (util::bottom(splatSizeRect) - splat_sprite.getGlobalBounds().size.y) });
+    }
+
+    void AcidSpoutAnimation::resetDropSprite()
+    {
+        drop_sprite.setPosition({ drop_sprite.getPosition().x, map_rect.position.y });
     }
 
     //
@@ -114,9 +141,6 @@ namespace thornberry
                         {
                             anim.spout_frame_index  = 0;
                             anim.is_spout_animating = false;
-
-                            // TODO remove after testing
-                            anim.state = AcidSpoutState::Wait;
                         }
 
                         anim.spout_sprite.setTextureRect(
@@ -126,12 +150,34 @@ namespace thornberry
                 }
 
                 // move the drop sprite
-                // TODO
+                anim.drop_sprite.move({ 0.0f, (anim.drop_speed * t_elapsedSec) });
+                anim.drop_speed *= 1.05f;
+                if (util::bottom(anim.drop_sprite) > util::bottom(anim.map_rect))
+                {
+                    anim.state = AcidSpoutState::Splat;
+                    anim.resetDropSprite();
+                    anim.drop_speed = anim.drop_speed_initial;
+                }
             }
             else if (AcidSpoutState::Splat == anim.state)
             {
-                // TODO
-                anim.wait_elapsed_sec = 0.0f;
+                anim.splat_elapsed_sec += t_elapsedSec;
+                const float timeBetweenSplatFramesSec{ 0.1f };
+                if (anim.splat_elapsed_sec > timeBetweenSplatFramesSec)
+                {
+                    anim.splat_elapsed_sec -= timeBetweenSplatFramesSec;
+
+                    if (++anim.splat_frame_index >= 7)
+                    {
+                        anim.splat_frame_index = 0;
+                        anim.state             = AcidSpoutState::Wait;
+                        anim.wait_elapsed_sec  = 0.0f;
+                    }
+
+                    anim.splat_sprite.setTextureRect(
+                        util::cellRect(
+                            anim.splat_frame_index, m_splatTexture.getSize(), m_splatCellSize));
+                }
             }
         }
     }
@@ -141,8 +187,6 @@ namespace thornberry
     {
         for (const AcidSpoutAnimation & anim : m_animations)
         {
-            t_target.draw(anim.spout_sprite, t_states);
-
             if (AcidSpoutState::Drip == anim.state)
             {
                 t_target.draw(anim.drop_sprite, t_states);
@@ -151,6 +195,8 @@ namespace thornberry
             {
                 t_target.draw(anim.splat_sprite, t_states);
             }
+
+            t_target.draw(anim.spout_sprite, t_states);
         }
     }
 
@@ -162,7 +208,8 @@ namespace thornberry
             m_dropTexture,
             m_splatTexture,
             t_context.random.fromTo(2.75f, 4.5f),
-            m_spoutCellSize);
+            m_spoutCellSize,
+            m_splatCellSize);
     }
 
 } // namespace thornberry

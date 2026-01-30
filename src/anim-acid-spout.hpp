@@ -34,7 +34,10 @@ namespace thornberry
             const sf::Texture & t_dropTexture,
             const sf::Texture & t_splatTexture,
             const float t_timeBetweenDropSec,
-            const sf::Vector2i & t_spoutCellSize);
+            const sf::Vector2i & t_spoutCellSize,
+            const sf::Vector2i & t_splatCellSize);
+
+        void resetDropSprite();
 
         AcidSpoutState state;
         sf::FloatRect map_rect;
@@ -46,7 +49,10 @@ namespace thornberry
         float time_between_drop_sec;
         float splat_elapsed_sec;
         std::size_t spout_frame_index;
+        std::size_t splat_frame_index;
         bool is_spout_animating;
+        float drop_speed_initial;
+        float drop_speed;
     };
 
     //
@@ -64,9 +70,9 @@ namespace thornberry
         inline void clear() { m_animations.clear(); }
 
       private:
-        sf::Texture  m_spoutTexture;
-        sf::Texture  m_dropTexture;
-        sf::Texture  m_splatTexture;
+        sf::Texture m_spoutTexture;
+        sf::Texture m_dropTexture;
+        sf::Texture m_splatTexture;
         sf::Vector2i m_spoutCellSize;
         sf::Vector2i m_splatCellSize;
         std::vector<AcidSpoutAnimation> m_animations;
