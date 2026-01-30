@@ -186,10 +186,10 @@ namespace thornberry
 
         bool m_isMapRectBigEnoughHoriz;
         bool m_isMapRectBigEnoughVert;
-        sf::FloatRect m_moveMapRectLeft;
-        sf::FloatRect m_moveMapRectRight;
-        sf::FloatRect m_moveMapRectUp;
-        sf::FloatRect m_moveMapRectDown;
+        sf::FloatRect m_moveScreenRectLeft;
+        sf::FloatRect m_moveScreenRectRight;
+        sf::FloatRect m_moveScreenRectUp;
+        sf::FloatRect m_moveScreenRectDown;
 
         std::string m_walkSoundEffectName;
     };

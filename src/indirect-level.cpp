@@ -45,10 +45,10 @@ namespace thornberry
         , m_backgroundRectangle{}
         , m_isMapRectBigEnoughHoriz{ false }
         , m_isMapRectBigEnoughVert{ false }
-        , m_moveMapRectLeft{}
-        , m_moveMapRectRight{}
-        , m_moveMapRectUp{}
-        , m_moveMapRectDown{}
+        , m_moveScreenRectLeft{}
+        , m_moveScreenRectRight{}
+        , m_moveScreenRectUp{}
+        , m_moveScreenRectDown{}
         , m_walkSoundEffectName{}
     {
         // harmless guesses based on what I know is in typical map files
@@ -74,31 +74,35 @@ namespace thornberry
         m_isMapRectBigEnoughHoriz = false;
         m_isMapRectBigEnoughVert  = false;
 
-        const sf::FloatRect mapRect{ t_context.screen_layout.mapRect() };
-        m_mapScreenPosOffset = mapRect.position;
-        m_offscreenDrawRect  = { { 0.0f, 0.0f }, mapRect.size };
+        const sf::FloatRect screenRect{ t_context.screen_layout.mapRect() };
+        m_mapScreenPosOffset = screenRect.position;
+        m_offscreenDrawRect  = { { 0.0f, 0.0f }, screenRect.size };
 
         m_backgroundRectangle.setFillColor(sf::Color::Black);
-        m_backgroundRectangle.setPosition(mapRect.position);
-        m_backgroundRectangle.setSize(mapRect.size);
+        m_backgroundRectangle.setPosition(screenRect.position);
+        m_backgroundRectangle.setSize(screenRect.size);
         m_backgroundRectangle.setOutlineColor(t_context.config.map_outline_color);
         m_backgroundRectangle.setOutlineThickness(1.0f);
 
         // create moveMap Rects
-        const sf::FloatRect innerMapRect{ util::scaleRectInPlaceCopy(
-            mapRect, t_context.config.avatar_walk_inner_map_ratio) };
+        const sf::FloatRect innerScreenRect{ util::scaleRectInPlaceCopy(
+            screenRect, t_context.config.avatar_walk_inner_map_ratio) };
 
-        m_moveMapRectUp = { mapRect.position,
-                            { mapRect.size.x, (mapRect.size.y - innerMapRect.size.y) * 0.5f } };
+        m_moveScreenRectUp = { screenRect.position,
+                               { screenRect.size.x,
+                                 (screenRect.size.y - innerScreenRect.size.y) * 0.5f } };
 
-        m_moveMapRectDown = { { mapRect.position.x, util::bottom(innerMapRect) },
-                              { mapRect.size.x, (mapRect.size.y - innerMapRect.size.y) * 0.5f } };
+        m_moveScreenRectDown = { { screenRect.position.x, util::bottom(innerScreenRect) },
+                                 { screenRect.size.x,
+                                   (screenRect.size.y - innerScreenRect.size.y) * 0.5f } };
 
-        m_moveMapRectLeft = { mapRect.position,
-                              { (mapRect.size.x - innerMapRect.size.x) * 0.5f, mapRect.size.y } };
+        m_moveScreenRectLeft = { screenRect.position,
+                                 { (screenRect.size.x - innerScreenRect.size.x) * 0.5f,
+                                   screenRect.size.y } };
 
-        m_moveMapRectRight = { { util::right(innerMapRect), mapRect.position.y },
-                               { (mapRect.size.x - innerMapRect.size.x) * 0.5f, mapRect.size.y } };
+        m_moveScreenRectRight = { { util::right(innerScreenRect), screenRect.position.y },
+                                  { (screenRect.size.x - innerScreenRect.size.x) * 0.5f,
+                                    screenRect.size.y } };
 
         t_context.smoke.clear();
         t_context.sparkle.clear();
@@ -425,7 +429,7 @@ namespace thornberry
 
         if ((t_move.x < 0.0f) && !m_isMapRectBigEnoughHoriz) // moving left
         {
-            if (playerRect.findIntersection(m_moveMapRectLeft).has_value())
+            if (playerRect.findIntersection(m_moveScreenRectLeft).has_value())
             {
                 if (m_offscreenDrawRect.position.x > std::abs(t_move.x))
                 {
@@ -442,7 +446,7 @@ namespace thornberry
         }
         else if ((t_move.x > 0.0f) && !m_isMapRectBigEnoughHoriz) // moving right
         {
-            if (playerRect.findIntersection(m_moveMapRectRight).has_value())
+            if (playerRect.findIntersection(m_moveScreenRectRight).has_value())
             {
                 if (util::right(m_offscreenDrawRect) <
                     static_cast<float>(m_renderTexture.getSize().x))
@@ -460,7 +464,7 @@ namespace thornberry
         }
         else if ((t_move.y < 0.0f) && !m_isMapRectBigEnoughVert) // moving up
         {
-            if (playerRect.findIntersection(m_moveMapRectUp).has_value())
+            if (playerRect.findIntersection(m_moveScreenRectUp).has_value())
             {
                 if (m_offscreenDrawRect.position.y > std::abs(t_move.y))
                 {
@@ -477,7 +481,7 @@ namespace thornberry
         }
         else if ((t_move.y > 0.0f) && !m_isMapRectBigEnoughVert) // moving down
         {
-            if (playerRect.findIntersection(m_moveMapRectDown).has_value())
+            if (playerRect.findIntersection(m_moveScreenRectDown).has_value())
             {
                 if (util::bottom(m_offscreenDrawRect) <
                     static_cast<float>(m_renderTexture.getSize().y))
