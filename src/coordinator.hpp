@@ -4,13 +4,13 @@
 // coordinator.hpp
 //
 #include "anim-acid-spout.hpp"
+#include "anim-lightning.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "font.hpp"
 #include "framerate.hpp"
 #include "indirect-level.hpp"
 #include "level-file-loader.hpp"
-#include "lightning-anim.hpp"
 #include "music-particle.hpp"
 #include "music-player.hpp"
 #include "npc-manager.hpp"

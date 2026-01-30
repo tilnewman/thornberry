@@ -1,7 +1,7 @@
 //
-// lightning-anim.cpp
+// anim-lightning.cpp
 //
-#include "lightning-anim.hpp"
+#include "anim-lightning.hpp"
 
 #include "config.hpp"
 #include "context.hpp"

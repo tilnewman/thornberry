@@ -1,7 +1,7 @@
-#ifndef LIGHTNING_ANIM_HPP_INLCUDED
-#define LIGHTNING_ANIM_HPP_INLCUDED
+#ifndef ANIM_LIGHTNING_HPP_INLCUDED
+#define ANIM_LIGHTNING_HPP_INLCUDED
 //
-// lightning-anim.hpp
+// anim-lightning.hpp
 //
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -65,4 +65,4 @@ namespace thornberry
 
 } // namespace thornberry
 
-#endif // LIGHTNING_ANIM_HPP_INLCUDED
+#endif // ANIM_LIGHTNING_HPP_INLCUDED

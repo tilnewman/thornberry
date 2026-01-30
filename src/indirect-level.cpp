@@ -4,10 +4,10 @@
 #include "indirect-level.hpp"
 
 #include "anim-acid-spout.hpp"
+#include "anim-lightning.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "level-file-loader.hpp"
-#include "lightning-anim.hpp"
 #include "music-particle.hpp"
 #include "music-player.hpp"
 #include "npc-manager.hpp"
