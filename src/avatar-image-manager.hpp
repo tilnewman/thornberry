@@ -8,6 +8,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include <filesystem>
+#include <memory>
 #include <vector>
 
 namespace thornberry
@@ -27,17 +28,17 @@ namespace thornberry
     {
       public:
         AvatarImageManager();
-        ~AvatarImageManager();
 
         static AvatarImageManager & instance();
         void setup(const Config & t_config);
-        const sf::Texture & shadowTexture() const { return m_shadowTexture; }
+        const sf::Texture & shadowTexture() const { return *m_shadowTextureUPtr; }
         const sf::Texture & acquire(const AvatarImage & t_image);
         void release(const AvatarImage & t_image);
+        void teardown();
 
       private:
         std::filesystem::path m_mediaPath;
-        sf::Texture m_shadowTexture;
+        std::unique_ptr<sf::Texture> m_shadowTextureUPtr;
         std::vector<AvatarImagePack> m_imagePacks;
     };
 

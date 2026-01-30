@@ -145,6 +145,7 @@ namespace thornberry
         m_npcManagerUPtr.reset();
 
         MapTextureManager::instance().teardown();
+        AvatarImageManager::instance().teardown();
         util::SfmlDefaults::instance().teardown();
 
         m_contextUPtr.reset();

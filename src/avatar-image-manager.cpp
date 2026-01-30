@@ -16,25 +16,9 @@ namespace thornberry
 
     AvatarImageManager::AvatarImageManager()
         : m_mediaPath{}
-        , m_shadowTexture{}
+        , m_shadowTextureUPtr{ std::make_unique<sf::Texture>() }
         , m_imagePacks{}
     {}
-
-    AvatarImageManager::~AvatarImageManager()
-    {
-        for (std::size_t index{ 0 }; index < m_imagePacks.size(); ++index)
-        {
-            const AvatarImagePack & pack{ m_imagePacks.at(index) };
-
-            if (pack.ref_count != 0)
-            {
-                std::cout
-                    << "~AvatarImageManager() found a ref_count that was not zero!  ref_count="
-                    << pack.ref_count
-                    << ", AvatarImage=" << toString(static_cast<AvatarImage>(index)) << '\n';
-            }
-        }
-    }
 
     AvatarImageManager & AvatarImageManager::instance()
     {
@@ -47,7 +31,7 @@ namespace thornberry
         m_mediaPath = t_config.media_path;
 
         AlphaMasking::loadAndApplyMasks(
-            m_shadowTexture,
+            *m_shadowTextureUPtr,
             (t_config.media_path / "image" / "avatar" / "avatar-shadow.png").string(),
             t_config.background_mask_color,
             true);
@@ -105,6 +89,26 @@ namespace thornberry
         }
 
         --pack.ref_count;
+    }
+
+    void AvatarImageManager::teardown()
+    {
+        // report any ref_counts not returned to zero before teardown
+        for (std::size_t index{ 0 }; index < m_imagePacks.size(); ++index)
+        {
+            const AvatarImagePack & pack{ m_imagePacks.at(index) };
+
+            if (pack.ref_count != 0)
+            {
+                std::cout
+                    << "~AvatarImageManager() found a ref_count that was not zero!  ref_count="
+                    << pack.ref_count
+                    << ", AvatarImage=" << toString(static_cast<AvatarImage>(index)) << '\n';
+            }
+        }
+
+        m_imagePacks = std::vector<AvatarImagePack>();
+        m_shadowTextureUPtr.reset();
     }
 
 } // namespace thornberry
