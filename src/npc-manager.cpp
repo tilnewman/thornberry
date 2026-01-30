@@ -50,12 +50,11 @@ namespace thornberry
             const std::size_t npcCount{ 10 };
             m_npcs.reserve(npcCount);
 
+            const auto townFolkImages{ getAvatarImagesTownfolk() };
+
             for (std::size_t counter{ 0 }; counter < npcCount; ++counter)
             {
-                const AvatarImage image{ static_cast<AvatarImage>(
-                    t_context.random.zeroToOneLessThan(
-                        static_cast<std::size_t>(AvatarImage::count))) };
-
+                const AvatarImage image{ t_context.random.from(townFolkImages) };
                 const auto randomPositionOpt{ findRandomAvailableSpawnPosition(t_context) };
                 if (randomPositionOpt.has_value())
                 {
