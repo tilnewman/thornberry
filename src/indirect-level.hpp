@@ -127,9 +127,9 @@ namespace thornberry
             const sf::Vector2f & t_screenTileSize);
 
         // returns true if the avatar will move by t_move amount
-        [[nodiscard]] bool avatarMove(
+        [[nodiscard]] bool playerMove(
             const Context & t_context,
-            const sf::FloatRect & t_avatarRect,
+            const sf::FloatRect & t_playerMapRect,
             const sf::Vector2f & t_move);
 
         void stopWalkSound(const Context & t_context);

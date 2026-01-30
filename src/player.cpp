@@ -105,7 +105,7 @@ namespace thornberry
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up))
         {
             const sf::Vector2f move{ 0.0f, -walkAmount };
-            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
+            if (t_context.level.playerMove(t_context, collisionMapRect(), move))
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
@@ -115,7 +115,7 @@ namespace thornberry
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down))
         {
             const sf::Vector2f move{ 0.0f, walkAmount };
-            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
+            if (t_context.level.playerMove(t_context, collisionMapRect(), move))
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
@@ -125,7 +125,7 @@ namespace thornberry
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left))
         {
             const sf::Vector2f move{ -walkAmount, 0.0f };
-            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
+            if (t_context.level.playerMove(t_context, collisionMapRect(), move))
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
@@ -135,7 +135,7 @@ namespace thornberry
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right))
         {
             const sf::Vector2f move{ walkAmount, 0.0f };
-            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
+            if (t_context.level.playerMove(t_context, collisionMapRect(), move))
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);

@@ -378,22 +378,22 @@ namespace thornberry
         return { 0.0f, 0.0f };
     }
 
-    bool IndirectLevel::avatarMove(
+    bool IndirectLevel::playerMove(
         const Context & t_context,
-        const sf::FloatRect & t_avatarMapRect,
+        const sf::FloatRect & t_playerMapRect,
         const sf::Vector2f & t_move)
     {
         // start with map coordinates for collision and transition detection
-        sf::FloatRect avatarRect{ t_avatarMapRect };
-        avatarRect.position += t_move;
+        sf::FloatRect playerRect{ t_playerMapRect };
+        playerRect.position += t_move;
 
-        if (doesIntersetWithCollision(avatarRect))
+        if (doesIntersetWithCollision(playerRect))
         {
             stopWalkSound(t_context);
             return false;
         }
 
-        const std::optional<Transition> transitionOpt{ findIntersectingExitTransition(avatarRect) };
+        const std::optional<Transition> transitionOpt{ findIntersectingExitTransition(playerRect) };
         if (transitionOpt.has_value())
         {
             if (!transitionOpt->sfx_name.empty())
@@ -409,18 +409,23 @@ namespace thornberry
             return false;
         }
 
+        if (t_context.npc.doesRectCollideWithAny(playerRect))
+        {
+            return false;
+        }
+
         // allow the avatar to interact with animation layers (pickups, etc...)
-        interactWithAll(t_context, avatarRect);
+        interactWithAll(t_context, playerRect);
 
         // this avatarRect needs to still be in map coordinates for this
-        playWalkSound(t_context, avatarRect);
+        playWalkSound(t_context, playerRect);
 
         // change to screen coordinates for everything else
-        avatarRect.position += mapToScreenOffset();
+        playerRect.position += mapToScreenOffset();
 
         if ((t_move.x < 0.0f) && !m_isMapRectBigEnoughHoriz) // moving left
         {
-            if (avatarRect.findIntersection(m_moveMapRectLeft).has_value())
+            if (playerRect.findIntersection(m_moveMapRectLeft).has_value())
             {
                 if (m_offscreenDrawRect.position.x > std::abs(t_move.x))
                 {
@@ -437,7 +442,7 @@ namespace thornberry
         }
         else if ((t_move.x > 0.0f) && !m_isMapRectBigEnoughHoriz) // moving right
         {
-            if (avatarRect.findIntersection(m_moveMapRectRight).has_value())
+            if (playerRect.findIntersection(m_moveMapRectRight).has_value())
             {
                 if (util::right(m_offscreenDrawRect) <
                     static_cast<float>(m_renderTexture.getSize().x))
@@ -455,7 +460,7 @@ namespace thornberry
         }
         else if ((t_move.y < 0.0f) && !m_isMapRectBigEnoughVert) // moving up
         {
-            if (avatarRect.findIntersection(m_moveMapRectUp).has_value())
+            if (playerRect.findIntersection(m_moveMapRectUp).has_value())
             {
                 if (m_offscreenDrawRect.position.y > std::abs(t_move.y))
                 {
@@ -472,7 +477,7 @@ namespace thornberry
         }
         else if ((t_move.y > 0.0f) && !m_isMapRectBigEnoughVert) // moving down
         {
-            if (avatarRect.findIntersection(m_moveMapRectDown).has_value())
+            if (playerRect.findIntersection(m_moveMapRectDown).has_value())
             {
                 if (util::bottom(m_offscreenDrawRect) <
                     static_cast<float>(m_renderTexture.getSize().y))
