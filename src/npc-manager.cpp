@@ -125,7 +125,6 @@ namespace thornberry
             // all NPCs and the player are the same size so steal the player's size to make this
             sf::FloatRect randomRect({ *randomPositionOpt, playerRect.size });
             randomRect.position -= (playerRect.size * 0.5f); // because sprite origin is centered
-            // randomRect.size.y *= 0.3f;                // a third looks good so keep this magic
             util::scaleRectInPlace(randomRect, 1.2f); // this grow seems to help prevent overlap
 
             // check if random position collides with the player
