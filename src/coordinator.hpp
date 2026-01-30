@@ -3,6 +3,7 @@
 //
 // coordinator.hpp
 //
+#include "anim-acid-spout.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "font.hpp"
@@ -67,6 +68,7 @@ namespace thornberry
         std::unique_ptr<LightningAnimationManager> m_lightningAnimationManagerUPtr;
         std::unique_ptr<MusicParticleManager> m_musicParticleManagerUPtr;
         std::unique_ptr<NpcManager> m_npcManagerUPtr;
+        std::unique_ptr<AcidSpoutAnimationManager> m_acidSpoutAnimationManagerUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 

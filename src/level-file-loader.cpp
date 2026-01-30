@@ -3,6 +3,7 @@
 //
 #include "level-file-loader.hpp"
 
+#include "anim-acid-spout.hpp"
 #include "anim-layer-campfire.hpp"
 #include "anim-layer-candleflame.hpp"
 #include "anim-layer-fire.hpp"
@@ -396,6 +397,10 @@ namespace thornberry
             else if (name == "lightning-trap")
             {
                 t_context.lightning.add(t_context, rect);
+            }
+            else if (name == "acid-trap")
+            {
+                t_context.acid_spout.add(t_context, rect);
             }
             else
             {

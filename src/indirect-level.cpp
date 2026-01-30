@@ -3,6 +3,7 @@
 //
 #include "indirect-level.hpp"
 
+#include "anim-acid-spout.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "level-file-loader.hpp"
@@ -107,6 +108,7 @@ namespace thornberry
         t_context.smoke.clear();
         t_context.sparkle.clear();
         t_context.lightning.clear();
+        t_context.acid_spout.clear();
     }
 
     void IndirectLevel::setLevelDetails(
@@ -219,9 +221,10 @@ namespace thornberry
         t_context.lightning.draw(m_renderTexture, m_renderStates);
         t_context.musical_note.draw(m_renderTexture, m_renderStates);
         t_context.npc.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
-
+        
         t_context.player.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
 
+        t_context.acid_spout.draw(m_renderTexture, m_renderStates);
         drawUpperLayers(m_renderTexture, m_renderStates);
         t_context.smoke.draw(m_renderTexture, m_renderStates);
 
@@ -282,6 +285,7 @@ namespace thornberry
         t_context.smoke.move(t_move);
         t_context.sparkle.move(t_move);
         t_context.lightning.move(t_move);
+        t_context.acid_spout.move(t_move);
     }
 
     void IndirectLevel::draw(
@@ -543,6 +547,7 @@ namespace thornberry
 
         t_context.sparkle.postLevelLoadSetup(t_context);
         t_context.lightning.postLevelLoadSetup(t_context);
+        t_context.acid_spout.postLevelLoadSetup(t_context);
         t_context.npc.postLevelLoadSetup(t_context);
     }
 

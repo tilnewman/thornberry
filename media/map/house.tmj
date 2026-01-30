@@ -425,6 +425,17 @@
                  "width":13.3605306045267,
                  "x":302.856037995013,
                  "y":256.476194816959
+                }, 
+                {
+                 "height":120,
+                 "id":73,
+                 "name":"acid-trap",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":36,
+                 "x":622,
+                 "y":175
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -789,7 +800,7 @@
          "y":0
         }],
  "nextlayerid":25,
- "nextobjectid":73,
+ "nextobjectid":74,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

@@ -25,6 +25,7 @@ namespace thornberry
     class LightningAnimationManager;
     class MusicParticleManager;
     class NpcManager;
+    class AcidSpoutAnimationManager;
 
     //
     struct Context
@@ -44,7 +45,8 @@ namespace thornberry
             SparkleParticleEffects & t_sparkleParticleEffects,
             LightningAnimationManager & t_lightningAnimationManager,
             MusicParticleManager & t_musicParticleManager,
-            NpcManager & t_npcManager)
+            NpcManager & t_npcManager,
+            AcidSpoutAnimationManager & t_acidSpoutAnimationManager)
             : config{ t_config }
             , screen_layout{ t_screenLayout }
             , random{ t_random }
@@ -60,6 +62,7 @@ namespace thornberry
             , lightning{ t_lightningAnimationManager }
             , musical_note{ t_musicParticleManager }
             , npc{ t_npcManager }
+            , acid_spout{ t_acidSpoutAnimationManager }
         {}
 
         const Config & config;
@@ -77,6 +80,7 @@ namespace thornberry
         LightningAnimationManager & lightning;
         MusicParticleManager & musical_note;
         NpcManager & npc;
+        AcidSpoutAnimationManager & acid_spout;
     };
 
 } // namespace thornberry
