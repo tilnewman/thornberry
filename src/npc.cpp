@@ -6,6 +6,8 @@
 #include "config.hpp"
 #include "context.hpp"
 #include "indirect-level.hpp"
+#include "npc-manager.hpp"
+#include "player.hpp"
 #include "random.hpp"
 #include "screen-layout.hpp"
 
@@ -169,42 +171,91 @@ namespace thornberry
         const float walkAmount{ t_context.screen_layout.calScaleBasedOnResolution(
             t_context, (t_context.config.avatar_walk_speed * t_elapsedSec)) };
 
-        const auto isWalkingInDirection = [&](const AvatarDirection dir) 
-            {
+        const auto isWalkingInDirection = [&](const AvatarDirection dir) {
             return (
-                std::find(
-                    std::begin(m_walkDirections),
-                    std::end(m_walkDirections),
-                    dir) != std::end(m_walkDirections));
-            };
+                std::find(std::begin(m_walkDirections), std::end(m_walkDirections), dir) !=
+                std::end(m_walkDirections));
+        };
 
         if (isWalkingInDirection(AvatarDirection::Up))
         {
             const sf::Vector2f move{ 0.0f, -walkAmount };
-            m_sprite.move(move);
-            m_shadowSprite.move(move);
+            if (isMovedPositionValid(t_context, move))
+            {
+                m_sprite.move(move);
+                m_shadowSprite.move(move);
+            }
         }
 
         if (isWalkingInDirection(AvatarDirection::Down))
         {
             const sf::Vector2f move{ 0.0f, walkAmount };
-            m_sprite.move(move);
-            m_shadowSprite.move(move);
+            if (isMovedPositionValid(t_context, move))
+            {
+                m_sprite.move(move);
+                m_shadowSprite.move(move);
+            }
         }
 
         if (isWalkingInDirection(AvatarDirection::Left))
         {
             const sf::Vector2f move{ -walkAmount, 0.0f };
-            m_sprite.move(move);
-            m_shadowSprite.move(move);
+            if (isMovedPositionValid(t_context, move))
+            {
+                m_sprite.move(move);
+                m_shadowSprite.move(move);
+            }
         }
 
         if (isWalkingInDirection(AvatarDirection::Right))
         {
             const sf::Vector2f move{ walkAmount, 0.0f };
-            m_sprite.move(move);
-            m_shadowSprite.move(move);
+            if (isMovedPositionValid(t_context, move))
+            {
+                m_sprite.move(move);
+                m_shadowSprite.move(move);
+            }
         }
+    }
+
+    bool Npc::isMovedPositionValid(const Context & t_context, const sf::Vector2f & t_move) const
+    {
+        // everything in this function is in map coordinates
+
+        sf::FloatRect movedRect{ collisionMapRect() };
+        movedRect.position += t_move;
+
+        // check for collision with player
+        if (movedRect.findIntersection(t_context.player.collisionMapRect()).has_value())
+        {
+            return false;
+        }
+
+        // ensure the new position is within walk bounds
+        const std::vector<sf::FloatRect> & walkBounds{ t_context.level.npcWalkBounds() };
+        bool didAllFourCornersFitInAnyWalkBound{ false };
+        for (const sf::FloatRect & walkBound : walkBounds)
+        {
+            const sf::Vector2f topLeft{ movedRect.position };
+            const sf::Vector2f topRight{ util::right(movedRect), movedRect.position.y };
+            const sf::Vector2f botLeft{ movedRect.position.x, util::bottom(movedRect) };
+            const sf::Vector2f botRight{ util::right(movedRect), util::bottom(movedRect) };
+
+            if (walkBound.contains(topLeft) && walkBound.contains(topRight) &&
+                walkBound.contains(botLeft) && walkBound.contains(botRight))
+            {
+                didAllFourCornersFitInAnyWalkBound = true;
+                break;
+            }
+        }
+
+        if (!didAllFourCornersFitInAnyWalkBound)
+        {
+            return false;
+        }
+
+        // check for collision with other NPCs
+        return !t_context.npc.doesRectCollideWithAnyExcept(movedRect, *this);
     }
 
 } // namespace thornberry

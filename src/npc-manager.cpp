@@ -33,21 +33,21 @@ namespace thornberry
             return;
         }
 
-        // const std::string levelName{ t_context.level.name() };
-        // if (levelName == "house.tmj")
-        //{
-        //     const auto randomPositionOpt{ findRandomAvailableSpawnPosition(t_context) };
-        //     if (randomPositionOpt.has_value())
-        //     {
-        //         Npc & npc{ m_npcs.emplace_back(AvatarImage::leather_corporal2_dark) };
-        //         npc.setup(t_context);
-        //         npc.standFacingRandomDirection(t_context);
-        //         npc.setPosition(*randomPositionOpt);
-        //     }
-        // }
-        // else if (levelName == "thornberry.tmj")
+        const std::string levelName{ t_context.level.name() };
+        if (levelName == "house.tmj")
         {
-            const std::size_t npcCount{ 20 };
+            const auto randomPositionOpt{ findRandomAvailableSpawnPosition(t_context) };
+            if (randomPositionOpt.has_value())
+            {
+                Npc & npc{ m_npcs.emplace_back(AvatarImage::leather_corporal2_dark) };
+                npc.setup(t_context);
+                npc.standFacingRandomDirection(t_context);
+                npc.setPosition(*randomPositionOpt);
+            }
+        }
+        else if (levelName == "thornberry.tmj")
+        {
+            const std::size_t npcCount{ 10 };
             m_npcs.reserve(npcCount);
 
             for (std::size_t counter{ 0 }; counter < npcCount; ++counter)
@@ -135,18 +135,31 @@ namespace thornberry
                 continue;
             }
 
-            // check if random position collides with any other NPCs
-            bool didAnyNPCsCollide{ false };
-            for (const Npc & npc : m_npcs)
+            // ensure the new position is within walk bounds
+            const std::vector<sf::FloatRect> & walkBounds{ t_context.level.npcWalkBounds() };
+            bool didAllFourCornersFitInAnyWalkBound{ false };
+            for (const sf::FloatRect & walkBound : walkBounds)
             {
-                if (randomRect.findIntersection(npc.collisionMapRect()).has_value())
+                const sf::Vector2f topLeft{ randomRect.position };
+                const sf::Vector2f topRight{ util::right(randomRect), randomRect.position.y };
+                const sf::Vector2f botLeft{ randomRect.position.x, util::bottom(randomRect) };
+                const sf::Vector2f botRight{ util::right(randomRect), util::bottom(randomRect) };
+
+                if (walkBound.contains(topLeft) && walkBound.contains(topRight) &&
+                    walkBound.contains(botLeft) && walkBound.contains(botRight))
                 {
-                    didAnyNPCsCollide = true;
+                    didAllFourCornersFitInAnyWalkBound = true;
                     break;
                 }
             }
 
-            if (!didAnyNPCsCollide)
+            if (!didAllFourCornersFitInAnyWalkBound)
+            {
+                continue;
+            }
+
+            // check if random position collides with any other NPCs
+            if (!doesRectCollideWithAny(randomRect))
             {
                 return *randomPositionOpt;
             }
@@ -156,6 +169,43 @@ namespace thornberry
                      "to place an NPC!\n";
 
         return {};
+    }
+
+    bool NpcManager::doesRectCollideWithAny(const sf::FloatRect & t_mapRect) const
+    {
+        // all of this function is in map coordinates
+
+        for (const Npc & npc : m_npcs)
+        {
+            if (t_mapRect.findIntersection(npc.collisionMapRect()).has_value())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool NpcManager::doesRectCollideWithAnyExcept(
+        const sf::FloatRect & t_mapRect, const Npc & t_npc) const
+    {
+        // all of this function is in map coordinates
+
+        for (const Npc & npc : m_npcs)
+        {
+            // check if npc == t_npc (not perfect but close enough)
+            if (npc.collisionMapRect() == t_npc.collisionMapRect())
+            {
+                continue;
+            }
+
+            if (t_mapRect.findIntersection(npc.collisionMapRect()).has_value())
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 } // namespace thornberry
