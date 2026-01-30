@@ -63,7 +63,7 @@ namespace thornberry
     {
         for (LightningAnimation & anim : m_animations)
         {
-            // only track time and discharg if it's visible
+            // only track time and discharge if it's visible
             if (!t_context.level.offscreenRect().findIntersection(anim.offscreen_rect).has_value())
             {
                 continue;
