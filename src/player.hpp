@@ -16,6 +16,9 @@ namespace thornberry
         virtual ~Player() override = default;
 
         void handleEvent(const Context & t_context, const sf::Event & t_event);
+
+      private:
+        void updateWalkPosition(const Context & t_context, const float t_elapsedSec) override;
     };
 
 } // namespace thornberry

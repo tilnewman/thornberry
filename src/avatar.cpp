@@ -40,7 +40,8 @@ namespace thornberry
         , m_isHurtColorWhite{ true }
     {}
 
-    // we have to have this because it might get used by a container like std::vector
+    // This might get used by a container like std::vector and the default constructed one won't
+    // increment the AvatarImageManager ref_count.
     Avatar::Avatar(Avatar && t_otherAvatar)
         : m_image{ t_otherAvatar.m_image }
         , m_anim{ t_otherAvatar.m_anim }
@@ -59,6 +60,26 @@ namespace thornberry
         , m_isHurtColorWhite{ t_otherAvatar.m_isHurtColorWhite }
     {
         AvatarImageManager::instance().acquire(m_image);
+    }
+
+    // only including this because it won't be generated because move constructor is defined
+    void Avatar::operator=(const Avatar & t_otherAvatar)
+    {
+        m_image                 = t_otherAvatar.m_image;
+        m_anim                  = t_otherAvatar.m_anim;
+        m_direction             = t_otherAvatar.m_direction;
+        m_isAnimating           = t_otherAvatar.m_isAnimating;
+        m_animCells             = t_otherAvatar.m_animCells;
+        m_animIndex             = t_otherAvatar.m_animIndex;
+        m_elapsedSec            = t_otherAvatar.m_elapsedSec;
+        m_blinkElapsedSec       = t_otherAvatar.m_blinkElapsedSec;
+        m_timeUntilBlinkSec     = t_otherAvatar.m_timeUntilBlinkSec;
+        m_sprite                = t_otherAvatar.m_sprite;
+        m_shadowSprite          = t_otherAvatar.m_shadowSprite;
+        m_hurtEnableTimerSec    = t_otherAvatar.m_hurtEnableTimerSec;
+        m_isHurtAnimating       = t_otherAvatar.m_isHurtAnimating;
+        m_hurtColorCycleTimeSec = t_otherAvatar.m_hurtColorCycleTimeSec;
+        m_isHurtColorWhite      = t_otherAvatar.m_isHurtColorWhite;
     }
 
     Avatar::~Avatar() { AvatarImageManager::instance().release(m_image); }
@@ -98,7 +119,12 @@ namespace thornberry
     void Avatar::update(const Context & t_context, const float t_elapsedSec)
     {
         updateBlinking(t_context, t_elapsedSec);
-        updateWalkPosition(t_context, t_elapsedSec);
+
+        if (m_isAnimating && (AvatarAnim::Walk == m_anim))
+        {
+            updateWalkPosition(t_context, t_elapsedSec);
+        }
+        
         updateAnimation(t_context, t_elapsedSec);
         updateHurtAnimation(t_context, t_elapsedSec);
     }
@@ -149,57 +175,6 @@ namespace thornberry
                 m_isAnimating = true;
                 m_anim        = AvatarAnim::Blink;
                 setAnim();
-            }
-        }
-    }
-
-    void Avatar::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
-    {
-        if (!m_isAnimating || (AvatarAnim::Walk != m_anim))
-        {
-            return;
-        }
-
-        const float walkAmount{ t_context.screen_layout.calScaleBasedOnResolution(
-            t_context, (t_context.config.avatar_walk_speed * t_elapsedSec)) };
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up))
-        {
-            const sf::Vector2f move{ 0.0f, -walkAmount };
-            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
-            {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
-            }
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down))
-        {
-            const sf::Vector2f move{ 0.0f, walkAmount };
-            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
-            {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
-            }
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left))
-        {
-            const sf::Vector2f move{ -walkAmount, 0.0f };
-            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
-            {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
-            }
-        }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right))
-        {
-            const sf::Vector2f move{ walkAmount, 0.0f };
-            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
-            {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
             }
         }
     }
@@ -259,6 +234,12 @@ namespace thornberry
         sprite = m_sprite;
         sprite.move(t_positionOffset);
         t_target.draw(sprite, t_states);
+
+        // draw collision rect
+        // sf::FloatRect rect(collisionMapRect());
+        // rect.position += t_positionOffset;
+        // // rect.size.y *= 0.3f;
+        // t_target.draw(util::makeRectangleShape(rect, false, sf::Color::Red), t_states);
     }
 
     void Avatar::setAnim()

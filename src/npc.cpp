@@ -3,9 +3,11 @@
 //
 #include "npc.hpp"
 
+#include "config.hpp"
 #include "context.hpp"
 #include "indirect-level.hpp"
 #include "random.hpp"
+#include "screen-layout.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
 
@@ -28,6 +30,14 @@ namespace thornberry
         , m_actionElpasedSec{ t_otherNpc.m_actionElpasedSec }
         , m_timeUntilActionChangeSec{ t_otherNpc.m_timeUntilActionChangeSec }
     {}
+
+    void Npc::operator=(const Npc & t_otherNpc)
+    {
+        Avatar::operator=(t_otherNpc);
+        m_action                   = t_otherNpc.m_action;
+        m_actionElpasedSec         = t_otherNpc.m_actionElpasedSec;
+        m_timeUntilActionChangeSec = t_otherNpc.m_timeUntilActionChangeSec;
+    }
 
     void Npc::standFacingRandomDirection(const Context & t_context)
     {
@@ -76,13 +86,13 @@ namespace thornberry
                 // TODO
                 standFacingRandomDirection(t_context);
 
-                //const auto walkTargetOpt{ pickRandomWalkTarget(t_context) };
-                //if (!walkTargetOpt.has_value())
+                // const auto walkTargetOpt{ pickRandomWalkTarget(t_context) };
+                // if (!walkTargetOpt.has_value())
                 //{
-                //    // if pickRandomTarget() fails, just face a new direction
-                //    standFacingRandomDirection(t_context);
-                //    return;
-                //}
+                //     // if pickRandomTarget() fails, just face a new direction
+                //     standFacingRandomDirection(t_context);
+                //     return;
+                // }
             }
         }
     }
@@ -117,6 +127,40 @@ namespace thornberry
 
         return sf::Vector2f{ (targetRect.position.x + t_context.random.zeroTo(targetRect.size.x)),
                              (targetRect.position.y + t_context.random.zeroTo(targetRect.size.y)) };
+    }
+
+    void Npc::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
+    {
+        const float walkAmount{ t_context.screen_layout.calScaleBasedOnResolution(
+            t_context, (t_context.config.avatar_walk_speed * t_elapsedSec)) };
+
+        if (AvatarDirection::Up == m_direction)
+        {
+            const sf::Vector2f move{ 0.0f, -walkAmount };
+            m_sprite.move(move);
+            m_shadowSprite.move(move);
+        }
+
+        if (AvatarDirection::Down == m_direction)
+        {
+            const sf::Vector2f move{ 0.0f, walkAmount };
+            m_sprite.move(move);
+            m_shadowSprite.move(move);
+        }
+
+        if (AvatarDirection::Left == m_direction)
+        {
+            const sf::Vector2f move{ -walkAmount, 0.0f };
+            m_sprite.move(move);
+            m_shadowSprite.move(move);
+        }
+
+        if (AvatarDirection::Right == m_direction)
+        {
+            const sf::Vector2f move{ walkAmount, 0.0f };
+            m_sprite.move(move);
+            m_shadowSprite.move(move);
+        }
     }
 
 } // namespace thornberry

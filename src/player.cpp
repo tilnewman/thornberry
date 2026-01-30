@@ -7,6 +7,7 @@
 #include "indirect-level.hpp"
 #include "music-particle.hpp"
 #include "music-player.hpp"
+#include "screen-layout.hpp"
 #include "sound-player.hpp"
 
 namespace thornberry
@@ -92,6 +93,52 @@ namespace thornberry
                 m_anim        = AvatarAnim::None;
                 setAnim();
                 t_context.level.stopWalkSound(t_context);
+            }
+        }
+    }
+
+    void Player::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
+    {
+        const float walkAmount{ t_context.screen_layout.calScaleBasedOnResolution(
+            t_context, (t_context.config.avatar_walk_speed * t_elapsedSec)) };
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up))
+        {
+            const sf::Vector2f move{ 0.0f, -walkAmount };
+            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
+            {
+                m_sprite.move(move);
+                m_shadowSprite.move(move);
+            }
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down))
+        {
+            const sf::Vector2f move{ 0.0f, walkAmount };
+            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
+            {
+                m_sprite.move(move);
+                m_shadowSprite.move(move);
+            }
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left))
+        {
+            const sf::Vector2f move{ -walkAmount, 0.0f };
+            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
+            {
+                m_sprite.move(move);
+                m_shadowSprite.move(move);
+            }
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right))
+        {
+            const sf::Vector2f move{ walkAmount, 0.0f };
+            if (t_context.level.avatarMove(t_context, collisionMapRect(), move))
+            {
+                m_sprite.move(move);
+                m_shadowSprite.move(move);
             }
         }
     }

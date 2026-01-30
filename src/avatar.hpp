@@ -45,6 +45,7 @@ namespace thornberry
         Avatar(const AvatarImage t_image);
         Avatar(Avatar && t_otherAvatar); // see comment in cpp
         virtual ~Avatar();
+        void operator=(const Avatar & t_otherAvatar); // see comment in cpp
 
         void startHurtAnimation();
         void setup(const Context & t_context);
@@ -61,7 +62,7 @@ namespace thornberry
 
       protected:
         void updateBlinking(const Context & t_context, const float t_elapsedSec);
-        void updateWalkPosition(const Context & t_context, const float t_elapsedSec);
+        virtual void updateWalkPosition(const Context & t_context, const float t_elapsedSec) = 0;
         void updateAnimation(const Context & t_context, const float t_elapsedSec);
         void updateHurtAnimation(const Context & t_context, const float t_elapsedSec);
         void setAnim();

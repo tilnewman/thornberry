@@ -25,14 +25,16 @@ namespace thornberry
     {
       public:
         Npc(const AvatarImage t_image);
-        Npc(Npc && t_otherNpc);
+        Npc(Npc && t_otherNpc); // see comment in Avatar.cpp
         virtual ~Npc() override = default;
+        void operator=(const Npc & t_otherNpc); // see comment in Avatar.cpp
 
         void standFacingRandomDirection(const Context & t_context);
         void update(const Context & t_context, const float t_elapsedSec) override;
 
       private:
         const std::optional<sf::Vector2f> pickRandomWalkTarget(const Context & t_context) const;
+        void updateWalkPosition(const Context & t_context, const float t_elapsedSec) override;
 
       private:
         NpcAction m_action;

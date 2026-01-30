@@ -12,6 +12,7 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
+#include <algorithm>
 #include <iostream>
 #include <string>
 
@@ -32,21 +33,21 @@ namespace thornberry
             return;
         }
 
-        const std::string levelName{ t_context.level.name() };
-        if (levelName == "house.tmj")
+        // const std::string levelName{ t_context.level.name() };
+        // if (levelName == "house.tmj")
+        //{
+        //     const auto randomPositionOpt{ findRandomAvailableSpawnPosition(t_context) };
+        //     if (randomPositionOpt.has_value())
+        //     {
+        //         Npc & npc{ m_npcs.emplace_back(AvatarImage::leather_corporal2_dark) };
+        //         npc.setup(t_context);
+        //         npc.standFacingRandomDirection(t_context);
+        //         npc.setPosition(*randomPositionOpt);
+        //     }
+        // }
+        // else if (levelName == "thornberry.tmj")
         {
-            const auto randomPositionOpt{ findRandomAvailableSpawnPosition(t_context) };
-            if (randomPositionOpt.has_value())
-            {
-                Npc & npc{ m_npcs.emplace_back(AvatarImage::leather_corporal2_dark) };
-                npc.setup(t_context);
-                npc.standFacingRandomDirection(t_context);
-                npc.setPosition(*randomPositionOpt);
-            }
-        }
-        else if (levelName == "thornberry.tmj")
-        {
-            const std::size_t npcCount{ 20 };
+            const std::size_t npcCount{ 100 };
             m_npcs.reserve(npcCount);
 
             for (std::size_t counter{ 0 }; counter < npcCount; ++counter)
@@ -124,8 +125,9 @@ namespace thornberry
 
             // all NPCs and the player are the same size so steal the player's size to make this
             sf::FloatRect randomRect({ *randomPositionOpt, playerRect.size });
-            randomRect.position -= (playerRect.size * 0.5f);
-            util::scaleRectInPlace(randomRect, 1.2f);
+            randomRect.position -= (playerRect.size * 0.5f); // because sprite origin is centered
+            // randomRect.size.y *= 0.3f;                // a third looks good so keep this magic
+            util::scaleRectInPlace(randomRect, 1.2f); // this grow seems to help prevent overlap
 
             // check if random position collides with the player
             if (randomRect.findIntersection(playerRect).has_value())
