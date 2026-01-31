@@ -63,6 +63,7 @@ namespace thornberry
         TreeJungle,
         TreeSnow,
         Water,
+        Water2,
         Count
     };
 
@@ -123,6 +124,7 @@ namespace thornberry
             case TileImage::TreeJungle:             { return "tree-jungle"; }
             case TileImage::TreeSnow:               { return "tree-snow"; }
             case TileImage::Water:                  { return "water"; }
+            case TileImage::Water2:                 { return "water2"; }
             case TileImage::Count:                  { return "count"; }
             default:                                { return "Error_TileImage_Unknown"; }
         }
@@ -184,6 +186,7 @@ namespace thornberry
         else if (t_filename == "tree-jungle")           { return TileImage::TreeJungle; }
         else if (t_filename == "tree-snow")             { return TileImage::TreeSnow; }
         else if (t_filename == "water")                 { return TileImage::Water; }
+        else if (t_filename == "water2")                { return TileImage::Water2; }
         else
         {
             return TileImage::Count;

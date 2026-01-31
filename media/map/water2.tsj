@@ -1,0 +1,80 @@
+{ "columns":5,
+ "image":"..\/image\/map\/water2.png",
+ "imageheight":120,
+ "imagewidth":200,
+ "margin":0,
+ "name":"water2",
+ "spacing":0,
+ "tilecount":15,
+ "tiledversion":"1.11.2",
+ "tileheight":40,
+ "tilewidth":40,
+ "type":"tileset",
+ "version":"1.10",
+ "wangsets":[
+        {
+         "colors":[
+                {
+                 "color":"#ff0000",
+                 "name":"",
+                 "probability":1,
+                 "tile":-1
+                }],
+         "name":"Water",
+         "tile":-1,
+         "type":"corner",
+         "wangtiles":[
+                {
+                 "tileid":0,
+                 "wangid":[0, 0, 0, 1, 0, 0, 0, 0]
+                }, 
+                {
+                 "tileid":1,
+                 "wangid":[0, 0, 0, 1, 0, 1, 0, 0]
+                }, 
+                {
+                 "tileid":2,
+                 "wangid":[0, 0, 0, 0, 0, 1, 0, 0]
+                }, 
+                {
+                 "tileid":5,
+                 "wangid":[0, 1, 0, 1, 0, 0, 0, 0]
+                }, 
+                {
+                 "tileid":6,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":7,
+                 "wangid":[0, 0, 0, 0, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":8,
+                 "wangid":[0, 1, 0, 0, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":9,
+                 "wangid":[0, 1, 0, 1, 0, 0, 0, 1]
+                }, 
+                {
+                 "tileid":10,
+                 "wangid":[0, 1, 0, 0, 0, 0, 0, 0]
+                }, 
+                {
+                 "tileid":11,
+                 "wangid":[0, 1, 0, 0, 0, 0, 0, 1]
+                }, 
+                {
+                 "tileid":12,
+                 "wangid":[0, 0, 0, 0, 0, 0, 0, 1]
+                }, 
+                {
+                 "tileid":13,
+                 "wangid":[0, 0, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":14,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 0]
+                }]
+        }]
+}
