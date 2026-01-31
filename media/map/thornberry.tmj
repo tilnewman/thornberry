@@ -917,6 +917,17 @@
                  "width":123,
                  "x":2041,
                  "y":2278
+                }, 
+                {
+                 "height":48,
+                 "id":131,
+                 "name":"metal-trap",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":108,
+                 "x":1948,
+                 "y":2454
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2069,7 +2080,7 @@
          "y":0
         }],
  "nextlayerid":44,
- "nextobjectid":131,
+ "nextobjectid":132,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

@@ -1,7 +1,7 @@
-#ifndef ANIM_PLANT_TRAP_HPP_INCLUDED
-#define ANIM_PLANT_TRAP_HPP_INCLUDED
+#ifndef ANIM_METAL_TRAP_HPP_INCLUDED
+#define ANIM_METAL_TRAP_HPP_INCLUDED
 //
-// anim-plant-trap.hpp
+// anim-metal-trap.hpp
 //
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
@@ -18,7 +18,7 @@ namespace thornberry
     struct Context;
 
     //
-    enum class PlantTrapState
+    enum class MetalTrapState
     {
         Delay,
         Ready,
@@ -26,26 +26,26 @@ namespace thornberry
     };
 
     //
-    struct PlantTrapAnimation
+    struct MetalTrapAnimation
     {
-        PlantTrapAnimation(
+        MetalTrapAnimation(
             const sf::Texture & t_texture,
             const sf::FloatRect & t_mapRect,
             const sf::Vector2i & m_cellSize);
 
         sf::Sprite sprite;
         sf::FloatRect offscreen_rect;
-        PlantTrapState state;
+        MetalTrapState state;
         float elapsed_sec;
         std::size_t frame_index;
 
     };
 
     //
-    class PlantTrapAnimationManager
+    class MetalTrapAnimationManager
     {
       public:
-        PlantTrapAnimationManager();
+        MetalTrapAnimationManager();
 
         void setup(const Config & t_config);
         void postLevelLoadSetup(const Context & t_context);
@@ -58,9 +58,9 @@ namespace thornberry
       private:
         sf::Texture m_texture;
         sf::Vector2i m_cellSize;
-        std::vector<PlantTrapAnimation> m_animations;
+        std::vector<MetalTrapAnimation> m_animations;
     };
 
 } // namespace thornberry
 
-#endif // ANIM_PLANT_TRAP_HPP_INCLUDED
+#endif // ANIM_METAL_TRAP_HPP_INCLUDED

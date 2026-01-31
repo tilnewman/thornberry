@@ -10,6 +10,7 @@
 #include "anim-layer-lamp.hpp"
 #include "anim-layer-pickup.hpp"
 #include "anim-lightning.hpp"
+#include "anim-metal-trap.hpp"
 #include "anim-plant-trap.hpp"
 #include "check-macros.hpp"
 #include "config.hpp"
@@ -406,6 +407,10 @@ namespace thornberry
             else if (name == "plant-trap")
             {
                 t_context.plant_trap.add(rect);
+            }
+            else if (name == "metal-trap")
+            {
+                t_context.metal_trap.add(rect);
             }
             else
             {

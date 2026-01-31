@@ -5,6 +5,7 @@
 //
 #include "anim-acid-spout.hpp"
 #include "anim-lightning.hpp"
+#include "anim-metal-trap.hpp"
 #include "anim-plant-trap.hpp"
 #include "config.hpp"
 #include "context.hpp"
@@ -71,6 +72,7 @@ namespace thornberry
         std::unique_ptr<NpcManager> m_npcManagerUPtr;
         std::unique_ptr<AcidSpoutAnimationManager> m_acidSpoutAnimationManagerUPtr;
         std::unique_ptr<PlantTrapAnimationManager> m_plantTrapAnimationManagerUPtr;
+        std::unique_ptr<MetalTrapAnimationManager> m_metalTrapAnimationManagerUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 

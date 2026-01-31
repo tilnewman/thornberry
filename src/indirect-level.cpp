@@ -5,6 +5,7 @@
 
 #include "anim-acid-spout.hpp"
 #include "anim-lightning.hpp"
+#include "anim-metal-trap.hpp"
 #include "anim-plant-trap.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
@@ -111,6 +112,7 @@ namespace thornberry
         t_context.lightning.clear();
         t_context.acid_spout.clear();
         t_context.plant_trap.clear();
+        t_context.metal_trap.clear();
     }
 
     void IndirectLevel::setLevelDetails(
@@ -225,6 +227,7 @@ namespace thornberry
         t_context.npc.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
         t_context.acid_spout.draw(m_renderTexture, m_renderStates);
         t_context.plant_trap.draw(m_renderTexture, m_renderStates);
+        t_context.metal_trap.draw(m_renderTexture, m_renderStates);
 
         t_context.player.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
 
@@ -290,6 +293,7 @@ namespace thornberry
         t_context.lightning.move(t_move);
         t_context.acid_spout.move(t_move);
         t_context.plant_trap.move(t_move);
+        t_context.metal_trap.move(t_move);
     }
 
     void IndirectLevel::draw(
@@ -554,6 +558,7 @@ namespace thornberry
         t_context.acid_spout.postLevelLoadSetup(t_context);
         t_context.npc.postLevelLoadSetup(t_context);
         t_context.plant_trap.postLevelLoadSetup(t_context);
+        t_context.metal_trap.postLevelLoadSetup(t_context);
     }
 
     void IndirectLevel::moveAllLayers(const sf::Vector2f & t_move)

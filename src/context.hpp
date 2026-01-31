@@ -27,6 +27,7 @@ namespace thornberry
     class NpcManager;
     class AcidSpoutAnimationManager;
     class PlantTrapAnimationManager;
+    class MetalTrapAnimationManager;
 
     //
     struct Context
@@ -48,7 +49,8 @@ namespace thornberry
             MusicParticleManager & t_musicParticleManager,
             NpcManager & t_npcManager,
             AcidSpoutAnimationManager & t_acidSpoutAnimationManager,
-            PlantTrapAnimationManager & t_plantTrapAnimationManager)
+            PlantTrapAnimationManager & t_plantTrapAnimationManager,
+            MetalTrapAnimationManager & t_metalTrapAnimationManager)
             : config{ t_config }
             , screen_layout{ t_screenLayout }
             , random{ t_random }
@@ -66,6 +68,7 @@ namespace thornberry
             , npc{ t_npcManager }
             , acid_spout{ t_acidSpoutAnimationManager }
             , plant_trap{ t_plantTrapAnimationManager }
+            , metal_trap{ t_metalTrapAnimationManager }
         {}
 
         const Config & config;
@@ -85,6 +88,7 @@ namespace thornberry
         NpcManager & npc;
         AcidSpoutAnimationManager & acid_spout;
         PlantTrapAnimationManager & plant_trap;
+        MetalTrapAnimationManager & metal_trap;
     };
 
 } // namespace thornberry
