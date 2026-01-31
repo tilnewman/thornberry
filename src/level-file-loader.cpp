@@ -2,22 +2,17 @@
 // level-file-loader.cpp
 //
 #include "level-file-loader.hpp"
-
-#include "anim-acid-spout.hpp"
 #include "anim-layer-campfire.hpp"
 #include "anim-layer-candleflame.hpp"
 #include "anim-layer-fire.hpp"
 #include "anim-layer-lamp.hpp"
 #include "anim-layer-pickup.hpp"
-#include "anim-lightning.hpp"
-#include "anim-metal-trap.hpp"
-#include "anim-plant-trap.hpp"
 #include "check-macros.hpp"
 #include "config.hpp"
 #include "map-textures.hpp"
+#include "predraw-animations.hpp"
 #include "screen-layout.hpp"
 #include "sfml-util.hpp"
-#include "sparkle-particle.hpp"
 
 #include <filesystem>
 #include <fstream>
@@ -394,23 +389,23 @@ namespace thornberry
             }
             else if (name == "sparkle")
             {
-                t_context.sparkle.add(t_context, rect);
+                t_context.predraw_anim.sparkle().add(t_context, rect);
             }
             else if (name == "lightning-trap")
             {
-                t_context.lightning.add(t_context, rect);
+                t_context.predraw_anim.lightningTrap().add(t_context, rect);
             }
             else if (name == "acid-trap")
             {
-                t_context.acid_spout.add(t_context, rect);
+                t_context.predraw_anim.acidTrap().add(t_context, rect);
             }
             else if (name == "plant-trap")
             {
-                t_context.plant_trap.add(rect);
+                t_context.predraw_anim.plantTrap().add(rect);
             }
             else if (name == "metal-trap")
             {
-                t_context.metal_trap.add(rect);
+                t_context.predraw_anim.metalTrap().add(rect);
             }
             else
             {

@@ -21,13 +21,8 @@ namespace thornberry
     class FontManager;
     class PickupImageManager;
     class SmokeParticleEffects;
-    class SparkleParticleEffects;
-    class LightningAnimationManager;
-    class MusicParticleManager;
     class NpcManager;
-    class AcidSpoutAnimationManager;
-    class PlantTrapAnimationManager;
-    class MetalTrapAnimationManager;
+    class PredrawAnimations;
 
     //
     struct Context
@@ -44,13 +39,8 @@ namespace thornberry
             util::MusicPlayer & t_musicPlayer,
             PickupImageManager & t_pickupImageManager,
             SmokeParticleEffects & t_smokeParticleEffects,
-            SparkleParticleEffects & t_sparkleParticleEffects,
-            LightningAnimationManager & t_lightningAnimationManager,
-            MusicParticleManager & t_musicParticleManager,
             NpcManager & t_npcManager,
-            AcidSpoutAnimationManager & t_acidSpoutAnimationManager,
-            PlantTrapAnimationManager & t_plantTrapAnimationManager,
-            MetalTrapAnimationManager & t_metalTrapAnimationManager)
+            PredrawAnimations & t_predrawAnimations)
             : config{ t_config }
             , screen_layout{ t_screenLayout }
             , random{ t_random }
@@ -62,13 +52,8 @@ namespace thornberry
             , music{ t_musicPlayer }
             , pickup_image{ t_pickupImageManager }
             , smoke{ t_smokeParticleEffects }
-            , sparkle{ t_sparkleParticleEffects }
-            , lightning{ t_lightningAnimationManager }
-            , musical_note{ t_musicParticleManager }
             , npc{ t_npcManager }
-            , acid_spout{ t_acidSpoutAnimationManager }
-            , plant_trap{ t_plantTrapAnimationManager }
-            , metal_trap{ t_metalTrapAnimationManager }
+            , predraw_anim{ t_predrawAnimations }
         {}
 
         const Config & config;
@@ -82,13 +67,8 @@ namespace thornberry
         util::MusicPlayer & music;
         PickupImageManager & pickup_image;
         SmokeParticleEffects & smoke;
-        SparkleParticleEffects & sparkle;
-        LightningAnimationManager & lightning;
-        MusicParticleManager & musical_note;
         NpcManager & npc;
-        AcidSpoutAnimationManager & acid_spout;
-        PlantTrapAnimationManager & plant_trap;
-        MetalTrapAnimationManager & metal_trap;
+        PredrawAnimations & predraw_anim;
     };
 
 } // namespace thornberry

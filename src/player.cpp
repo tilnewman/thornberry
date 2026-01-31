@@ -5,8 +5,8 @@
 
 #include "context.hpp"
 #include "indirect-level.hpp"
-#include "music-particle.hpp"
 #include "music-player.hpp"
+#include "predraw-animations.hpp"
 #include "screen-layout.hpp"
 #include "sound-player.hpp"
 
@@ -68,7 +68,7 @@ namespace thornberry
                 t_context.level.stopWalkSound(t_context);
 
                 t_context.sfx.play("flute");
-                t_context.musical_note.add(t_context, collisionMapRect());
+                t_context.predraw_anim.music().add(t_context, collisionMapRect());
             }
             else if (keyPressedPtr->scancode == sf::Keyboard::Scancode::D)
             {

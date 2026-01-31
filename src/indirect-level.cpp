@@ -3,21 +3,16 @@
 //
 #include "indirect-level.hpp"
 
-#include "anim-acid-spout.hpp"
-#include "anim-lightning.hpp"
-#include "anim-metal-trap.hpp"
-#include "anim-plant-trap.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "level-file-loader.hpp"
-#include "music-particle.hpp"
 #include "music-player.hpp"
 #include "npc-manager.hpp"
 #include "player.hpp"
+#include "predraw-animations.hpp"
 #include "screen-layout.hpp"
 #include "smoke-particle.hpp"
 #include "sound-player.hpp"
-#include "sparkle-particle.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -108,11 +103,7 @@ namespace thornberry
                                     screenRect.size.y } };
 
         t_context.smoke.clear();
-        t_context.sparkle.clear();
-        t_context.lightning.clear();
-        t_context.acid_spout.clear();
-        t_context.plant_trap.clear();
-        t_context.metal_trap.clear();
+        t_context.predraw_anim.clear();
     }
 
     void IndirectLevel::setLevelDetails(
@@ -221,13 +212,8 @@ namespace thornberry
         m_renderTexture.clear(sf::Color::Black);
 
         drawLowerLayers(m_renderTexture, m_renderStates);
-        t_context.sparkle.draw(m_renderTexture, m_renderStates);
-        t_context.lightning.draw(m_renderTexture, m_renderStates);
-        t_context.musical_note.draw(m_renderTexture, m_renderStates);
+        t_context.predraw_anim.draw(m_renderTexture, m_renderStates);
         t_context.npc.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
-        t_context.acid_spout.draw(m_renderTexture, m_renderStates);
-        t_context.plant_trap.draw(m_renderTexture, m_renderStates);
-        t_context.metal_trap.draw(m_renderTexture, m_renderStates);
 
         t_context.player.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
 
@@ -289,11 +275,7 @@ namespace thornberry
     {
         moveAllLayers(t_move);
         t_context.smoke.move(t_move);
-        t_context.sparkle.move(t_move);
-        t_context.lightning.move(t_move);
-        t_context.acid_spout.move(t_move);
-        t_context.plant_trap.move(t_move);
-        t_context.metal_trap.move(t_move);
+        t_context.predraw_anim.move(t_move);
     }
 
     void IndirectLevel::draw(
@@ -553,12 +535,8 @@ namespace thornberry
             layerUPtr->postLevelLoadSetup(t_context);
         }
 
-        t_context.sparkle.postLevelLoadSetup(t_context);
-        t_context.lightning.postLevelLoadSetup(t_context);
-        t_context.acid_spout.postLevelLoadSetup(t_context);
+        t_context.predraw_anim.postLevelLoadSetup(t_context);
         t_context.npc.postLevelLoadSetup(t_context);
-        t_context.plant_trap.postLevelLoadSetup(t_context);
-        t_context.metal_trap.postLevelLoadSetup(t_context);
     }
 
     void IndirectLevel::moveAllLayers(const sf::Vector2f & t_move)

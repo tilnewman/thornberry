@@ -182,4 +182,17 @@ namespace thornberry
         // clang-format on
     }
 
+    void MusicParticleManager::move(const sf::Vector2f & t_move)
+    {
+        for (MusicAnimation & anim : m_animations)
+        {
+            anim.offscreen_rect.position += t_move;
+
+            for (MusicParticle & particle : anim.particles)
+            {
+                particle.sprite.move(t_move);
+            }
+        }
+    }
+
 } // namespace thornberry

@@ -32,13 +32,8 @@ namespace thornberry
         , m_musicPlayerUPtr{}
         , m_pickupImageManagerUPtr{}
         , m_smokeParticleEffectsUPtr{}
-        , m_sparkleParticleEffectsUPtr{}
-        , m_lightningAnimationManagerUPtr{}
-        , m_musicParticleManagerUPtr{}
         , m_npcManagerUPtr{}
-        , m_acidSpoutAnimationManagerUPtr{}
-        , m_plantTrapAnimationManagerUPtr{}
-        , m_metalTrapAnimationManagerUPtr{}
+        , m_predrawAnimationsUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -60,24 +55,19 @@ namespace thornberry
         MapTextureManager::instance().setup();
         AvatarImageManager::instance().setup(m_config);
 
-        m_randomUPtr                    = std::make_unique<util::Random>();
-        m_soundPlayerUPtr               = std::make_unique<util::SoundPlayer>(*m_randomUPtr);
-        m_musicPlayerUPtr               = std::make_unique<util::MusicPlayer>();
-        m_screenLayoutUPtr              = std::make_unique<ScreenLayout>();
-        m_levelUPtr                     = std::make_unique<IndirectLevel>();
-        m_levelFileLoaderUPtr           = std::make_unique<LevelFileLoader>();
-        m_playerUPtr                    = std::make_unique<Player>(AvatarImage::puck_female_light);
-        m_fontManagerUPtr               = std::make_unique<FontManager>();
-        m_framerateUPtr                 = std::make_unique<FrameRateDisplay>();
-        m_pickupImageManagerUPtr        = std::make_unique<PickupImageManager>();
-        m_smokeParticleEffectsUPtr      = std::make_unique<SmokeParticleEffects>();
-        m_sparkleParticleEffectsUPtr    = std::make_unique<SparkleParticleEffects>();
-        m_lightningAnimationManagerUPtr = std::make_unique<LightningAnimationManager>();
-        m_musicParticleManagerUPtr      = std::make_unique<MusicParticleManager>();
-        m_npcManagerUPtr                = std::make_unique<NpcManager>();
-        m_acidSpoutAnimationManagerUPtr = std::make_unique<AcidSpoutAnimationManager>();
-        m_plantTrapAnimationManagerUPtr = std::make_unique<PlantTrapAnimationManager>();
-        m_metalTrapAnimationManagerUPtr = std::make_unique<MetalTrapAnimationManager>();
+        m_randomUPtr               = std::make_unique<util::Random>();
+        m_soundPlayerUPtr          = std::make_unique<util::SoundPlayer>(*m_randomUPtr);
+        m_musicPlayerUPtr          = std::make_unique<util::MusicPlayer>();
+        m_screenLayoutUPtr         = std::make_unique<ScreenLayout>();
+        m_levelUPtr                = std::make_unique<IndirectLevel>();
+        m_levelFileLoaderUPtr      = std::make_unique<LevelFileLoader>();
+        m_playerUPtr               = std::make_unique<Player>(AvatarImage::puck_female_light);
+        m_fontManagerUPtr          = std::make_unique<FontManager>();
+        m_framerateUPtr            = std::make_unique<FrameRateDisplay>();
+        m_pickupImageManagerUPtr   = std::make_unique<PickupImageManager>();
+        m_smokeParticleEffectsUPtr = std::make_unique<SmokeParticleEffects>();
+        m_npcManagerUPtr           = std::make_unique<NpcManager>();
+        m_predrawAnimationsUPtr    = std::make_unique<PredrawAnimations>();
 
         m_contextUPtr = std::make_unique<Context>(
             m_config,
@@ -91,25 +81,15 @@ namespace thornberry
             *m_musicPlayerUPtr,
             *m_pickupImageManagerUPtr,
             *m_smokeParticleEffectsUPtr,
-            *m_sparkleParticleEffectsUPtr,
-            *m_lightningAnimationManagerUPtr,
-            *m_musicParticleManagerUPtr,
             *m_npcManagerUPtr,
-            *m_acidSpoutAnimationManagerUPtr,
-            *m_plantTrapAnimationManagerUPtr,
-            *m_metalTrapAnimationManagerUPtr);
+            *m_predrawAnimationsUPtr);
 
         m_soundPlayerUPtr->setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayerUPtr->loadAll();
 
         m_musicPlayerUPtr->setup((m_config.media_path / "music").string());
 
-        m_metalTrapAnimationManagerUPtr->setup(m_config);
-        m_plantTrapAnimationManagerUPtr->setup(m_config);
-        m_acidSpoutAnimationManagerUPtr->setup(m_config);
-        m_musicParticleManagerUPtr->setup(m_config);
-        m_lightningAnimationManagerUPtr->setup(m_config);
-        m_sparkleParticleEffectsUPtr->setup(m_config);
+        m_predrawAnimationsUPtr->setup(m_config);
         m_smokeParticleEffectsUPtr->setup(m_config);
         m_pickupImageManagerUPtr->setup(m_config);
         m_screenLayoutUPtr->setup(m_config);
@@ -151,13 +131,8 @@ namespace thornberry
         m_musicPlayerUPtr.reset();
         m_pickupImageManagerUPtr.reset();
         m_smokeParticleEffectsUPtr.reset();
-        m_sparkleParticleEffectsUPtr.reset();
-        m_lightningAnimationManagerUPtr.reset();
-        m_musicParticleManagerUPtr.reset();
         m_npcManagerUPtr.reset();
-        m_acidSpoutAnimationManagerUPtr.reset();
-        m_plantTrapAnimationManagerUPtr.reset();
-        m_metalTrapAnimationManagerUPtr.reset();
+        m_predrawAnimationsUPtr.reset();
 
         MapTextureManager::instance().teardown();
         AvatarImageManager::instance().teardown();
@@ -199,12 +174,7 @@ namespace thornberry
         m_playerUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_npcManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_smokeParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
-        m_sparkleParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
-        m_lightningAnimationManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
-        m_musicParticleManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
-        m_acidSpoutAnimationManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
-        m_plantTrapAnimationManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
-        m_metalTrapAnimationManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
+        m_predrawAnimationsUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_framerateUPtr->update(*m_contextUPtr, t_elapsedSec);
     }
 

@@ -54,9 +54,11 @@ namespace thornberry
         MusicParticleManager();
 
         void setup(const Config & t_config);
+        void postLevelLoadSetup(const Context &) {}
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void update(const Context & t_context, const float t_elapsedSec);
         void add(const Context & t_context, const sf::FloatRect & t_mapRect);
+        void move(const sf::Vector2f & t_move);
         inline void clear() { m_animations.clear(); }
 
       private:

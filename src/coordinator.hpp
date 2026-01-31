@@ -3,26 +3,21 @@
 //
 // coordinator.hpp
 //
-#include "anim-acid-spout.hpp"
-#include "anim-lightning.hpp"
-#include "anim-metal-trap.hpp"
-#include "anim-plant-trap.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "font.hpp"
 #include "framerate.hpp"
 #include "indirect-level.hpp"
 #include "level-file-loader.hpp"
-#include "music-particle.hpp"
 #include "music-player.hpp"
 #include "npc-manager.hpp"
 #include "pickup-image-manager.hpp"
 #include "player.hpp"
+#include "predraw-animations.hpp"
 #include "random.hpp"
 #include "screen-layout.hpp"
 #include "smoke-particle.hpp"
 #include "sound-player.hpp"
-#include "sparkle-particle.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -66,13 +61,8 @@ namespace thornberry
         std::unique_ptr<util::MusicPlayer> m_musicPlayerUPtr;
         std::unique_ptr<PickupImageManager> m_pickupImageManagerUPtr;
         std::unique_ptr<SmokeParticleEffects> m_smokeParticleEffectsUPtr;
-        std::unique_ptr<SparkleParticleEffects> m_sparkleParticleEffectsUPtr;
-        std::unique_ptr<LightningAnimationManager> m_lightningAnimationManagerUPtr;
-        std::unique_ptr<MusicParticleManager> m_musicParticleManagerUPtr;
         std::unique_ptr<NpcManager> m_npcManagerUPtr;
-        std::unique_ptr<AcidSpoutAnimationManager> m_acidSpoutAnimationManagerUPtr;
-        std::unique_ptr<PlantTrapAnimationManager> m_plantTrapAnimationManagerUPtr;
-        std::unique_ptr<MetalTrapAnimationManager> m_metalTrapAnimationManagerUPtr;
+        std::unique_ptr<PredrawAnimations> m_predrawAnimationsUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 
