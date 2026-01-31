@@ -1046,12 +1046,12 @@ namespace util
 
     //
 
-    inline const sf::IntRect cellRect(
+    inline const sf::IntRect animationCellRect(
         const std::size_t t_cellIndex,
         const sf::Vector2u & t_textureSize,
         const sf::Vector2i & t_cellSize)
     {
-        sf::IntRect rect({ 0, 0 }, t_cellSize );
+        sf::IntRect rect({ 0, 0 }, t_cellSize);
 
         if ((t_textureSize.x > 0) && (t_textureSize.y > 0) && (t_cellSize.x > 0) &&
             (t_cellSize.y > 0) && (static_cast<int>(t_textureSize.x) >= t_cellSize.x) &&

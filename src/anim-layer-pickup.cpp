@@ -103,7 +103,7 @@ namespace thornberry
             pickup.sprite.move(t_move);
         }
 
-        //don't move the animations
+        // don't move the animations
     }
 
     void AnimLayerPickup::update(const Context &, const float t_elapsedSec)
@@ -121,7 +121,7 @@ namespace thornberry
                 }
 
                 pickup.sprite.setTextureRect(
-                    util::cellRect(pickup.frame_index, { 320u, 32u }, m_cellSize));
+                    util::animationCellRect(pickup.frame_index, { 320u, 32u }, m_cellSize));
             }
         }
 

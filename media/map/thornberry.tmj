@@ -906,6 +906,17 @@
                  "width":40,
                  "x":1880,
                  "y":2360
+                }, 
+                {
+                 "height":82,
+                 "id":130,
+                 "name":"plant-trap",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":123,
+                 "x":2041,
+                 "y":2278
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2058,7 +2069,7 @@
          "y":0
         }],
  "nextlayerid":44,
- "nextobjectid":130,
+ "nextobjectid":131,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

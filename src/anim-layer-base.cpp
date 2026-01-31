@@ -58,7 +58,8 @@ namespace thornberry
                 m_frameIndex = 0;
             }
 
-            m_sprite.setTextureRect(util::cellRect(m_frameIndex, m_texture.getSize(), m_cellSize));
+            m_sprite.setTextureRect(
+                util::animationCellRect(m_frameIndex, m_texture.getSize(), m_cellSize));
         }
     }
 

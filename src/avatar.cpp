@@ -124,7 +124,7 @@ namespace thornberry
         {
             updateWalkPosition(t_context, t_elapsedSec);
         }
-        
+
         updateAnimation(t_context, t_elapsedSec);
         updateHurtAnimation(t_context, t_elapsedSec);
     }
@@ -255,7 +255,7 @@ namespace thornberry
         const auto cellIndex{ static_cast<std::size_t>(m_animCells.at(m_animIndex) - 1) };
 
         m_sprite.setTextureRect(
-            util::cellRect(cellIndex, m_sprite.getTexture().getSize(), { 64, 64 }));
+            util::animationCellRect(cellIndex, m_sprite.getTexture().getSize(), { 64, 64 }));
 
         util::setOriginToCenter(m_sprite);
     }

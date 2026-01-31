@@ -10,6 +10,7 @@
 #include "anim-layer-lamp.hpp"
 #include "anim-layer-pickup.hpp"
 #include "anim-lightning.hpp"
+#include "anim-plant-trap.hpp"
 #include "check-macros.hpp"
 #include "config.hpp"
 #include "map-textures.hpp"
@@ -401,6 +402,10 @@ namespace thornberry
             else if (name == "acid-trap")
             {
                 t_context.acid_spout.add(t_context, rect);
+            }
+            else if (name == "plant-trap")
+            {
+                t_context.plant_trap.add(rect);
             }
             else
             {

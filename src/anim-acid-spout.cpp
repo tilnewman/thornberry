@@ -40,7 +40,7 @@ namespace thornberry
     {
         // spout sprite
         spout_sprite.setTextureRect(
-            util::cellRect(spout_frame_index, t_spoutTexture.getSize(), t_spoutCellSize));
+            util::animationCellRect(spout_frame_index, t_spoutTexture.getSize(), t_spoutCellSize));
 
         util::fitAndCenterInside(spout_sprite, t_mapRect);
         spout_sprite.setPosition({ spout_sprite.getPosition().x, t_mapRect.position.y });
@@ -51,7 +51,7 @@ namespace thornberry
 
         // splat sprite
         splat_sprite.setTextureRect(
-            util::cellRect(splat_frame_index, t_splatTexture.getSize(), t_splatCellSize));
+            util::animationCellRect(splat_frame_index, t_splatTexture.getSize(), t_splatCellSize));
 
         sf::FloatRect splatSizeRect{ t_mapRect };
         splatSizeRect.position.x -= (splatSizeRect.size.x * 0.5f);
@@ -152,7 +152,7 @@ namespace thornberry
                         }
 
                         anim.spout_sprite.setTextureRect(
-                            util::cellRect(
+                            util::animationCellRect(
                                 anim.spout_frame_index, m_spoutTexture.getSize(), m_spoutCellSize));
                     }
                 }
@@ -191,7 +191,7 @@ namespace thornberry
                     }
 
                     anim.splat_sprite.setTextureRect(
-                        util::cellRect(
+                        util::animationCellRect(
                             anim.splat_frame_index, m_splatTexture.getSize(), m_splatCellSize));
                 }
 

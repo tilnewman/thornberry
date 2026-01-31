@@ -37,6 +37,7 @@ namespace thornberry
         , m_musicParticleManagerUPtr{}
         , m_npcManagerUPtr{}
         , m_acidSpoutAnimationManagerUPtr{}
+        , m_plantTrapAnimationManagerUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -74,6 +75,7 @@ namespace thornberry
         m_musicParticleManagerUPtr      = std::make_unique<MusicParticleManager>();
         m_npcManagerUPtr                = std::make_unique<NpcManager>();
         m_acidSpoutAnimationManagerUPtr = std::make_unique<AcidSpoutAnimationManager>();
+        m_plantTrapAnimationManagerUPtr = std::make_unique<PlantTrapAnimationManager>();
 
         m_contextUPtr = std::make_unique<Context>(
             m_config,
@@ -91,13 +93,15 @@ namespace thornberry
             *m_lightningAnimationManagerUPtr,
             *m_musicParticleManagerUPtr,
             *m_npcManagerUPtr,
-            *m_acidSpoutAnimationManagerUPtr);
+            *m_acidSpoutAnimationManagerUPtr,
+            *m_plantTrapAnimationManagerUPtr);
 
         m_soundPlayerUPtr->setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayerUPtr->loadAll();
 
         m_musicPlayerUPtr->setup((m_config.media_path / "music").string());
 
+        m_plantTrapAnimationManagerUPtr->setup(m_config);
         m_acidSpoutAnimationManagerUPtr->setup(m_config);
         m_musicParticleManagerUPtr->setup(m_config);
         m_lightningAnimationManagerUPtr->setup(m_config);
@@ -148,6 +152,7 @@ namespace thornberry
         m_musicParticleManagerUPtr.reset();
         m_npcManagerUPtr.reset();
         m_acidSpoutAnimationManagerUPtr.reset();
+        m_plantTrapAnimationManagerUPtr.reset();
 
         MapTextureManager::instance().teardown();
         AvatarImageManager::instance().teardown();
@@ -193,6 +198,7 @@ namespace thornberry
         m_lightningAnimationManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_musicParticleManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_acidSpoutAnimationManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
+        m_plantTrapAnimationManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_framerateUPtr->update(*m_contextUPtr, t_elapsedSec);
     }
 
