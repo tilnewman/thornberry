@@ -10,6 +10,7 @@
 #include "check-macros.hpp"
 #include "config.hpp"
 #include "map-textures.hpp"
+#include "music-player.hpp"
 #include "predraw-animations.hpp"
 #include "screen-layout.hpp"
 #include "sfml-util.hpp"
@@ -43,10 +44,46 @@ namespace thornberry
 
         parseLevelDetails(t_context, t_filename, json);
         parseTilesets(t_context, json);
+        parseMusic(t_context, json);
 
         // everything else in the level file is saved in "layers"
         // which are parsed in order from back to front
         parseLayers(t_context, json);
+    }
+
+    void LevelFileLoader::parseMusic(const Context & t_context, const nlohmann::json & t_wholeJson)
+    {
+        for (const nlohmann::json & propJson : t_wholeJson["properties"])
+        {
+            const std::string nameStr{ propJson["name"] };
+            const std::string valueStr{ propJson["value"] };
+
+            if ((nameStr == "Music") || (nameStr == "music"))
+            {
+                const Music oldMusic{ t_context.level.music() };
+                const Music newMusic{ musicFromString(valueStr) };
+
+                if (oldMusic == newMusic)
+                {
+                    continue;
+                }
+
+                if (oldMusic != Music::None)
+                {
+                    const std::string oldMusicFilename{ toString(oldMusic) +
+                                                        t_context.config.sound_filename_extension };
+
+                    t_context.music.stop(oldMusicFilename);
+                }
+
+                const std::string newMusicFilename{ toString(newMusic) +
+                                                    t_context.config.sound_filename_extension };
+
+                t_context.music.start(newMusicFilename);
+
+                t_context.level.music(newMusic);
+            }
+        }
     }
 
     void LevelFileLoader::parseLevelDetails(

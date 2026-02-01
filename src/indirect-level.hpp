@@ -56,6 +56,46 @@ namespace thornberry
     }
 
     //
+    enum struct Music
+    {
+        None,
+        Interior,
+        Exterior
+    };
+
+    inline const std::string toString(const Music t_music)
+    {
+        if (t_music == Music::Interior)
+        {
+            return "interior";
+        }
+        else if(t_music == Music::Exterior)
+        {
+            return "exterior";
+        }
+        else // None
+        {
+            return "";
+        }
+    }
+
+    inline Music musicFromString(const std::string & t_musicStr)
+    {
+        if ((t_musicStr == "interior") || (t_musicStr == "Interior"))
+        {
+            return Music::Interior;
+        }
+        else if ((t_musicStr == "exterior") || (t_musicStr == "Exterior"))
+        {
+            return Music::Exterior;
+        }
+        else
+        {
+            return Music::None;
+        }
+    }
+
+    //
     struct Transition
     {
         sf::FloatRect map_rect{};
@@ -89,6 +129,8 @@ namespace thornberry
             draw(const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states);
 
         [[nodiscard]] const std::string name() const { return m_name; }
+        [[nodiscard]] Music music() const { return m_music; }
+        void music(const Music t_music) { m_music = t_music; }
         [[nodiscard]] const sf::Vector2i mapTileCount() const { return m_mapTileCount; }
         [[nodiscard]] const sf::Vector2i textureTileSize() const { return m_textureTileSize; }
         [[nodiscard]] const sf::Vector2f screenTileSize() const { return m_screenTileSize; }
@@ -166,6 +208,7 @@ namespace thornberry
 
       private:
         std::string m_name;
+        Music m_music;
         sf::Vector2i m_mapTileCount;
         sf::Vector2i m_textureTileSize;
         sf::Vector2f m_screenTileSize;

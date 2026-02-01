@@ -475,17 +475,6 @@
                  "width":680,
                  "x":80,
                  "y":0
-                }, 
-                {
-                 "height":0,
-                 "id":62,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":0,
-                 "y":-80
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -494,8 +483,14 @@
          "y":0
         }],
  "nextlayerid":28,
- "nextobjectid":64,
+ "nextobjectid":65,
  "orientation":"orthogonal",
+ "properties":[
+        {
+         "name":"music",
+         "type":"string",
+         "value":"interior"
+        }],
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
  "tileheight":40,

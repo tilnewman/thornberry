@@ -425,6 +425,12 @@
  "nextlayerid":28,
  "nextobjectid":72,
  "orientation":"orthogonal",
+ "properties":[
+        {
+         "name":"music",
+         "type":"string",
+         "value":"interior"
+        }],
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
  "tileheight":40,
