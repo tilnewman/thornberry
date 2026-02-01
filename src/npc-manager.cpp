@@ -91,6 +91,20 @@ namespace thornberry
                 m_drawUpperSprites.emplace_back(npc.getSprites());
             }
         }
+
+        std::sort(
+            std::begin(m_drawLowerSprites),
+            std::end(m_drawLowerSprites),
+            [](const AvatarSprites & a, const AvatarSprites & b) {
+                return (a.avatar.getPosition().y < b.avatar.getPosition().y);
+        });
+
+        std::sort(
+            std::begin(m_drawUpperSprites),
+            std::end(m_drawUpperSprites),
+            [](const AvatarSprites & a, const AvatarSprites & b) {
+                return (a.avatar.getPosition().y < b.avatar.getPosition().y);
+            });
     }
 
     void NpcManager::update(const Context & t_context, const float t_elapsedSec)
