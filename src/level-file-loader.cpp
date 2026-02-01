@@ -53,13 +53,18 @@ namespace thornberry
 
     void LevelFileLoader::parseMusic(const Context & t_context, const nlohmann::json & t_wholeJson)
     {
-        for (const nlohmann::json & propJson : t_wholeJson["properties"])
+        try
         {
-            const std::string nameStr{ propJson["name"] };
-            const std::string valueStr{ propJson["value"] };
-
-            if ((nameStr == "Music") || (nameStr == "music"))
+            for (const nlohmann::json & propJson : t_wholeJson["properties"])
             {
+                const std::string nameStr{ propJson["name"] };
+                const std::string valueStr{ propJson["value"] };
+
+                if ((nameStr != "Music") && (nameStr != "music"))
+                {
+                    continue;
+                }
+
                 const Music oldMusic{ t_context.level.music() };
                 const Music newMusic{ musicFromString(valueStr) };
 
@@ -83,6 +88,16 @@ namespace thornberry
 
                 t_context.level.music(newMusic);
             }
+        }
+        catch (...)
+        {
+            std::cout
+                << "LevelFileLoader::parseMusic() found no music [properties] in the map file: "
+                << m_pathStr
+                << ".  Add a music property to the map.  Ignoring this for now and setting the "
+                   "music to None.\n";
+
+            t_context.level.music(Music::None);
         }
     }
 
