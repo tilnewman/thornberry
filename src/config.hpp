@@ -25,6 +25,7 @@ namespace thornberry
         sf::Color background_mask_color{ 75, 99, 127 };
         sf::Color map_outline_color{ 127, 127, 127 };
         std::string sound_filename_extension{ ".ogg" };
+        float music_volume{ 50.0f }; // 0-100
     };
 
 } // namespace thornberry

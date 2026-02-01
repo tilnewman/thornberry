@@ -79,7 +79,7 @@ namespace thornberry
                 const std::string newMusicFilename{ toString(newMusic) +
                                                     t_context.config.sound_filename_extension };
 
-                t_context.music.start(newMusicFilename);
+                t_context.music.start(newMusicFilename, t_context.config.music_volume);
 
                 t_context.level.music(newMusic);
             }
