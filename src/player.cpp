@@ -6,6 +6,7 @@
 #include "context.hpp"
 #include "indirect-level.hpp"
 #include "music-player.hpp"
+#include "npc-manager.hpp"
 #include "predraw-animations.hpp"
 #include "screen-layout.hpp"
 #include "sound-player.hpp"
@@ -17,9 +18,23 @@ namespace thornberry
         : Avatar(t_image)
     {}
 
+    Player::Player(const Player & t_otherPlayer)
+        : Avatar(t_otherPlayer)
+    {}
+
+    Player::Player(Player & t_otherPlayer)
+        : Avatar(t_otherPlayer)
+    {}
+
     Player::Player(Player && t_otherPlayer)
         : Avatar(std::move(t_otherPlayer))
     {}
+
+    void Player::operator=(const Player & t_otherPlayer) { Avatar::operator=(t_otherPlayer); }
+
+    void Player::operator=(Player & t_otherPlayer) { Avatar::operator=(t_otherPlayer); }
+
+    void Player::operator=(Player && t_otherPlayer) { Avatar::operator=(std::move(t_otherPlayer)); }
 
     void Player::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
@@ -97,10 +112,12 @@ namespace thornberry
         }
     }
 
-    void Player::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
+    bool Player::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
     {
         const float walkAmount{ t_context.screen_layout.calScaleBasedOnResolution(
             t_context, (t_context.config.avatar_walk_speed * t_elapsedSec)) };
+
+        bool didPositionChange{ false };
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up))
         {
@@ -109,6 +126,7 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
+                didPositionChange = true;
             }
         }
 
@@ -119,6 +137,7 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
+                didPositionChange = true;
             }
         }
 
@@ -129,6 +148,7 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
+                didPositionChange = true;
             }
         }
 
@@ -139,8 +159,16 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
+                didPositionChange = true;
             }
         }
+
+        if (didPositionChange)
+        {
+            t_context.npc.setupDrawOrderVectors(t_context);
+        }
+
+        return didPositionChange;
     }
 
 } // namespace thornberry

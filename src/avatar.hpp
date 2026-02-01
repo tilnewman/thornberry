@@ -39,18 +39,54 @@ namespace thornberry
     };
 
     //
+    struct AvatarSprites
+    {
+        AvatarSprites(const sf::Sprite t_avatarSprite, const sf::Sprite t_shadowSprite)
+            : avatar{ t_avatarSprite }
+            , shadow{ t_shadowSprite }
+        {}
+
+        sf::Sprite avatar;
+        sf::Sprite shadow;
+    };
+
+    //
     class Avatar
     {
       public:
+        Avatar() = delete;
         Avatar(const AvatarImage t_image);
-        Avatar(Avatar && t_otherAvatar); // see comment in cpp
+
+        // only including this because it won't be generated since move constructor is user defined
+        Avatar(const Avatar & t_otherAvatar);
+
+        // only including this because it won't be generated since move constructor is user defined
+        Avatar(Avatar & t_otherAvatar);
+
+        // This might get used by a container like std::vector and the default constructed one won't
+        // increment the AvatarImageManager ref_count.
+        Avatar(Avatar && t_otherAvatar);
+
+        // only including this because it won't be generated since move constructor is user defined
+        void operator=(const Avatar & t_otherAvatar);
+
+        // only including this because it won't be generated since move constructor is user defined
+        void operator=(Avatar & t_otherAvatar);
+
+        // only including this because it won't be generated since move constructor is user defined
+        void operator=(Avatar && t_otherAvatar);
+
+        Avatar(const Avatar && t_otherAvatar)         = delete;
+        void operator=(const Avatar && t_otherAvatar) = delete;
+
         virtual ~Avatar();
-        void operator=(const Avatar & t_otherAvatar); // see comment in cpp
 
         void startHurtAnimation();
         void setup(const Context & t_context);
         void setPosition(const sf::Vector2f & t_position);
-        virtual void update(const Context & t_context, const float t_elapsedSec);
+
+        // returns true if the avatar moved
+        virtual bool update(const Context & t_context, const float t_elapsedSec);
 
         void draw(
             const sf::Vector2f & t_positionOffset,
@@ -60,13 +96,28 @@ namespace thornberry
         [[nodiscard]] const sf::FloatRect collisionMapRect() const;
         [[nodiscard]] inline AvatarImage image() const noexcept { return m_image; }
 
+        [[nodiscard]] static inline const sf::FloatRect
+            makeAvatarToAvatarCollisionRect(const sf::FloatRect & t_rect)
+        {
+            sf::FloatRect rect{ t_rect };
+            rect.size.y *= 0.2f;
+            return rect;
+        }
+
+        [[nodiscard]] const AvatarSprites getSprites() const
+        {
+            return { m_sprite, m_shadowSprite };
+        }
+
       protected:
         void updateBlinking(const Context & t_context, const float t_elapsedSec);
-        virtual void updateWalkPosition(const Context & t_context, const float t_elapsedSec) = 0;
         void updateAnimation(const Context & t_context, const float t_elapsedSec);
         void updateHurtAnimation(const Context & t_context, const float t_elapsedSec);
         void setAnim();
         void updateSprite();
+
+        // returns true if the position moved
+        virtual bool updateWalkPosition(const Context & t_context, const float t_elapsedSec) = 0;
 
         [[nodiscard]] float timeBetweenBlinks(const Context & t_context) const;
         [[nodiscard]] static float timeBetweenFrames(const AvatarAnim t_anim);

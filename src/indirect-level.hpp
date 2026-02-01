@@ -69,7 +69,7 @@ namespace thornberry
         {
             return "interior";
         }
-        else if(t_music == Music::Exterior)
+        else if (t_music == Music::Exterior)
         {
             return "exterior";
         }
@@ -175,6 +175,8 @@ namespace thornberry
             const sf::Vector2f & t_move);
 
         void stopWalkSound(const Context & t_context);
+
+        [[nodiscard]] bool isInsideAnyNpcWalkBounds(const sf::FloatRect & t_rect) const;
 
       private:
         void setupOffscreenTileRange(const Context & t_context, const sf::Vector2f & t_entryPos);

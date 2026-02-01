@@ -21,6 +21,8 @@ namespace thornberry
 
     NpcManager::NpcManager()
         : m_npcs{}
+        , m_drawUpperSprites{}
+        , m_drawLowerSprites{}
     {}
 
     void NpcManager::postLevelLoadSetup(const Context & t_context)
@@ -47,7 +49,7 @@ namespace thornberry
         }
         else if (levelName == "thornberry.tmj")
         {
-            const std::size_t npcCount{ 10 };
+            const std::size_t npcCount{ 20 };
             m_npcs.reserve(npcCount);
 
             const auto townFolkImages{ getAvatarImagesTownfolk() };
@@ -65,24 +67,80 @@ namespace thornberry
                 }
             }
         }
+
+        std::sort(std::begin(m_npcs), std::end(m_npcs), [](const Npc & a, const Npc & b) {
+            return (a.collisionMapRect().position.y < b.collisionMapRect().position.y);
+        });
+    }
+
+    void NpcManager::setupDrawOrderVectors(const Context & t_context)
+    {
+        m_drawUpperSprites.clear();
+        m_drawLowerSprites.clear();
+
+        const sf::FloatRect playerRect{ t_context.player.collisionMapRect() };
+
+        for (const Npc & npc : m_npcs)
+        {
+            if (npc.collisionMapRect().position.y < playerRect.position.y)
+            {
+                m_drawLowerSprites.emplace_back(npc.getSprites());
+            }
+            else
+            {
+                m_drawUpperSprites.emplace_back(npc.getSprites());
+            }
+        }
     }
 
     void NpcManager::update(const Context & t_context, const float t_elapsedSec)
     {
+        bool didAnyNpcMove{ false };
         for (Npc & npc : m_npcs)
         {
-            npc.update(t_context, t_elapsedSec);
+            if (npc.update(t_context, t_elapsedSec))
+            {
+                didAnyNpcMove = true;
+            }
+        }
+
+        if (didAnyNpcMove)
+        {
+            setupDrawOrderVectors(t_context);
         }
     }
 
-    void NpcManager::draw(
+    void NpcManager::drawUpper(
         const sf::Vector2f & t_mapToOffscreenOffset,
         sf::RenderTarget & t_target,
         sf::RenderStates t_states) const
     {
-        for (const Npc & npc : m_npcs)
+        for (const AvatarSprites & sprites : m_drawUpperSprites)
         {
-            npc.draw(t_mapToOffscreenOffset, t_target, t_states);
+            sf::Sprite sprite{ sprites.shadow };
+            sprite.move(t_mapToOffscreenOffset);
+            t_target.draw(sprite, t_states);
+
+            sprite = sprites.avatar;
+            sprite.move(t_mapToOffscreenOffset);
+            t_target.draw(sprite, t_states);
+        }
+    }
+
+    void NpcManager::drawLower(
+        const sf::Vector2f & t_mapToOffscreenOffset,
+        sf::RenderTarget & t_target,
+        sf::RenderStates t_states) const
+    {
+        for (const AvatarSprites & sprites : m_drawLowerSprites)
+        {
+            sf::Sprite sprite{ sprites.shadow };
+            sprite.move(t_mapToOffscreenOffset);
+            t_target.draw(sprite, t_states);
+
+            sprite = sprites.avatar;
+            sprite.move(t_mapToOffscreenOffset);
+            t_target.draw(sprite, t_states);
         }
     }
 
@@ -112,8 +170,10 @@ namespace thornberry
     {
         // all of this function is in map coordinates
 
-        const sf::FloatRect playerRect{ t_context.player.collisionMapRect() };
+        const sf::FloatRect playerRect{ Avatar::makeAvatarToAvatarCollisionRect(
+            t_context.player.collisionMapRect()) };
 
+        // this trying x1000 times was just a guess that is more than ample
         for (std::size_t counter{ 0 }; counter < 1000; ++counter)
         {
             const auto randomPositionOpt{ pickRandomSpawnPosition(t_context) };
@@ -134,24 +194,7 @@ namespace thornberry
             }
 
             // ensure the new position is within walk bounds
-            const std::vector<sf::FloatRect> & walkBounds{ t_context.level.npcWalkBounds() };
-            bool didAllFourCornersFitInAnyWalkBound{ false };
-            for (const sf::FloatRect & walkBound : walkBounds)
-            {
-                const sf::Vector2f topLeft{ randomRect.position };
-                const sf::Vector2f topRight{ util::right(randomRect), randomRect.position.y };
-                const sf::Vector2f botLeft{ randomRect.position.x, util::bottom(randomRect) };
-                const sf::Vector2f botRight{ util::right(randomRect), util::bottom(randomRect) };
-
-                if (walkBound.contains(topLeft) && walkBound.contains(topRight) &&
-                    walkBound.contains(botLeft) && walkBound.contains(botRight))
-                {
-                    didAllFourCornersFitInAnyWalkBound = true;
-                    break;
-                }
-            }
-
-            if (!didAllFourCornersFitInAnyWalkBound)
+            if (!t_context.level.isInsideAnyNpcWalkBounds(randomRect))
             {
                 continue;
             }
@@ -175,7 +218,10 @@ namespace thornberry
 
         for (const Npc & npc : m_npcs)
         {
-            if (t_mapRect.findIntersection(npc.collisionMapRect()).has_value())
+            if (t_mapRect
+                    .findIntersection(
+                        Avatar::makeAvatarToAvatarCollisionRect(npc.collisionMapRect()))
+                    .has_value())
             {
                 return true;
             }
@@ -191,12 +237,15 @@ namespace thornberry
 
         for (const Npc & npc : m_npcs)
         {
-            if (& npc == & t_npc)
+            if (&npc == &t_npc)
             {
                 continue;
             }
 
-            if (t_mapRect.findIntersection(npc.collisionMapRect()).has_value())
+            if (t_mapRect
+                    .findIntersection(
+                        Avatar::makeAvatarToAvatarCollisionRect(npc.collisionMapRect()))
+                    .has_value())
             {
                 return true;
             }

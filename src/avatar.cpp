@@ -40,8 +40,46 @@ namespace thornberry
         , m_isHurtColorWhite{ true }
     {}
 
-    // This might get used by a container like std::vector and the default constructed one won't
-    // increment the AvatarImageManager ref_count.
+    Avatar::Avatar(const Avatar & t_otherAvatar)
+        : m_image{ t_otherAvatar.m_image }
+        , m_anim{ t_otherAvatar.m_anim }
+        , m_direction{ t_otherAvatar.m_direction }
+        , m_isAnimating{ t_otherAvatar.m_isAnimating }
+        , m_animCells{ t_otherAvatar.m_animCells }
+        , m_animIndex{ t_otherAvatar.m_animIndex }
+        , m_elapsedSec{ t_otherAvatar.m_elapsedSec }
+        , m_blinkElapsedSec{ t_otherAvatar.m_blinkElapsedSec }
+        , m_timeUntilBlinkSec{ t_otherAvatar.m_timeUntilBlinkSec }
+        , m_sprite{ t_otherAvatar.m_sprite }
+        , m_shadowSprite{ t_otherAvatar.m_shadowSprite }
+        , m_hurtEnableTimerSec{ t_otherAvatar.m_hurtEnableTimerSec }
+        , m_isHurtAnimating{ t_otherAvatar.m_isHurtAnimating }
+        , m_hurtColorCycleTimeSec{ t_otherAvatar.m_hurtColorCycleTimeSec }
+        , m_isHurtColorWhite{ t_otherAvatar.m_isHurtColorWhite }
+    {
+        AvatarImageManager::instance().acquire(m_image);
+    }
+
+    Avatar::Avatar(Avatar & t_otherAvatar)
+        : m_image{ t_otherAvatar.m_image }
+        , m_anim{ t_otherAvatar.m_anim }
+        , m_direction{ t_otherAvatar.m_direction }
+        , m_isAnimating{ t_otherAvatar.m_isAnimating }
+        , m_animCells{ t_otherAvatar.m_animCells }
+        , m_animIndex{ t_otherAvatar.m_animIndex }
+        , m_elapsedSec{ t_otherAvatar.m_elapsedSec }
+        , m_blinkElapsedSec{ t_otherAvatar.m_blinkElapsedSec }
+        , m_timeUntilBlinkSec{ t_otherAvatar.m_timeUntilBlinkSec }
+        , m_sprite{ t_otherAvatar.m_sprite }
+        , m_shadowSprite{ t_otherAvatar.m_shadowSprite }
+        , m_hurtEnableTimerSec{ t_otherAvatar.m_hurtEnableTimerSec }
+        , m_isHurtAnimating{ t_otherAvatar.m_isHurtAnimating }
+        , m_hurtColorCycleTimeSec{ t_otherAvatar.m_hurtColorCycleTimeSec }
+        , m_isHurtColorWhite{ t_otherAvatar.m_isHurtColorWhite }
+    {
+        AvatarImageManager::instance().acquire(m_image);
+    }
+
     Avatar::Avatar(Avatar && t_otherAvatar)
         : m_image{ t_otherAvatar.m_image }
         , m_anim{ t_otherAvatar.m_anim }
@@ -62,8 +100,45 @@ namespace thornberry
         AvatarImageManager::instance().acquire(m_image);
     }
 
-    // only including this because it won't be generated because move constructor is defined
     void Avatar::operator=(const Avatar & t_otherAvatar)
+    {
+        m_image                 = t_otherAvatar.m_image;
+        m_anim                  = t_otherAvatar.m_anim;
+        m_direction             = t_otherAvatar.m_direction;
+        m_isAnimating           = t_otherAvatar.m_isAnimating;
+        m_animCells             = t_otherAvatar.m_animCells;
+        m_animIndex             = t_otherAvatar.m_animIndex;
+        m_elapsedSec            = t_otherAvatar.m_elapsedSec;
+        m_blinkElapsedSec       = t_otherAvatar.m_blinkElapsedSec;
+        m_timeUntilBlinkSec     = t_otherAvatar.m_timeUntilBlinkSec;
+        m_sprite                = t_otherAvatar.m_sprite;
+        m_shadowSprite          = t_otherAvatar.m_shadowSprite;
+        m_hurtEnableTimerSec    = t_otherAvatar.m_hurtEnableTimerSec;
+        m_isHurtAnimating       = t_otherAvatar.m_isHurtAnimating;
+        m_hurtColorCycleTimeSec = t_otherAvatar.m_hurtColorCycleTimeSec;
+        m_isHurtColorWhite      = t_otherAvatar.m_isHurtColorWhite;
+    }
+
+    void Avatar::operator=(Avatar & t_otherAvatar)
+    {
+        m_image                 = t_otherAvatar.m_image;
+        m_anim                  = t_otherAvatar.m_anim;
+        m_direction             = t_otherAvatar.m_direction;
+        m_isAnimating           = t_otherAvatar.m_isAnimating;
+        m_animCells             = t_otherAvatar.m_animCells;
+        m_animIndex             = t_otherAvatar.m_animIndex;
+        m_elapsedSec            = t_otherAvatar.m_elapsedSec;
+        m_blinkElapsedSec       = t_otherAvatar.m_blinkElapsedSec;
+        m_timeUntilBlinkSec     = t_otherAvatar.m_timeUntilBlinkSec;
+        m_sprite                = t_otherAvatar.m_sprite;
+        m_shadowSprite          = t_otherAvatar.m_shadowSprite;
+        m_hurtEnableTimerSec    = t_otherAvatar.m_hurtEnableTimerSec;
+        m_isHurtAnimating       = t_otherAvatar.m_isHurtAnimating;
+        m_hurtColorCycleTimeSec = t_otherAvatar.m_hurtColorCycleTimeSec;
+        m_isHurtColorWhite      = t_otherAvatar.m_isHurtColorWhite;
+    }
+
+    void Avatar::operator=(Avatar && t_otherAvatar) 
     {
         m_image                 = t_otherAvatar.m_image;
         m_anim                  = t_otherAvatar.m_anim;
@@ -116,17 +191,21 @@ namespace thornberry
         m_shadowSprite.move({ 0.0f, (m_sprite.getGlobalBounds().size.y * 0.5f) });
     }
 
-    void Avatar::update(const Context & t_context, const float t_elapsedSec)
+    bool Avatar::update(const Context & t_context, const float t_elapsedSec)
     {
+        bool didPositionChange{ false };
+
         updateBlinking(t_context, t_elapsedSec);
 
         if (m_isAnimating && (AvatarAnim::Walk == m_anim))
         {
-            updateWalkPosition(t_context, t_elapsedSec);
+            didPositionChange = updateWalkPosition(t_context, t_elapsedSec);
         }
 
         updateAnimation(t_context, t_elapsedSec);
         updateHurtAnimation(t_context, t_elapsedSec);
+
+        return didPositionChange;
     }
 
     void Avatar::updateHurtAnimation(const Context &, const float t_elapsedSec)

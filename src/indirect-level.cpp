@@ -214,10 +214,11 @@ namespace thornberry
 
         drawLowerLayers(m_renderTexture, m_renderStates);
         t_context.predraw_anim.draw(m_renderTexture, m_renderStates);
-        t_context.npc.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
+        t_context.npc.drawLower(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
 
         t_context.player.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
 
+        t_context.npc.drawUpper(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
         drawUpperLayers(m_renderTexture, m_renderStates);
         t_context.smoke.draw(m_renderTexture, m_renderStates);
 
@@ -408,7 +409,8 @@ namespace thornberry
             return false;
         }
 
-        if (t_context.npc.doesRectCollideWithAny(playerRect))
+        if (t_context.npc.doesRectCollideWithAny(
+                Avatar::makeAvatarToAvatarCollisionRect(playerRect)))
         {
             return false;
         }
@@ -631,6 +633,25 @@ namespace thornberry
         footstepRect.position.y += adjustment;
 
         return footstepRect;
+    }
+
+    bool IndirectLevel::isInsideAnyNpcWalkBounds(const sf::FloatRect & t_rect) const
+    {
+        for (const sf::FloatRect & walkBound : m_npcWalkBounds)
+        {
+            const sf::Vector2f topLeft{ t_rect.position };
+            const sf::Vector2f topRight{ util::right(t_rect), t_rect.position.y };
+            const sf::Vector2f botLeft{ t_rect.position.x, util::bottom(t_rect) };
+            const sf::Vector2f botRight{ util::right(t_rect), util::bottom(t_rect) };
+
+            if (walkBound.contains(topLeft) && walkBound.contains(topRight) &&
+                walkBound.contains(botLeft) && walkBound.contains(botRight))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 } // namespace thornberry

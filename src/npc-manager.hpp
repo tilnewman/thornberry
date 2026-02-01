@@ -23,7 +23,12 @@ namespace thornberry
         void update(const Context & t_context, const float t_elapsedSec);
         void clear() { m_npcs.clear(); }
 
-        void draw(
+        void drawUpper(
+            const sf::Vector2f & t_mapToOffscreenOffset,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const;
+
+        void drawLower(
             const sf::Vector2f & t_mapToOffscreenOffset,
             sf::RenderTarget & t_target,
             sf::RenderStates t_states) const;
@@ -33,14 +38,21 @@ namespace thornberry
         [[nodiscard]] bool
             doesRectCollideWithAnyExcept(const sf::FloatRect & t_mapRect, const Npc & t_npc) const;
 
-      private:
-        const std::optional<sf::Vector2f> pickRandomSpawnPosition(const Context & t_context) const;
+        void setupDrawOrderVectors(const Context & t_context);
 
-        const std::optional<sf::Vector2f>
+      private:
+        [[nodiscard]] const std::optional<sf::Vector2f>
+            pickRandomSpawnPosition(const Context & t_context) const;
+
+        [[nodiscard]] const std::optional<sf::Vector2f>
             findRandomAvailableSpawnPosition(const Context & t_context) const;
 
       private:
         std::vector<Npc> m_npcs;
+
+        // these vectors hold copes of the sprites in m_npcs
+        std::vector<AvatarSprites> m_drawUpperSprites;
+        std::vector<AvatarSprites> m_drawLowerSprites;
     };
 
 } // namespace thornberry
