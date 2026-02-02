@@ -32,10 +32,6 @@ namespace thornberry
 
     void Player::operator=(const Player & t_otherPlayer) { Avatar::operator=(t_otherPlayer); }
 
-    void Player::operator=(Player & t_otherPlayer) { Avatar::operator=(t_otherPlayer); }
-
-    void Player::operator=(Player && t_otherPlayer) { Avatar::operator=(std::move(t_otherPlayer)); }
-
     void Player::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         if (const auto * keyPressedPtr = t_event.getIf<sf::Event::KeyPressed>())

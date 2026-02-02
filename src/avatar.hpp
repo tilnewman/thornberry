@@ -59,30 +59,15 @@ namespace thornberry
     class Avatar
     {
       public:
-        Avatar() = delete;
         explicit Avatar(const AvatarImage t_image);
 
-        // only including this because it won't be generated since move constructor is user defined
+        // implement all constructors to make sure we call AvatarImageManager::acquire()
         Avatar(const Avatar & t_otherAvatar);
-
-        // only including this because it won't be generated since move constructor is user defined
         Avatar(Avatar & t_otherAvatar);
-
-        // This might get used by a container like std::vector and the default constructed one won't
-        // increment the AvatarImageManager ref_count.
         Avatar(Avatar && t_otherAvatar);
 
-        // only including this because it won't be generated since move constructor is user defined
+        // only including this because it won't be generated since move constructor is defined above
         void operator=(const Avatar & t_otherAvatar);
-
-        // only including this because it won't be generated since move constructor is user defined
-        void operator=(Avatar & t_otherAvatar);
-
-        // only including this because it won't be generated since move constructor is user defined
-        void operator=(Avatar && t_otherAvatar);
-
-        Avatar(const Avatar && t_otherAvatar)         = delete;
-        void operator=(const Avatar && t_otherAvatar) = delete;
 
         virtual ~Avatar();
 

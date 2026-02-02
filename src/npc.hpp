@@ -25,17 +25,15 @@ namespace thornberry
     class Npc : public Avatar
     {
       public:
-        Npc() = delete;
         explicit Npc(const AvatarImage t_image);
-        Npc(const Npc & t_otherNpc);            // see comment in Avatar.hpp
-        Npc(Npc & t_otherNpc);                  // see comment in Avatar.hpp
-        Npc(Npc && t_otherNpc);                 // see comment in Avatar.hpp
-        void operator=(const Npc & t_otherNpc); // see comment in Avatar.hpp
-        void operator=(Npc & t_otherNpc);       // see comment in Avatar.hpp
-        void operator=(Npc && t_otherNpc);      // see comment in Avatar.hpp
-        Npc(const Npc && t_otherNpc)            = delete;
-        void operator=(const Npc && t_otherNpc) = delete;
-        virtual ~Npc() override                 = default;
+
+        // see comment in Avatar.hpp for why these are required
+        Npc(const Npc & t_otherNpc);
+        Npc(Npc & t_otherNpc);
+        Npc(Npc && t_otherNpc);
+        void operator=(const Npc & t_otherNpc);
+
+        virtual ~Npc() override = default;
 
         void standFacingRandomDirection(const Context & t_context);
         void update(const Context & t_context, const float t_elapsedSec) override;

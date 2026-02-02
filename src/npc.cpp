@@ -51,27 +51,10 @@ namespace thornberry
         , m_walkDirections{ t_otherNpc.m_walkDirections }
     {}
 
+    
     void Npc::operator=(const Npc & t_otherNpc)
     {
         Avatar::operator=(t_otherNpc);
-        m_action                   = t_otherNpc.m_action;
-        m_actionElpasedSec         = t_otherNpc.m_actionElpasedSec;
-        m_timeUntilActionChangeSec = t_otherNpc.m_timeUntilActionChangeSec;
-        m_walkDirections           = t_otherNpc.m_walkDirections;
-    }
-
-    void Npc::operator=(Npc & t_otherNpc)
-    {
-        Avatar::operator=(t_otherNpc);
-        m_action                   = t_otherNpc.m_action;
-        m_actionElpasedSec         = t_otherNpc.m_actionElpasedSec;
-        m_timeUntilActionChangeSec = t_otherNpc.m_timeUntilActionChangeSec;
-        m_walkDirections           = t_otherNpc.m_walkDirections;
-    }
-
-    void Npc::operator=(Npc && t_otherNpc) 
-    {
-        Avatar::operator=(std::move(t_otherNpc));
         m_action                   = t_otherNpc.m_action;
         m_actionElpasedSec         = t_otherNpc.m_actionElpasedSec;
         m_timeUntilActionChangeSec = t_otherNpc.m_timeUntilActionChangeSec;

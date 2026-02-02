@@ -115,42 +115,6 @@ namespace thornberry
         m_isHurtColorWhite      = t_otherAvatar.m_isHurtColorWhite;
     }
 
-    void Avatar::operator=(Avatar & t_otherAvatar)
-    {
-        m_image                 = t_otherAvatar.m_image;
-        m_anim                  = t_otherAvatar.m_anim;
-        m_direction             = t_otherAvatar.m_direction;
-        m_isAnimating           = t_otherAvatar.m_isAnimating;
-        m_animCells             = t_otherAvatar.m_animCells;
-        m_animIndex             = t_otherAvatar.m_animIndex;
-        m_elapsedSec            = t_otherAvatar.m_elapsedSec;
-        m_blinkElapsedSec       = t_otherAvatar.m_blinkElapsedSec;
-        m_timeUntilBlinkSec     = t_otherAvatar.m_timeUntilBlinkSec;
-        m_sprites               = t_otherAvatar.m_sprites;
-        m_hurtEnableTimerSec    = t_otherAvatar.m_hurtEnableTimerSec;
-        m_isHurtAnimating       = t_otherAvatar.m_isHurtAnimating;
-        m_hurtColorCycleTimeSec = t_otherAvatar.m_hurtColorCycleTimeSec;
-        m_isHurtColorWhite      = t_otherAvatar.m_isHurtColorWhite;
-    }
-
-    void Avatar::operator=(Avatar && t_otherAvatar)
-    {
-        m_image                 = t_otherAvatar.m_image;
-        m_anim                  = t_otherAvatar.m_anim;
-        m_direction             = t_otherAvatar.m_direction;
-        m_isAnimating           = t_otherAvatar.m_isAnimating;
-        m_animCells             = t_otherAvatar.m_animCells;
-        m_animIndex             = t_otherAvatar.m_animIndex;
-        m_elapsedSec            = t_otherAvatar.m_elapsedSec;
-        m_blinkElapsedSec       = t_otherAvatar.m_blinkElapsedSec;
-        m_timeUntilBlinkSec     = t_otherAvatar.m_timeUntilBlinkSec;
-        m_sprites               = t_otherAvatar.m_sprites;
-        m_hurtEnableTimerSec    = t_otherAvatar.m_hurtEnableTimerSec;
-        m_isHurtAnimating       = t_otherAvatar.m_isHurtAnimating;
-        m_hurtColorCycleTimeSec = t_otherAvatar.m_hurtColorCycleTimeSec;
-        m_isHurtColorWhite      = t_otherAvatar.m_isHurtColorWhite;
-    }
-
     Avatar::~Avatar() { AvatarImageManager::instance().release(m_image); }
 
     void Avatar::setup(const Context & t_context)

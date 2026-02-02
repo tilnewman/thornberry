@@ -11,14 +11,14 @@ namespace thornberry
     class Player : public Avatar
     {
       public:
-        Player() = delete;
         explicit Player(const AvatarImage t_image);
-        Player(const Player & t_otherPlayer);         // see comment in Avatar.hpp
-        Player(Player & t_otherPlayer);               // see comment in Avatar.hpp
-        Player(Player && t_otherPlayer);              // see comment in Avatar.hpp
-        void operator=(const Player & t_otherPlayer); // see comment in Avatar.hpp
-        void operator=(Player & t_otherPlayer);       // see comment in Avatar.hpp
-        void operator=(Player && t_otherPlayer);      // see comment in Avatar.hpp
+
+        // see comment in Avatar.hpp for why these are required
+        Player(const Player & t_otherPlayer);
+        Player(Player & t_otherPlayer);
+        Player(Player && t_otherPlayer);
+        void operator=(const Player & t_otherPlayer);
+
         virtual ~Player() override = default;
 
         void handleEvent(const Context & t_context, const sf::Event & t_event);
