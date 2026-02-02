@@ -35,17 +35,21 @@ namespace thornberry
             return;
         }
 
-        const std::string levelName{ t_context.level.name() };
-        if (levelName == "house.tmj")
-        {
+        const auto randomPlaceNpc = [&](const Context & t_context, const AvatarImage t_image) {
             const auto randomPositionOpt{ findRandomAvailableSpawnPosition(t_context) };
             if (randomPositionOpt.has_value())
             {
-                Npc & npc{ m_npcs.emplace_back(AvatarImage::leather_corporal2_dark) };
+                Npc & npc{ m_npcs.emplace_back(t_image) };
                 npc.setup(t_context);
                 npc.standFacingRandomDirection(t_context);
                 npc.setPosition(*randomPositionOpt);
             }
+        };
+
+        const std::string levelName{ t_context.level.name() };
+        if (levelName == "house.tmj")
+        {
+            randomPlaceNpc(t_context, AvatarImage::leather_corporal2_dark);
         }
         else if (levelName == "thornberry.tmj")
         {
@@ -53,18 +57,9 @@ namespace thornberry
             m_npcs.reserve(npcCount);
 
             const auto townFolkImages{ getAvatarImagesTownfolk() };
-
             for (std::size_t counter{ 0 }; counter < npcCount; ++counter)
             {
-                const AvatarImage image{ t_context.random.from(townFolkImages) };
-                const auto randomPositionOpt{ findRandomAvailableSpawnPosition(t_context) };
-                if (randomPositionOpt.has_value())
-                {
-                    Npc & npc{ m_npcs.emplace_back(image) };
-                    npc.setup(t_context);
-                    npc.standFacingRandomDirection(t_context);
-                    npc.setPosition(*randomPositionOpt);
-                }
+                randomPlaceNpc(t_context, t_context.random.from(townFolkImages));
             }
         }
 
@@ -78,6 +73,11 @@ namespace thornberry
     {
         m_drawUpperSprites.clear();
         m_drawLowerSprites.clear();
+
+        if (m_npcs.empty())
+        {
+            return;
+        }
 
         const sf::FloatRect playerRect{ t_context.player.collisionMapRect() };
 
