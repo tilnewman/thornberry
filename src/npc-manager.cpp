@@ -67,6 +67,10 @@ namespace thornberry
                 }
             }
         }
+
+        std::sort(std::begin(m_npcs), std::end(m_npcs), [](const Npc & a, const Npc & b) {
+            return (a.getSprites().avatar.getPosition().y < b.getSprites().avatar.getPosition().y);
+        });
     }
 
     void NpcManager::setupDrawOrderVectors(const Context & t_context)
@@ -203,10 +207,12 @@ namespace thornberry
             }
 
             // check if random position collides with any other NPCs
-            if (!doesRectCollideWithAny(randomRect))
+            if (doesRectCollideWithAny(randomRect))
             {
-                return *randomPositionOpt;
+                continue;
             }
+
+            return *randomPositionOpt;
         }
 
         std::cerr << "NpcManager::findRandomAvailableSpawnPosition() failed to find a free space "
