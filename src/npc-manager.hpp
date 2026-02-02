@@ -49,6 +49,8 @@ namespace thornberry
         [[nodiscard]] const std::optional<sf::Vector2f>
             findRandomAvailableSpawnPosition(const Context & t_context) const;
 
+        bool randomPlaceNpc(const Context & t_context, const AvatarImage & t_image);
+
         void draw(
             const AvatarSprites & t_sprites,
             const sf::Vector2f & t_mapToOffscreenOffset,

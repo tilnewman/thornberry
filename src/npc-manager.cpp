@@ -35,17 +35,6 @@ namespace thornberry
             return;
         }
 
-        const auto randomPlaceNpc = [&](const Context & t_context, const AvatarImage t_image) {
-            const auto randomPositionOpt{ findRandomAvailableSpawnPosition(t_context) };
-            if (randomPositionOpt.has_value())
-            {
-                Npc & npc{ m_npcs.emplace_back(t_image) };
-                npc.setup(t_context);
-                npc.standFacingRandomDirection(t_context);
-                npc.setPosition(*randomPositionOpt);
-            }
-        };
-
         const std::string levelName{ t_context.level.name() };
         if (levelName == "house.tmj")
         {
@@ -67,6 +56,23 @@ namespace thornberry
         std::sort(std::begin(m_npcs), std::end(m_npcs), [](const Npc & a, const Npc & b) {
             return (a.getSprites().avatar.getPosition().y < b.getSprites().avatar.getPosition().y);
         });
+    }
+
+    bool NpcManager::randomPlaceNpc(const Context & t_context, const AvatarImage & t_image)
+    {
+        const auto randomPositionOpt{ findRandomAvailableSpawnPosition(t_context) };
+        if (randomPositionOpt.has_value())
+        {
+            Npc & npc{ m_npcs.emplace_back(t_image) };
+            npc.setup(t_context);
+            npc.setPosition(*randomPositionOpt);
+            npc.standFacingRandomDirection(t_context);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     void NpcManager::setupDrawOrderVectors(const Context & t_context)
@@ -178,10 +184,8 @@ namespace thornberry
         const sf::FloatRect spawnMapRect{ t_context.random.from(walkBounds) };
 
         return sf::Vector2f{
-            t_context.random.fromTo(
-                spawnMapRect.position.x, (spawnMapRect.position.x + spawnMapRect.size.x)),
-            t_context.random.fromTo(
-                spawnMapRect.position.y, (spawnMapRect.position.y + spawnMapRect.size.y))
+            t_context.random.fromTo(spawnMapRect.position.x, util::right(spawnMapRect)),
+            t_context.random.fromTo(spawnMapRect.position.y, util::bottom(spawnMapRect))
         };
     }
 
