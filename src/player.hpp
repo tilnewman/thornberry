@@ -12,7 +12,7 @@ namespace thornberry
     {
       public:
         Player() = delete;
-        Player(const AvatarImage t_image);
+        explicit Player(const AvatarImage t_image);
         Player(const Player & t_otherPlayer);         // see comment in Avatar.hpp
         Player(Player & t_otherPlayer);               // see comment in Avatar.hpp
         Player(Player && t_otherPlayer);              // see comment in Avatar.hpp

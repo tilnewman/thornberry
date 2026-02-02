@@ -60,7 +60,7 @@ namespace thornberry
     {
       public:
         Avatar() = delete;
-        Avatar(const AvatarImage t_image);
+        explicit Avatar(const AvatarImage t_image);
 
         // only including this because it won't be generated since move constructor is user defined
         Avatar(const Avatar & t_otherAvatar);

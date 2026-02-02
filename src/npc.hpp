@@ -26,7 +26,7 @@ namespace thornberry
     {
       public:
         Npc() = delete;
-        Npc(const AvatarImage t_image);
+        explicit Npc(const AvatarImage t_image);
         Npc(const Npc & t_otherNpc);            // see comment in Avatar.hpp
         Npc(Npc & t_otherNpc);                  // see comment in Avatar.hpp
         Npc(Npc && t_otherNpc);                 // see comment in Avatar.hpp
