@@ -8,6 +8,7 @@
 #include "indirect-level.hpp"
 #include "player.hpp"
 #include "sfml-util.hpp"
+#include "sound-player.hpp"
 #include "texture-loader.hpp"
 
 namespace thornberry
@@ -93,7 +94,9 @@ namespace thornberry
 
                 if (metalOffscreenCollisionRect.findIntersection(playerOffscreenRect).has_value())
                 {
-                    // TODO actually hurt the player and play sfx
+                    // TODO actually hurt the player
+                    t_context.sfx.play("hurt");
+                    t_context.sfx.play("metal-trap");
                     t_context.player.startHurtAnimation();
 
                     anim.state       = MetalTrapState::Snap;

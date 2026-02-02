@@ -134,7 +134,8 @@ namespace thornberry
         if (avatarOffscreenRect.findIntersection(lightningOffscreenRect).has_value())
         {
             t_context.player.startHurtAnimation();
-            // TODO play hurt sfx and actually hurt the player
+            t_context.sfx.play("hurt");
+            // TODO actually hurt the player
         }
     }
 
