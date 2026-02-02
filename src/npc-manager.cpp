@@ -119,35 +119,49 @@ namespace thornberry
 
     void NpcManager::drawUpper(
         const sf::Vector2f & t_mapToOffscreenOffset,
+        const sf::FloatRect & t_offscreenDrawRect,
         sf::RenderTarget & t_target,
         sf::RenderStates t_states) const
     {
         for (const AvatarSprites & sprites : m_drawUpperSprites)
         {
-            sf::Sprite sprite{ sprites.shadow };
-            sprite.move(t_mapToOffscreenOffset);
-            t_target.draw(sprite, t_states);
+            sf::Sprite tempAvatar{ sprites.avatar };
+            tempAvatar.move(t_mapToOffscreenOffset);
 
-            sprite = sprites.avatar;
-            sprite.move(t_mapToOffscreenOffset);
-            t_target.draw(sprite, t_states);
+            if (!tempAvatar.getGlobalBounds().findIntersection(t_offscreenDrawRect).has_value())
+            {
+                continue;
+            }
+
+            sf::Sprite tempShadow{ sprites.shadow };
+            tempShadow.move(t_mapToOffscreenOffset);
+
+            t_target.draw(tempShadow, t_states);
+            t_target.draw(tempAvatar, t_states);
         }
     }
 
     void NpcManager::drawLower(
         const sf::Vector2f & t_mapToOffscreenOffset,
+        const sf::FloatRect & t_offscreenDrawRect,
         sf::RenderTarget & t_target,
         sf::RenderStates t_states) const
     {
         for (const AvatarSprites & sprites : m_drawLowerSprites)
         {
-            sf::Sprite sprite{ sprites.shadow };
-            sprite.move(t_mapToOffscreenOffset);
-            t_target.draw(sprite, t_states);
+            sf::Sprite tempAvatar{ sprites.avatar };
+            tempAvatar.move(t_mapToOffscreenOffset);
 
-            sprite = sprites.avatar;
-            sprite.move(t_mapToOffscreenOffset);
-            t_target.draw(sprite, t_states);
+            if (!tempAvatar.getGlobalBounds().findIntersection(t_offscreenDrawRect).has_value())
+            {
+                continue;
+            }
+
+            sf::Sprite tempShadow{ sprites.shadow };
+            tempShadow.move(t_mapToOffscreenOffset);
+
+            t_target.draw(tempShadow, t_states);
+            t_target.draw(tempAvatar, t_states);
         }
     }
 

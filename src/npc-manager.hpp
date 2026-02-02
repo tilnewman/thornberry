@@ -25,11 +25,13 @@ namespace thornberry
 
         void drawUpper(
             const sf::Vector2f & t_mapToOffscreenOffset,
+            const sf::FloatRect & t_offscreenDrawRect,
             sf::RenderTarget & t_target,
             sf::RenderStates t_states) const;
 
         void drawLower(
             const sf::Vector2f & t_mapToOffscreenOffset,
+            const sf::FloatRect & t_offscreenDrawRect,
             sf::RenderTarget & t_target,
             sf::RenderStates t_states) const;
 

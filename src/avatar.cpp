@@ -294,17 +294,24 @@ namespace thornberry
     }
 
     void Avatar::draw(
-        const sf::Vector2f & t_positionOffset,
+        const sf::Vector2f & t_mapToOffscreenOffset,
+        const sf::FloatRect & t_offscreenDrawRect,
         sf::RenderTarget & t_target,
         sf::RenderStates t_states) const
     {
-        sf::Sprite temp{ m_sprites.shadow };
-        temp.move(t_positionOffset);
-        t_target.draw(temp, t_states);
+        sf::Sprite tempAvatar{ m_sprites.avatar };
+        tempAvatar.move(t_mapToOffscreenOffset);
 
-        temp = m_sprites.avatar;
-        temp.move(t_positionOffset);
-        t_target.draw(temp, t_states);
+        if (!tempAvatar.getGlobalBounds().findIntersection(t_offscreenDrawRect).has_value())
+        {
+            return;
+        }
+
+        sf::Sprite tempShadow{ m_sprites.shadow };
+        tempShadow.move(t_mapToOffscreenOffset);
+
+        t_target.draw(tempShadow, t_states);
+        t_target.draw(tempAvatar, t_states);
 
         // draw collision rect
         // sf::FloatRect rect(collisionMapRect());
@@ -326,7 +333,8 @@ namespace thornberry
         const auto cellIndex{ static_cast<std::size_t>(m_animCells.at(m_animIndex) - 1) };
 
         m_sprites.avatar.setTextureRect(
-            util::animationCellRect(cellIndex, m_sprites.avatar.getTexture().getSize(), { 64, 64 }));
+            util::animationCellRect(
+                cellIndex, m_sprites.avatar.getTexture().getSize(), { 64, 64 }));
 
         util::setOriginToCenter(m_sprites.avatar);
     }

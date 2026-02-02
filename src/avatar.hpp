@@ -93,7 +93,8 @@ namespace thornberry
         virtual void update(const Context & t_context, const float t_elapsedSec);
 
         void draw(
-            const sf::Vector2f & t_positionOffset,
+            const sf::Vector2f & t_mapToOffscreenOffset,
+            const sf::FloatRect & t_offscreenDrawRect,
             sf::RenderTarget & t_target,
             sf::RenderStates t_states) const;
 

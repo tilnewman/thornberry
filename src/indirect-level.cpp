@@ -214,11 +214,16 @@ namespace thornberry
 
         drawLowerLayers(m_renderTexture, m_renderStates);
         t_context.predraw_anim.draw(m_renderTexture, m_renderStates);
-        t_context.npc.drawLower(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
 
-        t_context.player.draw(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
+        t_context.npc.drawLower(
+            mapToOffscreenOffset(), m_offscreenDrawRect, m_renderTexture, m_renderStates);
 
-        t_context.npc.drawUpper(mapToOffscreenOffset(), m_renderTexture, m_renderStates);
+        t_context.player.draw(
+            mapToOffscreenOffset(), m_offscreenDrawRect, m_renderTexture, m_renderStates);
+
+        t_context.npc.drawUpper(
+            mapToOffscreenOffset(), m_offscreenDrawRect, m_renderTexture, m_renderStates);
+
         drawUpperLayers(m_renderTexture, m_renderStates);
         t_context.smoke.draw(m_renderTexture, m_renderStates);
 
