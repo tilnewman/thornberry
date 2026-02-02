@@ -85,8 +85,7 @@ namespace thornberry
         void setup(const Context & t_context);
         void setPosition(const sf::Vector2f & t_position);
 
-        // returns true if the avatar moved
-        virtual bool update(const Context & t_context, const float t_elapsedSec);
+        virtual void update(const Context & t_context, const float t_elapsedSec);
 
         void draw(
             const sf::Vector2f & t_positionOffset,
@@ -115,9 +114,7 @@ namespace thornberry
         void updateHurtAnimation(const Context & t_context, const float t_elapsedSec);
         void setAnim();
         void updateSprite();
-
-        // returns true if the position moved
-        virtual bool updateWalkPosition(const Context & t_context, const float t_elapsedSec) = 0;
+        virtual void updateWalkPosition(const Context & t_context, const float t_elapsedSec) = 0;
 
         [[nodiscard]] float timeBetweenBlinks(const Context & t_context) const;
         [[nodiscard]] static float timeBetweenFrames(const AvatarAnim t_anim);

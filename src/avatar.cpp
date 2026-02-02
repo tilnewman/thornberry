@@ -138,7 +138,7 @@ namespace thornberry
         m_isHurtColorWhite      = t_otherAvatar.m_isHurtColorWhite;
     }
 
-    void Avatar::operator=(Avatar && t_otherAvatar) 
+    void Avatar::operator=(Avatar && t_otherAvatar)
     {
         m_image                 = t_otherAvatar.m_image;
         m_anim                  = t_otherAvatar.m_anim;
@@ -191,21 +191,17 @@ namespace thornberry
         m_shadowSprite.move({ 0.0f, (m_sprite.getGlobalBounds().size.y * 0.5f) });
     }
 
-    bool Avatar::update(const Context & t_context, const float t_elapsedSec)
+    void Avatar::update(const Context & t_context, const float t_elapsedSec)
     {
-        bool didPositionChange{ false };
-
         updateBlinking(t_context, t_elapsedSec);
 
         if (m_isAnimating && (AvatarAnim::Walk == m_anim))
         {
-            didPositionChange = updateWalkPosition(t_context, t_elapsedSec);
+            updateWalkPosition(t_context, t_elapsedSec);
         }
 
         updateAnimation(t_context, t_elapsedSec);
         updateHurtAnimation(t_context, t_elapsedSec);
-
-        return didPositionChange;
     }
 
     void Avatar::updateHurtAnimation(const Context &, const float t_elapsedSec)

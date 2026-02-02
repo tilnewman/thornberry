@@ -67,10 +67,6 @@ namespace thornberry
                 }
             }
         }
-
-        std::sort(std::begin(m_npcs), std::end(m_npcs), [](const Npc & a, const Npc & b) {
-            return (a.collisionMapRect().position.y < b.collisionMapRect().position.y);
-        });
     }
 
     void NpcManager::setupDrawOrderVectors(const Context & t_context)
@@ -97,7 +93,7 @@ namespace thornberry
             std::end(m_drawLowerSprites),
             [](const AvatarSprites & a, const AvatarSprites & b) {
                 return (a.avatar.getPosition().y < b.avatar.getPosition().y);
-        });
+            });
 
         std::sort(
             std::begin(m_drawUpperSprites),
@@ -109,19 +105,12 @@ namespace thornberry
 
     void NpcManager::update(const Context & t_context, const float t_elapsedSec)
     {
-        bool didAnyNpcMove{ false };
         for (Npc & npc : m_npcs)
         {
-            if (npc.update(t_context, t_elapsedSec))
-            {
-                didAnyNpcMove = true;
-            }
+            npc.update(t_context, t_elapsedSec);
         }
 
-        if (didAnyNpcMove)
-        {
-            setupDrawOrderVectors(t_context);
-        }
+        setupDrawOrderVectors(t_context);
     }
 
     void NpcManager::drawUpper(

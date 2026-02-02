@@ -38,11 +38,11 @@ namespace thornberry
         virtual ~Npc() override                 = default;
 
         void standFacingRandomDirection(const Context & t_context);
-        bool update(const Context & t_context, const float t_elapsedSec) override;
+        void update(const Context & t_context, const float t_elapsedSec) override;
 
       private:
         const std::optional<sf::Vector2f> pickRandomWalkTarget(const Context & t_context) const;
-        bool updateWalkPosition(const Context & t_context, const float t_elapsedSec) override;
+        void updateWalkPosition(const Context & t_context, const float t_elapsedSec) override;
         bool isMovedPositionValid(const Context & t_context, const sf::Vector2f & t_move) const;
 
       private:

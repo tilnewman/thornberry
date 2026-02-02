@@ -112,12 +112,10 @@ namespace thornberry
         }
     }
 
-    bool Player::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
+    void Player::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
     {
         const float walkAmount{ t_context.screen_layout.calScaleBasedOnResolution(
             t_context, (t_context.config.avatar_walk_speed * t_elapsedSec)) };
-
-        bool didPositionChange{ false };
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up))
         {
@@ -126,7 +124,6 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
-                didPositionChange = true;
             }
         }
 
@@ -137,7 +134,6 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
-                didPositionChange = true;
             }
         }
 
@@ -148,7 +144,6 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
-                didPositionChange = true;
             }
         }
 
@@ -159,16 +154,8 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
-                didPositionChange = true;
             }
         }
-
-        if (didPositionChange)
-        {
-            t_context.npc.setupDrawOrderVectors(t_context);
-        }
-
-        return didPositionChange;
     }
 
 } // namespace thornberry

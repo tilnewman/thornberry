@@ -93,9 +93,9 @@ namespace thornberry
         m_anim = AvatarAnim::None;
     }
 
-    bool Npc::update(const Context & t_context, const float t_elapsedSec)
+    void Npc::update(const Context & t_context, const float t_elapsedSec)
     {
-        const bool didPositionChange{ Avatar::update(t_context, t_elapsedSec) };
+        Avatar::update(t_context, t_elapsedSec);
 
         m_actionElpasedSec += t_elapsedSec;
         if (m_actionElpasedSec > m_timeUntilActionChangeSec)
@@ -167,8 +167,6 @@ namespace thornberry
                 }
             }
         }
-
-        return didPositionChange;
     }
 
     const std::optional<sf::Vector2f> Npc::pickRandomWalkTarget(const Context & t_context) const
@@ -203,7 +201,7 @@ namespace thornberry
                              (targetRect.position.y + t_context.random.zeroTo(targetRect.size.y)) };
     }
 
-    bool Npc::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
+    void Npc::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
     {
         const float walkAmount{ t_context.screen_layout.calScaleBasedOnResolution(
             t_context, (t_context.config.avatar_walk_speed * t_elapsedSec)) };
@@ -214,8 +212,6 @@ namespace thornberry
                 std::end(m_walkDirections));
         };
 
-        bool didPositionChange{ false };
-
         if (isWalkingInDirection(AvatarDirection::Up))
         {
             const sf::Vector2f move{ 0.0f, -walkAmount };
@@ -223,7 +219,6 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
-                didPositionChange = true;
             }
         }
 
@@ -234,7 +229,6 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
-                didPositionChange = true;
             }
         }
 
@@ -245,7 +239,6 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
-                didPositionChange = true;
             }
         }
 
@@ -256,11 +249,8 @@ namespace thornberry
             {
                 m_sprite.move(move);
                 m_shadowSprite.move(move);
-                didPositionChange = true;
             }
         }
-
-        return didPositionChange;
     }
 
     bool Npc::isMovedPositionValid(const Context & t_context, const sf::Vector2f & t_move) const
