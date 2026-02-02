@@ -93,7 +93,7 @@ namespace thornberry
 
     void AvatarImageManager::teardown()
     {
-        // report any ref_counts not returned to zero before teardown
+        // report any ref_counts not returned to zero
         for (std::size_t index{ 0 }; index < m_imagePacks.size(); ++index)
         {
             const AvatarImagePack & pack{ m_imagePacks.at(index) };

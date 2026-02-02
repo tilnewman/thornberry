@@ -52,6 +52,7 @@ namespace thornberry
                     }
                     else if (color == sf::Color(151, 0, 147))
                     {
+                        // this one shouldn't be needed but some shadow images use it so...
                         t_image.setPixel(pixelPos, sf::Color(0, 0, 0, 87));
                     }
                     else if (color == sf::Color(255, 0, 255))
