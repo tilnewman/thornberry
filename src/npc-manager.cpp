@@ -126,19 +126,7 @@ namespace thornberry
     {
         for (const AvatarSprites & sprites : m_drawUpperSprites)
         {
-            sf::Sprite tempAvatar{ sprites.avatar };
-            tempAvatar.move(t_mapToOffscreenOffset);
-
-            if (!tempAvatar.getGlobalBounds().findIntersection(t_offscreenDrawRect).has_value())
-            {
-                continue;
-            }
-
-            sf::Sprite tempShadow{ sprites.shadow };
-            tempShadow.move(t_mapToOffscreenOffset);
-
-            t_target.draw(tempShadow, t_states);
-            t_target.draw(tempAvatar, t_states);
+            draw(sprites, t_mapToOffscreenOffset, t_offscreenDrawRect, t_target, t_states);
         }
     }
 
@@ -150,20 +138,30 @@ namespace thornberry
     {
         for (const AvatarSprites & sprites : m_drawLowerSprites)
         {
-            sf::Sprite tempAvatar{ sprites.avatar };
-            tempAvatar.move(t_mapToOffscreenOffset);
-
-            if (!tempAvatar.getGlobalBounds().findIntersection(t_offscreenDrawRect).has_value())
-            {
-                continue;
-            }
-
-            sf::Sprite tempShadow{ sprites.shadow };
-            tempShadow.move(t_mapToOffscreenOffset);
-
-            t_target.draw(tempShadow, t_states);
-            t_target.draw(tempAvatar, t_states);
+            draw(sprites, t_mapToOffscreenOffset, t_offscreenDrawRect, t_target, t_states);
         }
+    }
+
+    void NpcManager::draw(
+        const AvatarSprites & t_sprites,
+        const sf::Vector2f & t_mapToOffscreenOffset,
+        const sf::FloatRect & t_offscreenDrawRect,
+        sf::RenderTarget & t_target,
+        sf::RenderStates t_states) const
+    {
+        sf::Sprite tempAvatar{ t_sprites.avatar };
+        tempAvatar.move(t_mapToOffscreenOffset);
+
+        if (!tempAvatar.getGlobalBounds().findIntersection(t_offscreenDrawRect).has_value())
+        {
+            return;
+        }
+
+        sf::Sprite tempShadow{ t_sprites.shadow };
+        tempShadow.move(t_mapToOffscreenOffset);
+
+        t_target.draw(tempShadow, t_states);
+        t_target.draw(tempAvatar, t_states);
     }
 
     const std::optional<sf::Vector2f>
