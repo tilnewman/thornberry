@@ -38,7 +38,8 @@ namespace thornberry
         const std::string levelName{ t_context.level.name() };
         if (levelName == "house.tmj")
         {
-            randomPlaceNpc(t_context, AvatarImage::leather_corporal2_dark);
+            const auto soldierImages{ getAvatarImagesSoldier() };
+            randomPlaceNpc(t_context, t_context.random.from(soldierImages));
         }
         else if (levelName == "thornberry.tmj")
         {

@@ -896,7 +896,7 @@ namespace thornberry
         // clang-format on
     }
 
-    constexpr std::array<AvatarImage, 257> getAvatarImagesTownfolk() noexcept
+    constexpr std::array<AvatarImage, 340> getAvatarImagesTownfolk() noexcept
     {
         return { AvatarImage::dress_dark_pixie_black,
                  AvatarImage::dress_dark_pixie_brown,
@@ -994,6 +994,90 @@ namespace thornberry
                  AvatarImage::girl_light_unkempt_darkblonde,
                  AvatarImage::girl_light_unkempt_lightblonde,
                  AvatarImage::girl_light_unkempt_lightblonde2,
+                 AvatarImage::leather_circus1_dark_brunette,
+                 AvatarImage::leather_circus1_dark_raven,
+                 AvatarImage::leather_circus1_dark_white,
+                 AvatarImage::leather_circus1_light_blonde,
+                 AvatarImage::leather_circus1_light_brunette,
+                 AvatarImage::leather_circus1_light_raven,
+                 AvatarImage::leather_circus2_dark_brunette,
+                 AvatarImage::leather_circus2_dark_raven,
+                 AvatarImage::leather_circus2_dark_white,
+                 AvatarImage::leather_circus2_light_blonde,
+                 AvatarImage::leather_circus2_light_brunette,
+                 AvatarImage::leather_circus2_light_raven,
+                 AvatarImage::leather_common1_dark_brunette,
+                 AvatarImage::leather_common1_dark_raven,
+                 AvatarImage::leather_common1_dark_white,
+                 AvatarImage::leather_common1_light_blonde,
+                 AvatarImage::leather_common1_light_brunette,
+                 AvatarImage::leather_common1_light_raven,
+                 AvatarImage::leather_common2_dark_brunette,
+                 AvatarImage::leather_common2_dark_raven,
+                 AvatarImage::leather_common2_dark_white,
+                 AvatarImage::leather_common2_light_blonde,
+                 AvatarImage::leather_common2_light_brunette,
+                 AvatarImage::leather_common2_light_raven,
+                 AvatarImage::leather_common3_dark_brunette,
+                 AvatarImage::leather_common3_dark_raven,
+                 AvatarImage::leather_common3_dark_white,
+                 AvatarImage::leather_common3_light_blonde,
+                 AvatarImage::leather_common3_light_brunette,
+                 AvatarImage::leather_common3_light_raven,
+                 AvatarImage::leather_ironarms_dark_brunette,
+                 AvatarImage::leather_ironarms_dark_raven,
+                 AvatarImage::leather_ironarms_dark_white,
+                 AvatarImage::leather_ironarms_light_blonde,
+                 AvatarImage::leather_ironarms_light_brunette,
+                 AvatarImage::leather_ironarms_light_raven,
+                 AvatarImage::leather_ironrich_dark_brunette,
+                 AvatarImage::leather_ironrich_dark_raven,
+                 AvatarImage::leather_ironrich_dark_white,
+                 AvatarImage::leather_ironrich_light_blonde,
+                 AvatarImage::leather_ironrich_light_brunette,
+                 AvatarImage::leather_ironrich_light_raven,
+                 AvatarImage::leather_poor_dark_brunette,
+                 AvatarImage::leather_poor_dark_raven,
+                 AvatarImage::leather_poor_dark_white,
+                 AvatarImage::leather_poor_light_blonde,
+                 AvatarImage::leather_poor_light_brunette,
+                 AvatarImage::leather_poor_light_raven,
+                 AvatarImage::leather_private1_dark_brunette,
+                 AvatarImage::leather_private1_dark_raven,
+                 AvatarImage::leather_private1_dark_white,
+                 AvatarImage::leather_private1_light_blonde,
+                 AvatarImage::leather_private1_light_brunette,
+                 AvatarImage::leather_private1_light_raven,
+                 AvatarImage::leather_private2_dark_brunette,
+                 AvatarImage::leather_private2_dark_raven,
+                 AvatarImage::leather_private2_dark_white,
+                 AvatarImage::leather_private2_light_blonde,
+                 AvatarImage::leather_private2_light_brunette,
+                 AvatarImage::leather_private2_light_raven,
+                 AvatarImage::leather_private3_dark_brunette,
+                 AvatarImage::leather_private3_dark_raven,
+                 AvatarImage::leather_private3_dark_white,
+                 AvatarImage::leather_private3_light_blonde,
+                 AvatarImage::leather_private3_light_brunette,
+                 AvatarImage::leather_private3_light_raven,
+                 AvatarImage::leather_private4_dark_brunette,
+                 AvatarImage::leather_private4_dark_raven,
+                 AvatarImage::leather_private4_dark_white,
+                 AvatarImage::leather_private4_light_blonde,
+                 AvatarImage::leather_private4_light_brunette,
+                 AvatarImage::leather_private4_light_raven,
+                 AvatarImage::leather_thug1_dark_brunette,
+                 AvatarImage::leather_thug1_dark_raven,
+                 AvatarImage::leather_thug1_dark_white,
+                 AvatarImage::leather_thug1_light_blonde,
+                 AvatarImage::leather_thug1_light_brunette,
+                 AvatarImage::leather_thug1_light_raven,
+                 AvatarImage::leather_thug2_dark_brunette,
+                 AvatarImage::leather_thug2_dark_raven,
+                 AvatarImage::leather_thug2_dark_white,
+                 AvatarImage::leather_thug2_light_blonde,
+                 AvatarImage::leather_thug2_light_brunette,
+                 AvatarImage::leather_thug2_light_raven,
                  AvatarImage::maid_dark_pixie_black,
                  AvatarImage::maid_dark_pixie_brown,
                  AvatarImage::maid_dark_pixie_brunette,
@@ -1156,6 +1240,26 @@ namespace thornberry
                  AvatarImage::tunic_female_light_unkempt_lightblonde2 };
     }
 
+    constexpr std::array<AvatarImage, 28> getAvatarImagesSoldier() noexcept
+    {
+        return {
+            AvatarImage::leather_specialist1_dark, AvatarImage::leather_specialist1_light,
+            AvatarImage::leather_specialist2_dark, AvatarImage::leather_specialist2_light,
+            AvatarImage::leather_private2nd1_dark, AvatarImage::leather_private2nd1_light,
+            AvatarImage::leather_private2nd2_dark, AvatarImage::leather_private2nd2_light,
+            AvatarImage::leather_private2nd3_dark, AvatarImage::leather_private2nd3_light,
+            AvatarImage::leather_private2nd4_dark, AvatarImage::leather_private2nd4_light,
+            AvatarImage::leather_private1st1_dark, AvatarImage::leather_private1st1_light,
+            AvatarImage::leather_private1st2_dark, AvatarImage::leather_private1st2_light,
+            AvatarImage::leather_private1st3_dark, AvatarImage::leather_private1st3_light,
+            AvatarImage::leather_private1st4_dark, AvatarImage::leather_private1st4_light,
+            AvatarImage::leather_corporal1_dark,   AvatarImage::leather_corporal1_light,
+            AvatarImage::leather_corporal2_dark,   AvatarImage::leather_corporal2_light,
+            AvatarImage::plate_major_dark,         AvatarImage::plate_major_light,
+            AvatarImage::plate_sergeant_dark,      AvatarImage::plate_sergeant_light,
+        };
+    }
+
     constexpr std::array<AvatarImage, 40> getAvatarImagesMonk() noexcept
     {
         return { AvatarImage::monk_beltleather_dark_bracer,
@@ -1198,6 +1302,18 @@ namespace thornberry
                  AvatarImage::robes_male_light_plain_brunette,
                  AvatarImage::robes_male_light_plain_raven,
                  AvatarImage::robes_male_light_plain_white };
+    }
+
+    constexpr std::array<AvatarImage, 12> getAvatarImagesPlayer() noexcept
+    {
+        return {
+            AvatarImage::sara_bluewhite,    AvatarImage::sara_cyan,
+            AvatarImage::sara_green,        AvatarImage::sara_white,
+            AvatarImage::puck_female_dark,  AvatarImage::puck_female_light,
+            AvatarImage::puck_male_dark,    AvatarImage::puck_male_light,
+            AvatarImage::metal_female_dark, AvatarImage::metal_female_light,
+            AvatarImage::metal_male_dark,   AvatarImage::metal_male_light,
+        };
     }
 
     inline const std::string avatarImageToFilename(const AvatarImage t_avatarImage)

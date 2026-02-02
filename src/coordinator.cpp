@@ -61,13 +61,15 @@ namespace thornberry
         m_screenLayoutUPtr         = std::make_unique<ScreenLayout>();
         m_levelUPtr                = std::make_unique<IndirectLevel>();
         m_levelFileLoaderUPtr      = std::make_unique<LevelFileLoader>();
-        m_playerUPtr               = std::make_unique<Player>(AvatarImage::puck_female_light);
         m_fontManagerUPtr          = std::make_unique<FontManager>();
         m_framerateUPtr            = std::make_unique<FrameRateDisplay>();
         m_pickupImageManagerUPtr   = std::make_unique<PickupImageManager>();
         m_smokeParticleEffectsUPtr = std::make_unique<SmokeParticleEffects>();
         m_npcManagerUPtr           = std::make_unique<NpcManager>();
         m_predrawAnimationsUPtr    = std::make_unique<PredrawAnimations>();
+
+        const auto playerImages{ getAvatarImagesPlayer() };
+        m_playerUPtr = std::make_unique<Player>(m_randomUPtr->from(playerImages));
 
         m_contextUPtr = std::make_unique<Context>(
             m_config,
