@@ -217,8 +217,8 @@ namespace thornberry
             const sf::Vector2f move{ 0.0f, -walkAmount };
             if (isMovedPositionValid(t_context, move))
             {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
+                m_sprites.avatar.move(move);
+                m_sprites.shadow.move(move);
             }
         }
 
@@ -227,8 +227,8 @@ namespace thornberry
             const sf::Vector2f move{ 0.0f, walkAmount };
             if (isMovedPositionValid(t_context, move))
             {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
+                m_sprites.avatar.move(move);
+                m_sprites.shadow.move(move);
             }
         }
 
@@ -237,8 +237,8 @@ namespace thornberry
             const sf::Vector2f move{ -walkAmount, 0.0f };
             if (isMovedPositionValid(t_context, move))
             {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
+                m_sprites.avatar.move(move);
+                m_sprites.shadow.move(move);
             }
         }
 
@@ -247,8 +247,8 @@ namespace thornberry
             const sf::Vector2f move{ walkAmount, 0.0f };
             if (isMovedPositionValid(t_context, move))
             {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
+                m_sprites.avatar.move(move);
+                m_sprites.shadow.move(move);
             }
         }
     }

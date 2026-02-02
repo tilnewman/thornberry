@@ -46,6 +46,11 @@ namespace thornberry
             , shadow{ t_shadowSprite }
         {}
 
+        AvatarSprites(const sf::Texture & t_avatarTexture, const sf::Texture & t_shadowTexture)
+            : avatar{ t_avatarTexture }
+            , shadow{ t_shadowTexture }
+        {}
+
         sf::Sprite avatar;
         sf::Sprite shadow;
     };
@@ -103,10 +108,7 @@ namespace thornberry
             return rect;
         }
 
-        [[nodiscard]] const AvatarSprites getSprites() const
-        {
-            return { m_sprite, m_shadowSprite };
-        }
+        [[nodiscard]] const AvatarSprites & getSprites() const { return m_sprites; }
 
       protected:
         void updateBlinking(const Context & t_context, const float t_elapsedSec);
@@ -135,8 +137,7 @@ namespace thornberry
         float m_elapsedSec;
         float m_blinkElapsedSec;
         float m_timeUntilBlinkSec;
-        sf::Sprite m_sprite;       // position is in map coordinates
-        sf::Sprite m_shadowSprite; // position is in map coordinates
+        AvatarSprites m_sprites;
         float m_hurtEnableTimerSec;
         bool m_isHurtAnimating;
         float m_hurtColorCycleTimeSec;

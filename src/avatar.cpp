@@ -32,8 +32,8 @@ namespace thornberry
         , m_elapsedSec{ 0.0f }
         , m_blinkElapsedSec{ 0.0f }
         , m_timeUntilBlinkSec{ 0.0f }
-        , m_sprite{ AvatarImageManager::instance().acquire(t_image) }
-        , m_shadowSprite{ AvatarImageManager ::instance().shadowTexture() }
+        , m_sprites{ AvatarImageManager::instance().acquire(t_image),
+                     AvatarImageManager ::instance().shadowTexture() }
         , m_hurtEnableTimerSec{ 0.0f }
         , m_isHurtAnimating{ false }
         , m_hurtColorCycleTimeSec{ 0.0f }
@@ -50,8 +50,7 @@ namespace thornberry
         , m_elapsedSec{ t_otherAvatar.m_elapsedSec }
         , m_blinkElapsedSec{ t_otherAvatar.m_blinkElapsedSec }
         , m_timeUntilBlinkSec{ t_otherAvatar.m_timeUntilBlinkSec }
-        , m_sprite{ t_otherAvatar.m_sprite }
-        , m_shadowSprite{ t_otherAvatar.m_shadowSprite }
+        , m_sprites{ t_otherAvatar.m_sprites }
         , m_hurtEnableTimerSec{ t_otherAvatar.m_hurtEnableTimerSec }
         , m_isHurtAnimating{ t_otherAvatar.m_isHurtAnimating }
         , m_hurtColorCycleTimeSec{ t_otherAvatar.m_hurtColorCycleTimeSec }
@@ -70,8 +69,7 @@ namespace thornberry
         , m_elapsedSec{ t_otherAvatar.m_elapsedSec }
         , m_blinkElapsedSec{ t_otherAvatar.m_blinkElapsedSec }
         , m_timeUntilBlinkSec{ t_otherAvatar.m_timeUntilBlinkSec }
-        , m_sprite{ t_otherAvatar.m_sprite }
-        , m_shadowSprite{ t_otherAvatar.m_shadowSprite }
+        , m_sprites{ t_otherAvatar.m_sprites }
         , m_hurtEnableTimerSec{ t_otherAvatar.m_hurtEnableTimerSec }
         , m_isHurtAnimating{ t_otherAvatar.m_isHurtAnimating }
         , m_hurtColorCycleTimeSec{ t_otherAvatar.m_hurtColorCycleTimeSec }
@@ -90,8 +88,7 @@ namespace thornberry
         , m_elapsedSec{ t_otherAvatar.m_elapsedSec }
         , m_blinkElapsedSec{ t_otherAvatar.m_blinkElapsedSec }
         , m_timeUntilBlinkSec{ t_otherAvatar.m_timeUntilBlinkSec }
-        , m_sprite{ t_otherAvatar.m_sprite }
-        , m_shadowSprite{ t_otherAvatar.m_shadowSprite }
+        , m_sprites{ t_otherAvatar.m_sprites }
         , m_hurtEnableTimerSec{ t_otherAvatar.m_hurtEnableTimerSec }
         , m_isHurtAnimating{ t_otherAvatar.m_isHurtAnimating }
         , m_hurtColorCycleTimeSec{ t_otherAvatar.m_hurtColorCycleTimeSec }
@@ -111,8 +108,7 @@ namespace thornberry
         m_elapsedSec            = t_otherAvatar.m_elapsedSec;
         m_blinkElapsedSec       = t_otherAvatar.m_blinkElapsedSec;
         m_timeUntilBlinkSec     = t_otherAvatar.m_timeUntilBlinkSec;
-        m_sprite                = t_otherAvatar.m_sprite;
-        m_shadowSprite          = t_otherAvatar.m_shadowSprite;
+        m_sprites               = t_otherAvatar.m_sprites;
         m_hurtEnableTimerSec    = t_otherAvatar.m_hurtEnableTimerSec;
         m_isHurtAnimating       = t_otherAvatar.m_isHurtAnimating;
         m_hurtColorCycleTimeSec = t_otherAvatar.m_hurtColorCycleTimeSec;
@@ -130,8 +126,7 @@ namespace thornberry
         m_elapsedSec            = t_otherAvatar.m_elapsedSec;
         m_blinkElapsedSec       = t_otherAvatar.m_blinkElapsedSec;
         m_timeUntilBlinkSec     = t_otherAvatar.m_timeUntilBlinkSec;
-        m_sprite                = t_otherAvatar.m_sprite;
-        m_shadowSprite          = t_otherAvatar.m_shadowSprite;
+        m_sprites               = t_otherAvatar.m_sprites;
         m_hurtEnableTimerSec    = t_otherAvatar.m_hurtEnableTimerSec;
         m_isHurtAnimating       = t_otherAvatar.m_isHurtAnimating;
         m_hurtColorCycleTimeSec = t_otherAvatar.m_hurtColorCycleTimeSec;
@@ -149,8 +144,7 @@ namespace thornberry
         m_elapsedSec            = t_otherAvatar.m_elapsedSec;
         m_blinkElapsedSec       = t_otherAvatar.m_blinkElapsedSec;
         m_timeUntilBlinkSec     = t_otherAvatar.m_timeUntilBlinkSec;
-        m_sprite                = t_otherAvatar.m_sprite;
-        m_shadowSprite          = t_otherAvatar.m_shadowSprite;
+        m_sprites               = t_otherAvatar.m_sprites;
         m_hurtEnableTimerSec    = t_otherAvatar.m_hurtEnableTimerSec;
         m_isHurtAnimating       = t_otherAvatar.m_isHurtAnimating;
         m_hurtColorCycleTimeSec = t_otherAvatar.m_hurtColorCycleTimeSec;
@@ -162,12 +156,12 @@ namespace thornberry
     void Avatar::setup(const Context & t_context)
     {
         // setup the avatar sprite
-        util::setOriginToCenter(m_sprite);
+        util::setOriginToCenter(m_sprites.avatar);
 
         const float avatarScale{ t_context.screen_layout.calScaleBasedOnResolution(
             t_context, t_context.config.avatar_scale) };
 
-        m_sprite.setScale({ avatarScale, avatarScale });
+        m_sprites.avatar.setScale({ avatarScale, avatarScale });
 
         setAnim();
 
@@ -175,10 +169,10 @@ namespace thornberry
         m_timeUntilBlinkSec = timeBetweenBlinks(t_context);
 
         // setup the shadow sprite
-        util::setOriginToCenter(m_shadowSprite);
+        util::setOriginToCenter(m_sprites.shadow);
         const float shadowScale{ avatarScale * 0.7f };
-        m_shadowSprite.setScale({ shadowScale, shadowScale });
-        m_shadowSprite.setColor(sf::Color(255, 255, 255, 150));
+        m_sprites.shadow.setScale({ shadowScale, shadowScale });
+        m_sprites.shadow.setColor(sf::Color(255, 255, 255, 150));
 
         // position both images relative to each other
         setPosition({ 0.0f, 0.0f });
@@ -186,9 +180,9 @@ namespace thornberry
 
     void Avatar::setPosition(const sf::Vector2f & t_position)
     {
-        m_sprite.setPosition(t_position);
-        m_shadowSprite.setPosition(t_position);
-        m_shadowSprite.move({ 0.0f, (m_sprite.getGlobalBounds().size.y * 0.5f) });
+        m_sprites.avatar.setPosition(t_position);
+        m_sprites.shadow.setPosition(t_position);
+        m_sprites.shadow.move({ 0.0f, (m_sprites.avatar.getGlobalBounds().size.y * 0.5f) });
     }
 
     void Avatar::update(const Context & t_context, const float t_elapsedSec)
@@ -210,7 +204,7 @@ namespace thornberry
         if (m_hurtEnableTimerSec > 1.0f)
         {
             m_isHurtAnimating = false;
-            m_sprite.setColor(sf::Color::White);
+            m_sprites.avatar.setColor(sf::Color::White);
         }
 
         if (m_isHurtAnimating)
@@ -222,11 +216,13 @@ namespace thornberry
                 const float cycleRatio{ m_hurtColorCycleTimeSec / colorCycleDurationSec };
                 if (m_isHurtColorWhite)
                 {
-                    m_sprite.setColor(colors::blend(cycleRatio, sf::Color::White, sf::Color::Red));
+                    m_sprites.avatar.setColor(
+                        colors::blend(cycleRatio, sf::Color::White, sf::Color::Red));
                 }
                 else
                 {
-                    m_sprite.setColor(colors::blend(cycleRatio, sf::Color::Red, sf::Color::White));
+                    m_sprites.avatar.setColor(
+                        colors::blend(cycleRatio, sf::Color::Red, sf::Color::White));
                 }
             }
             else
@@ -302,13 +298,13 @@ namespace thornberry
         sf::RenderTarget & t_target,
         sf::RenderStates t_states) const
     {
-        sf::Sprite sprite{ m_shadowSprite };
-        sprite.move(t_positionOffset);
-        t_target.draw(sprite, t_states);
+        sf::Sprite temp{ m_sprites.shadow };
+        temp.move(t_positionOffset);
+        t_target.draw(temp, t_states);
 
-        sprite = m_sprite;
-        sprite.move(t_positionOffset);
-        t_target.draw(sprite, t_states);
+        temp = m_sprites.avatar;
+        temp.move(t_positionOffset);
+        t_target.draw(temp, t_states);
 
         // draw collision rect
         // sf::FloatRect rect(collisionMapRect());
@@ -329,10 +325,10 @@ namespace thornberry
     {
         const auto cellIndex{ static_cast<std::size_t>(m_animCells.at(m_animIndex) - 1) };
 
-        m_sprite.setTextureRect(
-            util::animationCellRect(cellIndex, m_sprite.getTexture().getSize(), { 64, 64 }));
+        m_sprites.avatar.setTextureRect(
+            util::animationCellRect(cellIndex, m_sprites.avatar.getTexture().getSize(), { 64, 64 }));
 
-        util::setOriginToCenter(m_sprite);
+        util::setOriginToCenter(m_sprites.avatar);
     }
 
     float Avatar::timeBetweenFrames(const AvatarAnim t_anim)
@@ -436,7 +432,7 @@ namespace thornberry
 
     const sf::FloatRect Avatar::collisionMapRect() const
     {
-        sf::FloatRect rect{ m_sprite.getGlobalBounds() };
+        sf::FloatRect rect{ m_sprites.avatar.getGlobalBounds() };
         util::scaleRectInPlace(rect, { 0.4f, 0.775f });
         rect.position.y += (rect.size.y * 0.1375f);
         return rect;
@@ -448,7 +444,7 @@ namespace thornberry
         m_hurtEnableTimerSec    = 0.0f;
         m_hurtColorCycleTimeSec = 0.0f;
         m_isHurtColorWhite      = true;
-        m_sprite.setColor(sf::Color::Red);
+        m_sprites.avatar.setColor(sf::Color::Red);
     }
 
 } // namespace thornberry

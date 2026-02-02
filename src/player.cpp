@@ -122,8 +122,8 @@ namespace thornberry
             const sf::Vector2f move{ 0.0f, -walkAmount };
             if (t_context.level.playerMove(t_context, collisionMapRect(), move))
             {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
+                m_sprites.avatar.move(move);
+                m_sprites.shadow.move(move);
             }
         }
 
@@ -132,8 +132,8 @@ namespace thornberry
             const sf::Vector2f move{ 0.0f, walkAmount };
             if (t_context.level.playerMove(t_context, collisionMapRect(), move))
             {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
+                m_sprites.avatar.move(move);
+                m_sprites.shadow.move(move);
             }
         }
 
@@ -142,8 +142,8 @@ namespace thornberry
             const sf::Vector2f move{ -walkAmount, 0.0f };
             if (t_context.level.playerMove(t_context, collisionMapRect(), move))
             {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
+                m_sprites.avatar.move(move);
+                m_sprites.shadow.move(move);
             }
         }
 
@@ -152,8 +152,8 @@ namespace thornberry
             const sf::Vector2f move{ walkAmount, 0.0f };
             if (t_context.level.playerMove(t_context, collisionMapRect(), move))
             {
-                m_sprite.move(move);
-                m_shadowSprite.move(move);
+                m_sprites.avatar.move(move);
+                m_sprites.shadow.move(move);
             }
         }
     }
