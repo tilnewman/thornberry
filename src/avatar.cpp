@@ -312,12 +312,6 @@ namespace thornberry
 
         t_target.draw(tempShadow, t_states);
         t_target.draw(tempAvatar, t_states);
-
-        // draw collision rect
-        // sf::FloatRect rect(collisionMapRect());
-        // rect.position += t_positionOffset;
-        // // rect.size.y *= 0.3f;
-        // t_target.draw(util::makeRectangleShape(rect, false, sf::Color::Red), t_states);
     }
 
     void Avatar::setAnim()
