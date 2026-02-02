@@ -68,6 +68,7 @@ namespace thornberry
             }
         }
 
+        // this sort is not required but improves the performance of setupDrawOrderVectors() below
         std::sort(std::begin(m_npcs), std::end(m_npcs), [](const Npc & a, const Npc & b) {
             return (a.getSprites().avatar.getPosition().y < b.getSprites().avatar.getPosition().y);
         });
