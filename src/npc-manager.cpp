@@ -21,8 +21,8 @@ namespace thornberry
 
     NpcManager::NpcManager()
         : m_npcs{}
-        , m_drawUpperSprites{}
-        , m_drawLowerSprites{}
+        , m_upperSprites{}
+        , m_lowerSprites{}
     {}
 
     void NpcManager::postLevelLoadSetup(const Context & t_context)
@@ -77,8 +77,8 @@ namespace thornberry
 
     void NpcManager::setupDrawOrderVectors(const Context & t_context)
     {
-        m_drawUpperSprites.clear();
-        m_drawLowerSprites.clear();
+        m_upperSprites.clear();
+        m_lowerSprites.clear();
 
         if (m_npcs.empty())
         {
@@ -91,24 +91,24 @@ namespace thornberry
         {
             if (npc.collisionMapRect().position.y < playerRect.position.y)
             {
-                m_drawLowerSprites.emplace_back(npc.getSprites());
+                m_lowerSprites.emplace_back(npc.getSprites());
             }
             else
             {
-                m_drawUpperSprites.emplace_back(npc.getSprites());
+                m_upperSprites.emplace_back(npc.getSprites());
             }
         }
 
         std::sort(
-            std::begin(m_drawLowerSprites),
-            std::end(m_drawLowerSprites),
+            std::begin(m_lowerSprites),
+            std::end(m_lowerSprites),
             [](const AvatarSprites & a, const AvatarSprites & b) {
                 return (a.avatar.getPosition().y < b.avatar.getPosition().y);
             });
 
         std::sort(
-            std::begin(m_drawUpperSprites),
-            std::end(m_drawUpperSprites),
+            std::begin(m_upperSprites),
+            std::end(m_upperSprites),
             [](const AvatarSprites & a, const AvatarSprites & b) {
                 return (a.avatar.getPosition().y < b.avatar.getPosition().y);
             });
@@ -130,7 +130,7 @@ namespace thornberry
         sf::RenderTarget & t_target,
         sf::RenderStates t_states) const
     {
-        for (const AvatarSprites & sprites : m_drawUpperSprites)
+        for (const AvatarSprites & sprites : m_upperSprites)
         {
             draw(sprites, t_mapToOffscreenOffset, t_offscreenDrawRect, t_target, t_states);
         }
@@ -142,7 +142,7 @@ namespace thornberry
         sf::RenderTarget & t_target,
         sf::RenderStates t_states) const
     {
-        for (const AvatarSprites & sprites : m_drawLowerSprites)
+        for (const AvatarSprites & sprites : m_lowerSprites)
         {
             draw(sprites, t_mapToOffscreenOffset, t_offscreenDrawRect, t_target, t_states);
         }

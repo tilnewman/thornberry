@@ -61,9 +61,9 @@ namespace thornberry
       private:
         std::vector<Npc> m_npcs;
 
-        // these vectors hold copes of the sprites in m_npcs
-        std::vector<AvatarSprites> m_drawUpperSprites;
-        std::vector<AvatarSprites> m_drawLowerSprites;
+        // these vectors hold copes of the sprites in m_npcs in map coordinates
+        std::vector<AvatarSprites> m_upperSprites;
+        std::vector<AvatarSprites> m_lowerSprites;
     };
 
 } // namespace thornberry
