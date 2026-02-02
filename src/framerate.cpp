@@ -39,6 +39,7 @@ namespace thornberry
             m_elapsedSec -= 1.0f;
 
             std::string str{ "fps: " };
+            str.reserve(100); // just a guess
             str += std::to_string(static_cast<int>(framesPerSec));
             str += ", ";
             str += t_context.level.name();
