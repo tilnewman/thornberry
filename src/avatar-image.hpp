@@ -896,7 +896,7 @@ namespace thornberry
         // clang-format on
     }
 
-    constexpr std::array<AvatarImage, 340> getAvatarImagesTownfolk() noexcept
+    constexpr std::array<AvatarImage, 364> getAvatarImagesTownfolk() noexcept
     {
         return { AvatarImage::dress_dark_pixie_black,
                  AvatarImage::dress_dark_pixie_brown,
@@ -1202,6 +1202,30 @@ namespace thornberry
                  AvatarImage::rags_male_light_plain_brunette,
                  AvatarImage::rags_male_light_plain_raven,
                  AvatarImage::rags_male_light_plain_white,
+                 AvatarImage::robes_male_dark_bedhead_brunette,
+                 AvatarImage::robes_male_dark_bedhead_raven,
+                 AvatarImage::robes_male_dark_messy2_brunette,
+                 AvatarImage::robes_male_dark_messy2_raven,
+                 AvatarImage::robes_male_dark_parted_brunette,
+                 AvatarImage::robes_male_dark_parted_raven,
+                 AvatarImage::robes_male_dark_plain_brunette,
+                 AvatarImage::robes_male_dark_plain_raven,
+                 AvatarImage::robes_male_light_bedhead_blonde,
+                 AvatarImage::robes_male_light_bedhead_brunette,
+                 AvatarImage::robes_male_light_bedhead_raven,
+                 AvatarImage::robes_male_light_bedhead_white,
+                 AvatarImage::robes_male_light_messy2_blonde,
+                 AvatarImage::robes_male_light_messy2_brunette,
+                 AvatarImage::robes_male_light_messy2_raven,
+                 AvatarImage::robes_male_light_messy2_white,
+                 AvatarImage::robes_male_light_parted_blonde,
+                 AvatarImage::robes_male_light_parted_brunette,
+                 AvatarImage::robes_male_light_parted_raven,
+                 AvatarImage::robes_male_light_parted_white,
+                 AvatarImage::robes_male_light_plain_blonde,
+                 AvatarImage::robes_male_light_plain_brunette,
+                 AvatarImage::robes_male_light_plain_raven,
+                 AvatarImage::robes_male_light_plain_white,
                  AvatarImage::tunic_female_dark_bangsshort_black,
                  AvatarImage::tunic_female_dark_bangsshort_brown,
                  AvatarImage::tunic_female_dark_bangsshort_brunette,
@@ -1258,7 +1282,7 @@ namespace thornberry
                  AvatarImage::plate_sergeant_dark,      AvatarImage::plate_sergeant_light };
     }
 
-    constexpr std::array<AvatarImage, 40> getAvatarImagesMonk() noexcept
+    constexpr std::array<AvatarImage, 16> getAvatarImagesMonk() noexcept
     {
         return { AvatarImage::monk_beltleather_dark_bracer,
                  AvatarImage::monk_beltleather_dark_nobracer,
@@ -1275,41 +1299,18 @@ namespace thornberry
                  AvatarImage::monk_shirt_beltnone_dark,
                  AvatarImage::monk_shirt_beltnone_tanned2,
                  AvatarImage::monk_shirt_beltwhite_dark,
-                 AvatarImage::monk_shirt_beltwhite_tanned2,
-                 AvatarImage::robes_male_dark_bedhead_brunette,
-                 AvatarImage::robes_male_dark_bedhead_raven,
-                 AvatarImage::robes_male_dark_messy2_brunette,
-                 AvatarImage::robes_male_dark_messy2_raven,
-                 AvatarImage::robes_male_dark_parted_brunette,
-                 AvatarImage::robes_male_dark_parted_raven,
-                 AvatarImage::robes_male_dark_plain_brunette,
-                 AvatarImage::robes_male_dark_plain_raven,
-                 AvatarImage::robes_male_light_bedhead_blonde,
-                 AvatarImage::robes_male_light_bedhead_brunette,
-                 AvatarImage::robes_male_light_bedhead_raven,
-                 AvatarImage::robes_male_light_bedhead_white,
-                 AvatarImage::robes_male_light_messy2_blonde,
-                 AvatarImage::robes_male_light_messy2_brunette,
-                 AvatarImage::robes_male_light_messy2_raven,
-                 AvatarImage::robes_male_light_messy2_white,
-                 AvatarImage::robes_male_light_parted_blonde,
-                 AvatarImage::robes_male_light_parted_brunette,
-                 AvatarImage::robes_male_light_parted_raven,
-                 AvatarImage::robes_male_light_parted_white,
-                 AvatarImage::robes_male_light_plain_blonde,
-                 AvatarImage::robes_male_light_plain_brunette,
-                 AvatarImage::robes_male_light_plain_raven,
-                 AvatarImage::robes_male_light_plain_white };
+                 AvatarImage::monk_shirt_beltwhite_tanned2 };
     }
 
-    constexpr std::array<AvatarImage, 12> getAvatarImagesPlayer() noexcept
+    constexpr std::array<AvatarImage, 13> getAvatarImagesPlayer() noexcept
     {
         return { AvatarImage::sara_bluewhite,    AvatarImage::sara_cyan,
                  AvatarImage::sara_green,        AvatarImage::sara_white,
                  AvatarImage::puck_female_dark,  AvatarImage::puck_female_light,
                  AvatarImage::puck_male_dark,    AvatarImage::puck_male_light,
                  AvatarImage::metal_female_dark, AvatarImage::metal_female_light,
-                 AvatarImage::metal_male_dark,   AvatarImage::metal_male_light };
+                 AvatarImage::metal_male_dark,   AvatarImage::metal_male_light,
+                 AvatarImage::robes_whitebeard };
     }
 
     inline const std::string avatarImageToFilename(const AvatarImage t_avatarImage)
