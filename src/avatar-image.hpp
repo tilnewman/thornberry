@@ -1242,22 +1242,20 @@ namespace thornberry
 
     constexpr std::array<AvatarImage, 28> getAvatarImagesSoldier() noexcept
     {
-        return {
-            AvatarImage::leather_specialist1_dark, AvatarImage::leather_specialist1_light,
-            AvatarImage::leather_specialist2_dark, AvatarImage::leather_specialist2_light,
-            AvatarImage::leather_private2nd1_dark, AvatarImage::leather_private2nd1_light,
-            AvatarImage::leather_private2nd2_dark, AvatarImage::leather_private2nd2_light,
-            AvatarImage::leather_private2nd3_dark, AvatarImage::leather_private2nd3_light,
-            AvatarImage::leather_private2nd4_dark, AvatarImage::leather_private2nd4_light,
-            AvatarImage::leather_private1st1_dark, AvatarImage::leather_private1st1_light,
-            AvatarImage::leather_private1st2_dark, AvatarImage::leather_private1st2_light,
-            AvatarImage::leather_private1st3_dark, AvatarImage::leather_private1st3_light,
-            AvatarImage::leather_private1st4_dark, AvatarImage::leather_private1st4_light,
-            AvatarImage::leather_corporal1_dark,   AvatarImage::leather_corporal1_light,
-            AvatarImage::leather_corporal2_dark,   AvatarImage::leather_corporal2_light,
-            AvatarImage::plate_major_dark,         AvatarImage::plate_major_light,
-            AvatarImage::plate_sergeant_dark,      AvatarImage::plate_sergeant_light,
-        };
+        return { AvatarImage::leather_specialist1_dark, AvatarImage::leather_specialist1_light,
+                 AvatarImage::leather_specialist2_dark, AvatarImage::leather_specialist2_light,
+                 AvatarImage::leather_private2nd1_dark, AvatarImage::leather_private2nd1_light,
+                 AvatarImage::leather_private2nd2_dark, AvatarImage::leather_private2nd2_light,
+                 AvatarImage::leather_private2nd3_dark, AvatarImage::leather_private2nd3_light,
+                 AvatarImage::leather_private2nd4_dark, AvatarImage::leather_private2nd4_light,
+                 AvatarImage::leather_private1st1_dark, AvatarImage::leather_private1st1_light,
+                 AvatarImage::leather_private1st2_dark, AvatarImage::leather_private1st2_light,
+                 AvatarImage::leather_private1st3_dark, AvatarImage::leather_private1st3_light,
+                 AvatarImage::leather_private1st4_dark, AvatarImage::leather_private1st4_light,
+                 AvatarImage::leather_corporal1_dark,   AvatarImage::leather_corporal1_light,
+                 AvatarImage::leather_corporal2_dark,   AvatarImage::leather_corporal2_light,
+                 AvatarImage::plate_major_dark,         AvatarImage::plate_major_light,
+                 AvatarImage::plate_sergeant_dark,      AvatarImage::plate_sergeant_light };
     }
 
     constexpr std::array<AvatarImage, 40> getAvatarImagesMonk() noexcept
@@ -1306,14 +1304,12 @@ namespace thornberry
 
     constexpr std::array<AvatarImage, 12> getAvatarImagesPlayer() noexcept
     {
-        return {
-            AvatarImage::sara_bluewhite,    AvatarImage::sara_cyan,
-            AvatarImage::sara_green,        AvatarImage::sara_white,
-            AvatarImage::puck_female_dark,  AvatarImage::puck_female_light,
-            AvatarImage::puck_male_dark,    AvatarImage::puck_male_light,
-            AvatarImage::metal_female_dark, AvatarImage::metal_female_light,
-            AvatarImage::metal_male_dark,   AvatarImage::metal_male_light,
-        };
+        return { AvatarImage::sara_bluewhite,    AvatarImage::sara_cyan,
+                 AvatarImage::sara_green,        AvatarImage::sara_white,
+                 AvatarImage::puck_female_dark,  AvatarImage::puck_female_light,
+                 AvatarImage::puck_male_dark,    AvatarImage::puck_male_light,
+                 AvatarImage::metal_female_dark, AvatarImage::metal_female_light,
+                 AvatarImage::metal_male_dark,   AvatarImage::metal_male_light };
     }
 
     inline const std::string avatarImageToFilename(const AvatarImage t_avatarImage)
