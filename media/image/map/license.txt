@@ -1,8 +1,67 @@
-Trees were found on OpenGameArt.org:
-http://opengameart.org/content/tree-collection-v26-bleeds-game-art
-Tree Collection v2.6 - Bleed's Game Art
-Author: Bleed
+Tree Collection v2.6
+Bleed's Game Art
+http://remusprites.carbonmade.com/
+Found at OpenGameArt.org
 CC-BY 3.0
-Copyright/Attribution Notice: 
-"Bleed - http://remusprites.carbonmade.com/"
-Thursday, February 12, 2015
+http://creativecommons.org/licenses/by/3.0/
+The tree image shadows were changed, and then used to make map tiles.
+
+Daniel Cook’s Map Tiles
+https://lostgarden.home.blog/2006/07/08/more-free-game-graphics/
+Found at OpenGameArt.org
+CC-BY 3.0
+http://creativecommons.org/licenses/by/3.0/
+Image pixel position problems were fixed, repacked into smaller textures, and then used as map tiles.
+
+The mana world:Forest Tileset
+Saphy, Len Pabin
+Submitted by Leonard Pabin to OpenGameArt.org
+Some images were taken from the tileset, shading was added, and the results were used as map tiles.
+
+Whispers of Avalon: Grassland Tileset
+Submitted by Leonard Pabin to OpenGameArt.org
+CC-BY 3.0
+http://creativecommons.org/licenses/by/3.0/
+
+[LPC] Texture Pack Collection
+(Trees Mega-Pack/Flowers/Jungle/Conifer Trees Pack/Beach/Desert)
+bluecarrot16
+https://opengameart.org/content/lpc-outdoor-packs
+CC-BY-SA 3.0
+There are multiple sub-credits to each of these packs.  They ALL appear below, each on a single line.  All include the CC-BY-SA 3.0 license except where otherwise noted.
+---
+16x16 Game Assets, George Bailey, CC-BY 4.0, https://opengameart.org/content/16x16-game-assets
+Basic map 32x32 by Silver IV, Ivan Voirol (Silver IV), CC-BY 3.0, https://opengameart.org/content/basic-map-32x32-by-silver-iv
+Bone Planet, Hyptosis, CC0, https://opengameart.org/content/bone-planet
+BrowserQuest Sprites and Tiles, Guillaume Lecollinet, http://opengameart.org/content/browserquest-sprites-and-tiles
+Concept Art for LPC Entry, Barbara Rivera, https://opengameart.org/content/concept-art-for-lpc-entry
+Flowers, SpiderDave, CC0, https://opengameart.org/content/flowers
+Generic Platformer Tiles, surt, CC0, http://opengameart.org/content/generic-platformer-tiles
+Isometric 64x64 Outside Tileset, Yar, CC-BY 3.0, https://opengameart.org/content/isometric-64x64-outside-tileset
+Jungle Tree Pack, KnoblePersona, https://opengameart.org/content/jungle-tree-pack
+Liberated Pixel Cup (LPC) Base Assets, Lanea Zimmerman (Sharm), https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+Lots of Hyptosis' tiles organized!, Hyptosis, CC-BY 3.0, https://opengameart.org/content/lots-of-hyptosis-tiles-organized
+Lots of trees and plants from OGA (DB32) tilesets pack 1, Jetrel, Zabin, Hyptosis, Surt, CC0, https://opengameart.org/content/lots-of-trees-and-plants-from-oga-db32-tilesets-pack-1
+LPC C.Nilsson, Casper Nilsson, https://opengameart.org/content/lpc-cnilsson
+LPC Guido Bos entries cut up, Guido Bos, https://opengameart.org/content/lpc-guido-bos-entries-cut-up
+LPC Interior Castle Tiles, Lanea Zimmerman, CC-BY-3.0, http://opengameart.org/content/lpc-interior-castle-tiles
+LPC Leaf Recolor, William.Thompsonj, https://opengameart.org/content/lpc-leaf-recolor
+LPC Tree Recolors, William.Thompsonj, https://opengameart.org/content/lpc-tree-recolors
+Nature tileset, Paulina Riva (PauR), CC-BY 3.0, https://opengameart.org/content/nature-tileset
+OGA Community Tileset: Nature, qubodup, Bart K., Blarumyrran, https://opengameart.org/content/oga-community-tileset-nature
+Old Eastern Themed Building Tiles + Tree, Talosaurus, CC0, https://opengameart.org/content/old-eastern-themed-building-tiles-tree
+Old Frogatto tile art, Guido Bos, CC0, https://opengameart.org/content/old-frogatto-tile-art
+OPP2017 - Jungle and temple set, OpenPixelProject.com, CC0, https://opengameart.org/content/opp2017-jungle-and-temple-set
+Orthographic outdoor tiles, Buch, CC0, https://opengameart.org/content/orthographic-outdoor-tiles
+Outdoor tiles again, Buch (https://opengameart.org/users/buch), CC-BY 2.0, https://opengameart.org/content/outdoor-tiles-again
+Pine Tree Tiles, b_o, https://opengameart.org/content/pine-tree-tiles
+Pine Tree Pack, KnoblePersona, CC-BY 3.0, https://opengameart.org/content/pine-tree-pack
+Pixelsphere 32x32 Tileset + Grass + Trees, cynicmusic, CC0, http://opengameart.org/content/pixelsphere-32x32-tileset-grass-trees
+RPG Tiles--Forest and some Interior Tiles, Stephen Challener, CC-BY 3.0, https://opengameart.org/content/32x32-and-16x16-rpg-tiles-forest-and-some-interior-tiles
+RPG Item Set, Jetrel, CC0, https://opengameart.org/content/rpg-item-set
+Shoot'em up graphic kit, Johann Charlot, https://opengameart.org/content/shootem-up-graphic-kit
+Team River Fox, Chris Phillips, Barbara Rivera, https://opengameart.org/content/team-river-fox
+The Field of the Floating Islands, Buch (https://opengameart.org/users/buch), CC0, https://opengameart.org/content/the-field-of-the-floating-islands
+Trees, Surt, vk, CC0, https://opengameart.org/content/trees-1
+Trees & Bushes, ansimuz, CC0, https://opengameart.org/content/trees-bushes
+Tuxemon tileset, Buch, https://opengameart.org/content/tuxemon-tileset
