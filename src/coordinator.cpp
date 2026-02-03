@@ -190,8 +190,9 @@ namespace thornberry
     {
         m_renderWindow.clear(m_config.background_color);
 
+        m_dayNightCycleUPtr->drawBeforeMap(m_renderWindow, m_renderStates);
         m_levelUPtr->draw(*m_contextUPtr, m_renderWindow, m_renderStates);
-        m_dayNightCycleUPtr->draw(*m_contextUPtr, m_renderWindow, m_renderStates);
+        m_dayNightCycleUPtr->drawAfterMap(*m_contextUPtr, m_renderWindow, m_renderStates);
         m_framerateUPtr->draw(m_renderWindow, m_renderStates);
 
         m_renderWindow.display();

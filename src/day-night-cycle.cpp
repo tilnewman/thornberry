@@ -45,15 +45,18 @@ namespace thornberry
         util::fitAndCenterInside(m_sprite, rect);
         util::setOriginToCenter(m_sprite);
         m_sprite.scale({ 0.75f, 0.75f });
-        m_sprite.move({ m_sprite.getGlobalBounds().size * 0.5f });
         m_sprite.setRotation(sf::degrees(t_context.random.fromTo(0.0f, 360.0f)));
+
+        m_sprite.setPosition(
+            { (mapRect.position.x + (mapRect.size.x * 0.5f)), mapRect.position.y });
 
         m_cycleCoverRectangle.setFillColor(t_context.config.background_color);
 
         m_cycleCoverRectangle.setPosition(
             { m_sprite.getGlobalBounds().position.x, m_sprite.getPosition().y });
 
-        m_cycleCoverRectangle.setSize(m_sprite.getGlobalBounds().size);
+        m_cycleCoverRectangle.setSize(
+            { m_sprite.getGlobalBounds().size.x, (m_sprite.getGlobalBounds().size.y * 0.5f) });
     }
 
     void DayNightCycle::update(const Context &, const float t_elapsedSec)
@@ -79,12 +82,16 @@ namespace thornberry
         }
     }
 
-    void DayNightCycle::draw(
-        const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void
+        DayNightCycle::drawBeforeMap(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
     {
         t_target.draw(m_sprite, t_states);
         t_target.draw(m_cycleCoverRectangle, t_states);
+    }
 
+    void DayNightCycle::drawAfterMap(
+        const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    {
         if (t_context.level.locale() == Locale::Exterior)
         {
             t_target.draw(m_mapCoverRectangle, t_states);
