@@ -427,7 +427,7 @@
  "orientation":"orthogonal",
  "properties":[
         {
-         "name":"music",
+         "name":"locale",
          "type":"string",
          "value":"interior"
         }],

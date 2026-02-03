@@ -25,7 +25,7 @@ namespace thornberry
 
     IndirectLevel::IndirectLevel()
         : m_name{}
-        , m_music{ Music::None }
+        , m_locale{ Locale::None }
         , m_mapTileCount{}
         , m_textureTileSize{}
         , m_screenTileSize{}

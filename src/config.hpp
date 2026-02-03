@@ -22,6 +22,7 @@ namespace thornberry
         float avatar_scale{ 1.6f };
         float avatar_walk_speed{ 80.0f };
         float avatar_walk_inner_map_ratio{ 0.4f };
+        sf::Color background_color{ 30, 30, 30 };
         sf::Color background_mask_color{ 75, 99, 127 };
         sf::Color map_outline_color{ 127, 127, 127 };
         std::string sound_filename_extension{ ".ogg" };

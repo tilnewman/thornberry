@@ -23,6 +23,7 @@ namespace thornberry
     class SmokeParticleEffects;
     class NpcManager;
     class PredrawAnimations;
+    class DayNightCycle;
 
     //
     struct Context
@@ -40,7 +41,8 @@ namespace thornberry
             PickupImageManager & t_pickupImageManager,
             SmokeParticleEffects & t_smokeParticleEffects,
             NpcManager & t_npcManager,
-            PredrawAnimations & t_predrawAnimations)
+            PredrawAnimations & t_predrawAnimations,
+            DayNightCycle & t_dayNightCycle)
             : config{ t_config }
             , screen_layout{ t_screenLayout }
             , random{ t_random }
@@ -54,6 +56,7 @@ namespace thornberry
             , smoke{ t_smokeParticleEffects }
             , npc{ t_npcManager }
             , predraw_anim{ t_predrawAnimations }
+            , time{ t_dayNightCycle }
         {}
 
         const Config & config;
@@ -69,6 +72,7 @@ namespace thornberry
         SmokeParticleEffects & smoke;
         NpcManager & npc;
         PredrawAnimations & predraw_anim;
+        DayNightCycle & time;
     };
 
 } // namespace thornberry

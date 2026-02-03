@@ -33,7 +33,7 @@ namespace thornberry
 
         void parseTilesets(const Context & t_context, const nlohmann::json & t_wholeJson);
 
-        void parseMusic(const Context & t_context, const nlohmann::json & t_jt_wholeJsonson);
+        void parseLocale(const Context & t_context, const nlohmann::json & t_jt_wholeJsonson);
 
         void parseTilesetAsOrig(
             const nlohmann::json & t_json,

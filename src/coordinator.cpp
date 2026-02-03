@@ -34,6 +34,7 @@ namespace thornberry
         , m_smokeParticleEffectsUPtr{}
         , m_npcManagerUPtr{}
         , m_predrawAnimationsUPtr{}
+        , m_dayNightCycleUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -67,6 +68,7 @@ namespace thornberry
         m_smokeParticleEffectsUPtr = std::make_unique<SmokeParticleEffects>();
         m_npcManagerUPtr           = std::make_unique<NpcManager>();
         m_predrawAnimationsUPtr    = std::make_unique<PredrawAnimations>();
+        m_dayNightCycleUPtr        = std::make_unique<DayNightCycle>();
 
         const auto playerImages{ getAvatarImagesPlayer() };
         m_playerUPtr = std::make_unique<Player>(m_randomUPtr->from(playerImages));
@@ -84,7 +86,8 @@ namespace thornberry
             *m_pickupImageManagerUPtr,
             *m_smokeParticleEffectsUPtr,
             *m_npcManagerUPtr,
-            *m_predrawAnimationsUPtr);
+            *m_predrawAnimationsUPtr,
+            *m_dayNightCycleUPtr);
 
         m_soundPlayerUPtr->setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayerUPtr->loadAll();
@@ -98,6 +101,7 @@ namespace thornberry
         m_fontManagerUPtr->setup(m_config);
         m_framerateUPtr->setup(*m_contextUPtr);
         m_playerUPtr->setup(*m_contextUPtr);
+        m_dayNightCycleUPtr->setup(*m_contextUPtr);
 
         m_levelUPtr->load(*m_contextUPtr, "house.tmj", "thornberry.tmj");
     }
@@ -135,6 +139,7 @@ namespace thornberry
         m_smokeParticleEffectsUPtr.reset();
         m_npcManagerUPtr.reset();
         m_predrawAnimationsUPtr.reset();
+        m_dayNightCycleUPtr.reset();
 
         MapTextureManager::instance().teardown();
         AvatarImageManager::instance().teardown();
@@ -177,14 +182,16 @@ namespace thornberry
         m_npcManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_smokeParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_predrawAnimationsUPtr->update(*m_contextUPtr, t_elapsedSec);
+        m_dayNightCycleUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_framerateUPtr->update(*m_contextUPtr, t_elapsedSec);
     }
 
     void Coordinator::draw()
     {
-        m_renderWindow.clear(sf::Color(30, 30, 30));
+        m_renderWindow.clear(m_config.background_color);
 
         m_levelUPtr->draw(*m_contextUPtr, m_renderWindow, m_renderStates);
+        m_dayNightCycleUPtr->draw(*m_contextUPtr, m_renderWindow, m_renderStates);
         m_framerateUPtr->draw(m_renderWindow, m_renderStates);
 
         m_renderWindow.display();

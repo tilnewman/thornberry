@@ -15,6 +15,7 @@
 
 namespace thornberry
 {
+
     struct Context;
 
     //
@@ -56,42 +57,42 @@ namespace thornberry
     }
 
     //
-    enum struct Music
+    enum struct Locale : unsigned char
     {
         None,
         Interior,
         Exterior
     };
 
-    inline const std::string toString(const Music t_music)
+    inline const std::string toString(const Locale t_music)
     {
-        if (t_music == Music::Interior)
+        if (t_music == Locale::Interior)
         {
             return "interior";
         }
-        else if (t_music == Music::Exterior)
+        else if (t_music == Locale::Exterior)
         {
             return "exterior";
         }
-        else // None
+        else
         {
-            return "";
+            return "none";
         }
     }
 
-    inline Music musicFromString(const std::string & t_musicStr)
+    inline Locale localeFromString(const std::string & t_localeStr)
     {
-        if ((t_musicStr == "interior") || (t_musicStr == "Interior"))
+        if ((t_localeStr == "interior") || (t_localeStr == "Interior"))
         {
-            return Music::Interior;
+            return Locale::Interior;
         }
-        else if ((t_musicStr == "exterior") || (t_musicStr == "Exterior"))
+        else if ((t_localeStr == "exterior") || (t_localeStr == "Exterior"))
         {
-            return Music::Exterior;
+            return Locale::Exterior;
         }
         else
         {
-            return Music::None;
+            return Locale::None;
         }
     }
 
@@ -129,8 +130,8 @@ namespace thornberry
             draw(const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states);
 
         [[nodiscard]] const std::string name() const { return m_name; }
-        [[nodiscard]] Music music() const { return m_music; }
-        void music(const Music t_music) { m_music = t_music; }
+        [[nodiscard]] Locale locale() const { return m_locale; }
+        void locale(const Locale t_locale) { m_locale = t_locale; }
         [[nodiscard]] const sf::Vector2i mapTileCount() const { return m_mapTileCount; }
         [[nodiscard]] const sf::Vector2i textureTileSize() const { return m_textureTileSize; }
         [[nodiscard]] const sf::Vector2f screenTileSize() const { return m_screenTileSize; }
@@ -210,7 +211,7 @@ namespace thornberry
 
       private:
         std::string m_name;
-        Music m_music;
+        Locale m_locale;
         sf::Vector2i m_mapTileCount;
         sf::Vector2i m_textureTileSize;
         sf::Vector2f m_screenTileSize;

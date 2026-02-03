@@ -5,6 +5,7 @@
 //
 #include "config.hpp"
 #include "context.hpp"
+#include "day-night-cycle.hpp"
 #include "font.hpp"
 #include "framerate.hpp"
 #include "indirect-level.hpp"
@@ -63,6 +64,7 @@ namespace thornberry
         std::unique_ptr<SmokeParticleEffects> m_smokeParticleEffectsUPtr;
         std::unique_ptr<NpcManager> m_npcManagerUPtr;
         std::unique_ptr<PredrawAnimations> m_predrawAnimationsUPtr;
+        std::unique_ptr<DayNightCycle> m_dayNightCycleUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 

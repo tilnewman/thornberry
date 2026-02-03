@@ -44,14 +44,14 @@ namespace thornberry
 
         parseLevelDetails(t_context, t_filename, json);
         parseTilesets(t_context, json);
-        parseMusic(t_context, json);
+        parseLocale(t_context, json);
 
         // everything else in the level file is saved in "layers"
         // which are parsed in order from back to front
         parseLayers(t_context, json);
     }
 
-    void LevelFileLoader::parseMusic(const Context & t_context, const nlohmann::json & t_wholeJson)
+    void LevelFileLoader::parseLocale(const Context & t_context, const nlohmann::json & t_wholeJson)
     {
         try
         {
@@ -60,20 +60,20 @@ namespace thornberry
                 const std::string nameStr{ propJson["name"] };
                 const std::string valueStr{ propJson["value"] };
 
-                if ((nameStr != "Music") && (nameStr != "music"))
+                if ((nameStr != "Locale") && (nameStr != "locale"))
                 {
                     continue;
                 }
 
-                const Music oldMusic{ t_context.level.music() };
-                const Music newMusic{ musicFromString(valueStr) };
+                const Locale oldMusic{ t_context.level.locale() };
+                const Locale newMusic{ localeFromString(valueStr) };
 
                 if (oldMusic == newMusic)
                 {
                     continue;
                 }
 
-                if (oldMusic != Music::None)
+                if (oldMusic != Locale::None)
                 {
                     const std::string oldMusicFilename{ toString(oldMusic) +
                                                         t_context.config.sound_filename_extension };
@@ -86,18 +86,18 @@ namespace thornberry
 
                 t_context.music.start(newMusicFilename, t_context.config.music_volume);
 
-                t_context.level.music(newMusic);
+                t_context.level.locale(newMusic);
             }
         }
         catch (...)
         {
             std::cout
-                << "LevelFileLoader::parseMusic() found no music [properties] in the map file: "
+                << "LevelFileLoader::parseLocale() found no 'properties' in the map file: " 
                 << m_pathStr
-                << ".  Add a music property to the map.  Ignoring this for now and setting the "
-                   "music to None.\n";
+                << ".  Add a 'locale' property to the map.  Ignoring this for now and setting the "
+                   "music and day/night cycle to None.\n";
 
-            t_context.level.music(Music::None);
+            t_context.level.locale(Locale::None);
         }
     }
 
