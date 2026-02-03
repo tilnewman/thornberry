@@ -3,6 +3,7 @@
 //
 #include "day-night-cycle.hpp"
 
+#include "color-range.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "indirect-level.hpp"
@@ -56,6 +57,24 @@ namespace thornberry
     void DayNightCycle::update(const Context &, const float t_elapsedSec)
     {
         m_sprite.rotate(sf::degrees(t_elapsedSec));
+        if (m_sprite.getRotation().asDegrees() > 360.0f)
+        {
+            m_sprite.setRotation(sf::degrees(0.0f));
+        }
+
+        const float degrees{ m_sprite.getRotation().asDegrees() };
+        if (degrees < 180.0f)
+        {
+            const float ratio{ degrees / 180.0f };
+            const sf::Color color{ colors::blend(ratio, m_dayColor, m_nightColor) };
+            m_mapCoverRectangle.setFillColor(color);
+        }
+        else
+        {
+            const float ratio{ (degrees - 180.0f) / 180.0f };
+            const sf::Color color{ colors::blend(ratio, m_nightColor, m_dayColor) };
+            m_mapCoverRectangle.setFillColor(color);
+        }
     }
 
     void DayNightCycle::draw(
