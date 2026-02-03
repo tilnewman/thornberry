@@ -7,6 +7,7 @@
 #include "config.hpp"
 #include "context.hpp"
 #include "indirect-level.hpp"
+#include "random.hpp"
 #include "screen-layout.hpp"
 #include "sfml-util.hpp"
 #include "texture-loader.hpp"
@@ -45,6 +46,7 @@ namespace thornberry
         util::setOriginToCenter(m_sprite);
         m_sprite.scale({ 0.75f, 0.75f });
         m_sprite.move({ m_sprite.getGlobalBounds().size * 0.5f });
+        m_sprite.setRotation(sf::degrees(t_context.random.fromTo(0.0f, 360.0f)));
 
         m_cycleCoverRectangle.setFillColor(t_context.config.background_color);
 
@@ -56,7 +58,7 @@ namespace thornberry
 
     void DayNightCycle::update(const Context &, const float t_elapsedSec)
     {
-        m_sprite.rotate(sf::degrees(t_elapsedSec));
+        m_sprite.rotate(sf::degrees(t_elapsedSec * 0.5f));
         if (m_sprite.getRotation().asDegrees() > 360.0f)
         {
             m_sprite.setRotation(sf::degrees(0.0f));
