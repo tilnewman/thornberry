@@ -18,7 +18,7 @@ namespace thornberry
     struct Context;
 
     //
-    enum class MetalTrapState
+    enum class MetalTrapState : unsigned char
     {
         Delay,
         Ready,

@@ -18,7 +18,7 @@ namespace thornberry
     struct Context;
 
     //
-    enum class PlantTrapState
+    enum class PlantTrapState : unsigned char
     {
         Delay,
         Ready,

@@ -16,7 +16,7 @@ namespace thornberry
     struct Context;
 
     //
-    enum class LightningState
+    enum class LightningState : unsigned char
     {
         Wait,
         Discharge

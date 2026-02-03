@@ -10,7 +10,7 @@
 namespace thornberry
 {
 
-    enum class AvatarImage : std::size_t
+    enum class AvatarImage : unsigned short
     {
         dress_dark_pixie_black = 0,
         dress_dark_pixie_brown,

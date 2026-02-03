@@ -18,7 +18,7 @@ namespace thornberry
 {
     struct Context;
 
-    enum class TextureSetting
+    enum class TextureSetting : unsigned char
     {
         Normal,
         Smooth

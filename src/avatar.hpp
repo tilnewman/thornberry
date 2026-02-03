@@ -19,7 +19,7 @@ namespace thornberry
     struct Context;
 
     //
-    enum class AvatarDirection
+    enum class AvatarDirection : unsigned char
     {
         Up,
         Down,
@@ -28,7 +28,7 @@ namespace thornberry
     };
 
     //
-    enum class AvatarAnim
+    enum class AvatarAnim : unsigned char
     {
         None,
         Walk,

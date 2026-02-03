@@ -18,14 +18,14 @@ namespace thornberry
     struct Context;
 
     //
-    enum class LayerGroup
+    enum class LayerGroup : unsigned char
     {
         Upper,
         Lower
     };
 
     //
-    enum class TransitionDirection
+    enum class TransitionDirection : unsigned char
     {
         Entry,
         Exit

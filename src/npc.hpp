@@ -13,7 +13,7 @@ namespace thornberry
     struct Context;
 
     //
-    enum class NpcAction
+    enum class NpcAction : unsigned char
     {
         Wait,
         Walk,

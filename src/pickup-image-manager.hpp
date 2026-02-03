@@ -16,7 +16,7 @@ namespace thornberry
     struct Config;
 
     //
-    enum class Pickup : std::size_t
+    enum class Pickup : unsigned char
     {
         BottleBlue = 0,
         BottleGreen,

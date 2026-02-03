@@ -18,7 +18,7 @@ namespace thornberry
     struct Context;
 
     //
-    enum class AcidSpoutState
+    enum class AcidSpoutState : unsigned char
     {
         Wait,
         Drip,

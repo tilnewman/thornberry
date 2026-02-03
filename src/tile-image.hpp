@@ -9,7 +9,7 @@
 namespace thornberry
 {
 
-    enum class TileImage : std::size_t
+    enum class TileImage : unsigned char
     {
         BushLarge,
         BushMedium,

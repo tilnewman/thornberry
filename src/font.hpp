@@ -15,7 +15,7 @@ namespace thornberry
     struct Config;
 
     //
-    enum class FontSize
+    enum class FontSize : unsigned char
     {
         Colossal,
         Huge,
