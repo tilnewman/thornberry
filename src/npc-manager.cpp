@@ -38,12 +38,12 @@ namespace thornberry
         const std::string levelName{ t_context.level.name() };
         if (levelName == "house.tmj")
         {
-            const auto soldierImages{ getAvatarImagesSoldier() };
-            randomPlaceNpc(t_context, t_context.random.from(soldierImages));
+            const auto monkImages{ getAvatarImagesMonk() };
+            randomPlaceNpc(t_context, t_context.random.from(monkImages));
         }
         else if (levelName == "thornberry.tmj")
         {
-            const std::size_t npcCount{ 20 };
+            const std::size_t npcCount{ 10 };
             m_npcs.reserve(npcCount);
 
             const auto townFolkImages{ getAvatarImagesTownfolk() };
