@@ -2003,7 +2003,7 @@
                  "y":2615
                 }, 
                 {
-                 "height":120,
+                 "height":62,
                  "id":144,
                  "name":"",
                  "rotation":0,
@@ -2012,6 +2012,17 @@
                  "width":231,
                  "x":1772,
                  "y":2659
+                }, 
+                {
+                 "height":60,
+                 "id":157,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":35,
+                 "x":1813,
+                 "y":2711
                 }, 
                 {
                  "height":92,
@@ -2278,7 +2289,7 @@
          "y":0
         }],
  "nextlayerid":47,
- "nextobjectid":157,
+ "nextobjectid":158,
  "orientation":"orthogonal",
  "properties":[
         {
