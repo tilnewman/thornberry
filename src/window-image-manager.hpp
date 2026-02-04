@@ -29,15 +29,15 @@ namespace thornberry
 
         //
 
-        [[nodiscard]] const sf::Texture & bdTop() const { return m_borderTop; }
-        [[nodiscard]] const sf::Texture & bdBot() const { return m_borderBot; }
-        [[nodiscard]] const sf::Texture & bdLeft() const { return m_borderLeft; }
-        [[nodiscard]] const sf::Texture & bdRight() const { return m_borderRight; }
+        [[nodiscard]] const sf::Texture & borderTop() const { return m_borderTop; }
+        [[nodiscard]] const sf::Texture & borderBot() const { return m_borderBot; }
+        [[nodiscard]] const sf::Texture & borderLeft() const { return m_borderLeft; }
+        [[nodiscard]] const sf::Texture & borderRight() const { return m_borderRight; }
 
-        [[nodiscard]] const sf::Texture & bdTopLeft() const { return m_borderTopLeft; }
-        [[nodiscard]] const sf::Texture & bdTopRight() const { return m_borderTopRight; }
-        [[nodiscard]] const sf::Texture & bdBotLeft() const { return m_borderBotLeft; }
-        [[nodiscard]] const sf::Texture & bdBotRight() const { return m_borderBotRight; }
+        [[nodiscard]] const sf::Texture & borderTopLeft() const { return m_borderTopLeft; }
+        [[nodiscard]] const sf::Texture & borderTopRight() const { return m_borderTopRight; }
+        [[nodiscard]] const sf::Texture & borderBotLeft() const { return m_borderBotLeft; }
+        [[nodiscard]] const sf::Texture & borderBotRight() const { return m_borderBotRight; }
 
       private:
         sf::Texture m_backgroundTop;
