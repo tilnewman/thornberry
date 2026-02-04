@@ -61,21 +61,6 @@ namespace thornberry
         m_walkDirections           = t_otherNpc.m_walkDirections;
     }
 
-    void Npc::standFacingRandomDirection(const Context & t_context)
-    {
-        const AvatarDirection direction{ t_context.random.from(
-            { AvatarDirection::Up,
-              AvatarDirection::Down,
-              AvatarDirection::Left,
-              AvatarDirection::Right }) };
-
-        m_isAnimating = false;
-        m_anim        = AvatarAnim::Walk;
-        m_direction   = direction;
-        setAnim();
-        m_anim = AvatarAnim::None;
-    }
-
     void Npc::update(const Context & t_context, const float t_elapsedSec)
     {
         Avatar::update(t_context, t_elapsedSec);
@@ -200,8 +185,7 @@ namespace thornberry
             const sf::Vector2f move{ 0.0f, -walkAmount };
             if (isMovedPositionValid(t_context, move))
             {
-                m_sprites.avatar.move(move);
-                m_sprites.shadow.move(move);
+                Avatar::move(move);
             }
         }
 
@@ -210,8 +194,7 @@ namespace thornberry
             const sf::Vector2f move{ 0.0f, walkAmount };
             if (isMovedPositionValid(t_context, move))
             {
-                m_sprites.avatar.move(move);
-                m_sprites.shadow.move(move);
+                Avatar::move(move);
             }
         }
 
@@ -220,8 +203,7 @@ namespace thornberry
             const sf::Vector2f move{ -walkAmount, 0.0f };
             if (isMovedPositionValid(t_context, move))
             {
-                m_sprites.avatar.move(move);
-                m_sprites.shadow.move(move);
+                Avatar::move(move);
             }
         }
 
@@ -230,8 +212,7 @@ namespace thornberry
             const sf::Vector2f move{ walkAmount, 0.0f };
             if (isMovedPositionValid(t_context, move))
             {
-                m_sprites.avatar.move(move);
-                m_sprites.shadow.move(move);
+                Avatar::move(move);
             }
         }
     }

@@ -35,7 +35,6 @@ namespace thornberry
 
         virtual ~Npc() override = default;
 
-        void standFacingRandomDirection(const Context & t_context);
         void update(const Context & t_context, const float t_elapsedSec) override;
 
       private:

@@ -74,6 +74,7 @@ namespace thornberry
         void startHurtAnimation();
         void setup(const Context & t_context);
         void setPosition(const sf::Vector2f & t_position);
+        void move(const sf::Vector2f & t_move);
 
         virtual void update(const Context & t_context, const float t_elapsedSec);
 
@@ -95,6 +96,8 @@ namespace thornberry
         }
 
         [[nodiscard]] const AvatarSprites & getSprites() const { return m_sprites; }
+
+        void standFacingRandomDirection(const Context & t_context);
 
       protected:
         void updateBlinking(const Context & t_context, const float t_elapsedSec);

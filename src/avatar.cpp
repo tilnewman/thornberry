@@ -149,6 +149,12 @@ namespace thornberry
         m_sprites.shadow.move({ 0.0f, (m_sprites.avatar.getGlobalBounds().size.y * 0.5f) });
     }
 
+    void Avatar::move(const sf::Vector2f & t_move)
+    {
+        m_sprites.avatar.move(t_move);
+        m_sprites.shadow.move(t_move);
+    }
+
     void Avatar::update(const Context & t_context, const float t_elapsedSec)
     {
         updateBlinking(t_context, t_elapsedSec);
@@ -411,6 +417,21 @@ namespace thornberry
         m_hurtColorCycleTimeSec = 0.0f;
         m_isHurtColorWhite      = true;
         m_sprites.avatar.setColor(sf::Color::Red);
+    }
+
+    void Avatar::standFacingRandomDirection(const Context & t_context)
+    {
+        const AvatarDirection direction{ t_context.random.from(
+            { AvatarDirection::Up,
+              AvatarDirection::Down,
+              AvatarDirection::Left,
+              AvatarDirection::Right }) };
+
+        m_isAnimating = false;
+        m_anim        = AvatarAnim::Walk;
+        m_direction   = direction;
+        setAnim();
+        m_anim = AvatarAnim::None;
     }
 
 } // namespace thornberry
