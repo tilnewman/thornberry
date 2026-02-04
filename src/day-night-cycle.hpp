@@ -26,6 +26,7 @@ namespace thornberry
         void update(const Context & t_context, const float t_elapsedSec);
 
         void drawBeforeMap(
+            const Context & t_context,
             sf::RenderTarget & t_target,
             sf::RenderStates & t_states) const;
 
