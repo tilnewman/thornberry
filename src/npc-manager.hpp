@@ -35,7 +35,7 @@ namespace thornberry
             sf::RenderTarget & t_target,
             sf::RenderStates t_states) const;
 
-        [[nodiscard]] bool doesRectCollideWithAny(const sf::FloatRect & t_mapRect) const;
+        [[nodiscard]] const NpcRefOpt_t doesRectCollideWithAny(const sf::FloatRect & t_mapRect);
 
         [[nodiscard]] bool
             doesRectCollideWithAnyExcept(const sf::FloatRect & t_mapRect, const Npc & t_npc) const;
@@ -47,7 +47,7 @@ namespace thornberry
             pickRandomSpawnPosition(const Context & t_context) const;
 
         [[nodiscard]] const std::optional<sf::Vector2f>
-            findRandomAvailableSpawnPosition(const Context & t_context) const;
+            findRandomAvailableSpawnPosition(const Context & t_context);
 
         bool randomPlaceNpc(const Context & t_context, const AvatarImage & t_image);
 

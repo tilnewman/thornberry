@@ -191,7 +191,7 @@ namespace thornberry
     }
 
     const std::optional<sf::Vector2f>
-        NpcManager::findRandomAvailableSpawnPosition(const Context & t_context) const
+        NpcManager::findRandomAvailableSpawnPosition(const Context & t_context)
     {
         // all of this function is in map coordinates
 
@@ -225,7 +225,8 @@ namespace thornberry
             }
 
             // check if random position collides with any other NPCs
-            if (doesRectCollideWithAny(randomRect))
+            const NpcRefOpt_t npcRefOpt{ doesRectCollideWithAny(randomRect) };
+            if (npcRefOpt.has_value())
             {
                 continue;
             }
@@ -239,22 +240,22 @@ namespace thornberry
         return {};
     }
 
-    bool NpcManager::doesRectCollideWithAny(const sf::FloatRect & t_mapRect) const
+    const NpcRefOpt_t NpcManager::doesRectCollideWithAny(const sf::FloatRect & t_mapRect)
     {
         // all of this function is in map coordinates
 
-        for (const Npc & npc : m_npcs)
+        for (Npc & npc : m_npcs)
         {
             if (t_mapRect
                     .findIntersection(
                         Avatar::makeAvatarToAvatarCollisionRect(npc.collisionMapRect()))
                     .has_value())
             {
-                return true;
+                return { npc };
             }
         }
 
-        return false;
+        return {};
     }
 
     bool NpcManager::doesRectCollideWithAnyExcept(

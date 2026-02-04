@@ -5,6 +5,7 @@
 //
 #include "avatar.hpp"
 
+#include <functional>
 #include <optional>
 #include <vector>
 
@@ -47,6 +48,36 @@ namespace thornberry
         float m_actionElpasedSec;
         float m_timeUntilActionChangeSec;
         std::vector<AvatarDirection> m_walkDirections;
+    };
+
+    using NpcRefOpt_t = std::optional<std::reference_wrapper<Npc>>;
+
+    //
+    enum class MoveResult : unsigned char
+    {
+        Success,
+        FailMoveCollision,
+        FailTransition,
+        FailNpcCollision
+    };
+
+    //
+    struct MoveResultPack
+    {
+        MoveResultPack(const MoveResult t_result)
+            : result{ t_result }
+            , npc_opt{}
+        {}
+
+        MoveResultPack(Npc & t_collidingNpc)
+            : result{ MoveResult::FailNpcCollision }
+            , npc_opt{ t_collidingNpc }
+        {}
+
+        // explicit operator bool() const { return (MoveResult::Success == result); }
+
+        MoveResult result;
+        NpcRefOpt_t npc_opt;
     };
 
 } // namespace thornberry

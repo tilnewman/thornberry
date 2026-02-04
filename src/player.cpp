@@ -115,42 +115,37 @@ namespace thornberry
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up))
         {
-            const sf::Vector2f move{ 0.0f, -walkAmount };
-            if (t_context.level.playerMove(t_context, collisionMapRect(), move))
-            {
-                m_sprites.avatar.move(move);
-                m_sprites.shadow.move(move);
-            }
+            attemptMove(t_context, { 0.0f, -walkAmount });
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down))
         {
-            const sf::Vector2f move{ 0.0f, walkAmount };
-            if (t_context.level.playerMove(t_context, collisionMapRect(), move))
-            {
-                m_sprites.avatar.move(move);
-                m_sprites.shadow.move(move);
-            }
+            attemptMove(t_context, { 0.0f, walkAmount });
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left))
         {
-            const sf::Vector2f move{ -walkAmount, 0.0f };
-            if (t_context.level.playerMove(t_context, collisionMapRect(), move))
-            {
-                m_sprites.avatar.move(move);
-                m_sprites.shadow.move(move);
-            }
+            attemptMove(t_context, { -walkAmount, 0.0f });
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right))
         {
-            const sf::Vector2f move{ walkAmount, 0.0f };
-            if (t_context.level.playerMove(t_context, collisionMapRect(), move))
-            {
-                m_sprites.avatar.move(move);
-                m_sprites.shadow.move(move);
-            }
+            attemptMove(t_context, { walkAmount, 0.0f });
+        }
+    }
+
+    void Player::attemptMove(const Context & t_context, const sf::Vector2f & t_move)
+    {
+        const MoveResultPack resultPack{ t_context.level.playerMove(
+            t_context, collisionMapRect(), t_move) };
+
+        if (resultPack.result == MoveResult::Success)
+        {
+            Avatar::move(t_move);
+        }
+        else if (resultPack.npc_opt.has_value())
+        {
+            resultPack.npc_opt->get().standFacingPosition(util::center(collisionMapRect()));
         }
     }
 

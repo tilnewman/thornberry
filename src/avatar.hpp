@@ -98,8 +98,10 @@ namespace thornberry
         [[nodiscard]] const AvatarSprites & getSprites() const { return m_sprites; }
 
         void standFacingRandomDirection(const Context & t_context);
+        void standFacingPosition(const sf::Vector2f & t_mapPosition);
 
       protected:
+        void standFacing(const AvatarDirection t_direction);
         void updateBlinking(const Context & t_context, const float t_elapsedSec);
         void updateAnimation(const Context & t_context, const float t_elapsedSec);
         void updateHurtAnimation(const Context & t_context, const float t_elapsedSec);

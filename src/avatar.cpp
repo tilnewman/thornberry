@@ -421,15 +421,43 @@ namespace thornberry
 
     void Avatar::standFacingRandomDirection(const Context & t_context)
     {
-        const AvatarDirection direction{ t_context.random.from(
+        standFacing(t_context.random.from(
             { AvatarDirection::Up,
               AvatarDirection::Down,
               AvatarDirection::Left,
-              AvatarDirection::Right }) };
+              AvatarDirection::Right }));
+    }
 
+    void Avatar::standFacingPosition(const sf::Vector2f & t_mapPosition)
+    {
+        const sf::Vector2f avatarPosition{ util::center(collisionMapRect()) };
+
+        const sf::Vector2f diff{ std::abs(t_mapPosition.x - avatarPosition.x),
+                                 std::abs(t_mapPosition.y - avatarPosition.y) };
+
+        if ((t_mapPosition.x < avatarPosition.x) && (diff.x > diff.y))
+        {
+            standFacing(AvatarDirection::Left);
+        }
+        else if ((t_mapPosition.x > avatarPosition.x) && (diff.x > diff.y))
+        {
+            standFacing(AvatarDirection::Right);
+        }
+        else if ((t_mapPosition.y < avatarPosition.y) && (diff.y > diff.x))
+        {
+            standFacing(AvatarDirection::Up);
+        }
+        else
+        {
+            standFacing(AvatarDirection::Down);
+        }
+    }
+
+    void Avatar::standFacing(const AvatarDirection t_direction)
+    {
         m_isAnimating = false;
         m_anim        = AvatarAnim::Walk;
-        m_direction   = direction;
+        m_direction   = t_direction;
         setAnim();
         m_anim = AvatarAnim::None;
     }

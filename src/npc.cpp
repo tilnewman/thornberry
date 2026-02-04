@@ -51,7 +51,6 @@ namespace thornberry
         , m_walkDirections{ t_otherNpc.m_walkDirections }
     {}
 
-    
     void Npc::operator=(const Npc & t_otherNpc)
     {
         Avatar::operator=(t_otherNpc);

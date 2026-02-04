@@ -3,6 +3,7 @@
 //
 // indirect-level.hpp
 //
+#include "npc.hpp"
 #include "indirect-tile-layer.hpp"
 #include "sfml-util.hpp"
 
@@ -15,7 +16,6 @@
 
 namespace thornberry
 {
-
     struct Context;
 
     //
@@ -170,7 +170,7 @@ namespace thornberry
             const sf::Vector2f & t_screenTileSize);
 
         // returns true if the avatar will move by t_move amount
-        [[nodiscard]] bool playerMove(
+        [[nodiscard]] const MoveResultPack playerMove(
             const Context & t_context,
             const sf::FloatRect & t_playerMapRect,
             const sf::Vector2f & t_move);

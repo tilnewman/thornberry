@@ -25,6 +25,7 @@ namespace thornberry
 
       private:
         void updateWalkPosition(const Context & t_context, const float t_elapsedSec) override;
+        void attemptMove(const Context & t_context, const sf::Vector2f & t_move);
     };
 
 } // namespace thornberry

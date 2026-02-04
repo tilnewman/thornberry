@@ -383,7 +383,7 @@ namespace thornberry
         return { 0.0f, 0.0f };
     }
 
-    bool IndirectLevel::playerMove(
+    const MoveResultPack IndirectLevel::playerMove(
         const Context & t_context,
         const sf::FloatRect & t_playerMapRect,
         const sf::Vector2f & t_move)
@@ -405,19 +405,20 @@ namespace thornberry
             load(t_context, nameCopy, transitionOpt->map_filename);
 
             stopWalkSound(t_context);
-            return false;
+            return { MoveResult::FailTransition };
         }
 
         if (doesIntersetWithCollision(playerRect))
         {
             stopWalkSound(t_context);
-            return false;
+            return { MoveResult::FailMoveCollision };
         }
 
-        if (t_context.npc.doesRectCollideWithAny(
-                Avatar::makeAvatarToAvatarCollisionRect(playerRect)))
+        const NpcRefOpt_t npcRefOpt{ t_context.npc.doesRectCollideWithAny(
+            Avatar::makeAvatarToAvatarCollisionRect(playerRect)) };
+        if (npcRefOpt.has_value())
         {
-            return false;
+            return MoveResultPack{ npcRefOpt.value().get() };
         }
 
         // allow the avatar to interact with animation layers (pickups, etc...)
@@ -500,7 +501,7 @@ namespace thornberry
             }
         }
 
-        return true;
+        return { MoveResult::Success };
     }
 
     void IndirectLevel::interactWithAll(
