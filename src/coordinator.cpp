@@ -35,6 +35,7 @@ namespace thornberry
         , m_npcManagerUPtr{}
         , m_predrawAnimationsUPtr{}
         , m_dayNightCycleUPtr{}
+        , m_windowImageManagerUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -69,6 +70,7 @@ namespace thornberry
         m_npcManagerUPtr           = std::make_unique<NpcManager>();
         m_predrawAnimationsUPtr    = std::make_unique<PredrawAnimations>();
         m_dayNightCycleUPtr        = std::make_unique<DayNightCycle>();
+        m_windowImageManagerUPtr   = std::make_unique<WindowImageManager>();
 
         const auto playerImages{ getAvatarImagesPlayer() };
         m_playerUPtr = std::make_unique<Player>(m_randomUPtr->from(playerImages));
@@ -87,13 +89,15 @@ namespace thornberry
             *m_smokeParticleEffectsUPtr,
             *m_npcManagerUPtr,
             *m_predrawAnimationsUPtr,
-            *m_dayNightCycleUPtr);
+            *m_dayNightCycleUPtr,
+            *m_windowImageManagerUPtr);
 
         m_soundPlayerUPtr->setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayerUPtr->loadAll();
 
         m_musicPlayerUPtr->setup((m_config.media_path / "music").string());
 
+        m_windowImageManagerUPtr->setup(m_config);
         m_predrawAnimationsUPtr->setup(m_config);
         m_smokeParticleEffectsUPtr->setup(m_config);
         m_pickupImageManagerUPtr->setup(m_config);
@@ -102,7 +106,7 @@ namespace thornberry
         m_framerateUPtr->setup(*m_contextUPtr);
         m_playerUPtr->setup(*m_contextUPtr);
         m_dayNightCycleUPtr->setup(*m_contextUPtr);
-
+        
         m_levelUPtr->load(*m_contextUPtr, "house.tmj", "thornberry.tmj");
     }
 
@@ -140,6 +144,7 @@ namespace thornberry
         m_npcManagerUPtr.reset();
         m_predrawAnimationsUPtr.reset();
         m_dayNightCycleUPtr.reset();
+        m_windowImageManagerUPtr.reset();
 
         MapTextureManager::instance().teardown();
         AvatarImageManager::instance().teardown();

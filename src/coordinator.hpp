@@ -19,6 +19,7 @@
 #include "screen-layout.hpp"
 #include "smoke-particle.hpp"
 #include "sound-player.hpp"
+#include "window-image-manager.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -65,6 +66,7 @@ namespace thornberry
         std::unique_ptr<NpcManager> m_npcManagerUPtr;
         std::unique_ptr<PredrawAnimations> m_predrawAnimationsUPtr;
         std::unique_ptr<DayNightCycle> m_dayNightCycleUPtr;
+        std::unique_ptr<WindowImageManager> m_windowImageManagerUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 

@@ -24,6 +24,7 @@ namespace thornberry
     class NpcManager;
     class PredrawAnimations;
     class DayNightCycle;
+    class WindowImageManager;
 
     //
     struct Context
@@ -38,11 +39,12 @@ namespace thornberry
             FontManager & t_fontManager,
             util::SoundPlayer & t_soundPlayer,
             util::MusicPlayer & t_musicPlayer,
-            PickupImageManager & t_pickupImageManager,
+            const PickupImageManager & t_pickupImageManager,
             SmokeParticleEffects & t_smokeParticleEffects,
             NpcManager & t_npcManager,
             PredrawAnimations & t_predrawAnimations,
-            DayNightCycle & t_dayNightCycle)
+            DayNightCycle & t_dayNightCycle,
+            const WindowImageManager & t_windowImageManager)
             : config{ t_config }
             , screen_layout{ t_screenLayout }
             , random{ t_random }
@@ -57,6 +59,7 @@ namespace thornberry
             , npc{ t_npcManager }
             , predraw_anim{ t_predrawAnimations }
             , time{ t_dayNightCycle }
+            , window_image{ t_windowImageManager }
         {}
 
         const Config & config;
@@ -68,11 +71,12 @@ namespace thornberry
         FontManager & font;
         util::SoundPlayer & sfx;
         util::MusicPlayer & music;
-        PickupImageManager & pickup_image;
+        const PickupImageManager & pickup_image;
         SmokeParticleEffects & smoke;
         NpcManager & npc;
         PredrawAnimations & predraw_anim;
         DayNightCycle & time;
+        const WindowImageManager & window_image;
     };
 
 } // namespace thornberry
