@@ -44,7 +44,7 @@ namespace thornberry
 
         util::fitAndCenterInside(m_sprite, rect);
         util::setOriginToCenter(m_sprite);
-        m_sprite.scale({ 0.75f, 0.75f });
+        m_sprite.scale({ 0.65f, 0.65f });
         m_sprite.setRotation(sf::degrees(t_context.random.fromTo(0.0f, 360.0f)));
         
         m_sprite.setPosition(
