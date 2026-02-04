@@ -392,12 +392,6 @@ namespace thornberry
         sf::FloatRect playerRect{ t_playerMapRect };
         playerRect.position += t_move;
 
-        if (doesIntersetWithCollision(playerRect))
-        {
-            stopWalkSound(t_context);
-            return false;
-        }
-
         const std::optional<Transition> transitionOpt{ findIntersectingExitTransition(playerRect) };
         if (transitionOpt.has_value())
         {
@@ -410,6 +404,12 @@ namespace thornberry
             const std::string nameCopy{ m_name };
             load(t_context, nameCopy, transitionOpt->map_filename);
 
+            stopWalkSound(t_context);
+            return false;
+        }
+
+        if (doesIntersetWithCollision(playerRect))
+        {
             stopWalkSound(t_context);
             return false;
         }
