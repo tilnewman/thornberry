@@ -35,6 +35,8 @@ namespace thornberry
       private:
         std::vector<sf::Sprite> m_sprites;
         sf::RectangleShape m_bgRectangle;
+        sf::Vector2f m_scale;
+        float m_bgOffset;
     };
 
 } // namespace thornberry

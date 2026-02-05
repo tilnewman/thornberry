@@ -4,6 +4,7 @@
 #include "window.hpp"
 
 #include "context.hpp"
+#include "screen-layout.hpp"
 #include "sfml-util.hpp"
 #include "window-image-manager.hpp"
 
@@ -13,10 +14,16 @@ namespace thornberry
     Window::Window()
         : m_sprites{}
         , m_bgRectangle{}
+        , m_scale{}
+        , m_bgOffset{ 4.0f }
     {}
 
     void Window::setup(const Context & t_context, const sf::FloatRect & t_rect)
     {
+        const float scale{ t_context.screen_layout.calScaleBasedOnResolution(t_context, 1.5f) };
+        m_scale.x = scale;
+        m_scale.y = scale;
+
         setupBackground(t_context, t_rect);
         setupBorder(t_context, t_rect);
     }
@@ -33,190 +40,210 @@ namespace thornberry
 
     void Window::setupBorder(const Context & t_context, const sf::FloatRect & t_rect)
     {
-        sf::Sprite spriteBorderTopLeft(t_context.window_image.borderTopLeft());
-        sf::Sprite spriteBorderTop(t_context.window_image.borderTop());
-        sf::Sprite spriteBorderTopRight(t_context.window_image.borderTopRight());
+        sf::Sprite spriteTopLeft(t_context.window_image.borderTopLeft());
+        spriteTopLeft.setScale(m_scale);
 
-        const float centerWidth{ (t_rect.size.x - spriteBorderTopLeft.getGlobalBounds().size.x) -
-                                 spriteBorderTopRight.getGlobalBounds().size.x };
+        sf::Sprite spriteTop(t_context.window_image.borderTop());
+        spriteTop.setScale(m_scale);
 
-        spriteBorderTopLeft.setPosition(t_rect.position);
+        sf::Sprite spriteTopRight(t_context.window_image.borderTopRight());
+        spriteTopRight.setScale(m_scale);
 
+        const float centerWidth{ (t_rect.size.x - spriteTopLeft.getGlobalBounds().size.x) -
+                                 spriteTopRight.getGlobalBounds().size.x };
+
+        spriteTopLeft.setPosition(t_rect.position);
         {
             sf::FloatRect r;
-            r.position.x = util::right(spriteBorderTopLeft.getGlobalBounds());
+            r.position.x = util::right(spriteTopLeft.getGlobalBounds());
             r.position.y = t_rect.position.y;
             r.size.x     = centerWidth;
-            r.size.y     = spriteBorderTop.getGlobalBounds().size.y;
+            r.size.y     = spriteTop.getGlobalBounds().size.y;
 
-            util::scaleAndCenterInside(spriteBorderTop, r);
+            util::scaleAndCenterInside(spriteTop, r);
         }
 
-        spriteBorderTopRight.setPosition({ util::right(spriteBorderTop), t_rect.position.y });
+        spriteTopRight.setPosition({ util::right(spriteTop), t_rect.position.y });
 
-        const float centerHeight{ (t_rect.size.y - spriteBorderTopLeft.getGlobalBounds().size.y) -
-                                  spriteBorderTopRight.getGlobalBounds().size.y };
+        sf::Sprite spriteBotLeft(t_context.window_image.borderBotLeft());
+        spriteBotLeft.setScale(m_scale);
+
+        const float centerHeight{ (t_rect.size.y - spriteTopLeft.getGlobalBounds().size.y) -
+                                  spriteBotLeft.getGlobalBounds().size.y };
 
         //
-        sf::Sprite spriteBorderLeft(t_context.window_image.borderLeft());
-
+        sf::Sprite spriteLeft(t_context.window_image.borderLeft());
+        spriteLeft.setScale(m_scale);
         {
             sf::FloatRect r;
             r.position.x = t_rect.position.x;
-            r.position.y = util::bottom(spriteBorderTopLeft);
-            r.size.x     = spriteBorderLeft.getGlobalBounds().size.x;
+            r.position.y = util::bottom(spriteTopLeft);
+            r.size.x     = spriteLeft.getGlobalBounds().size.x;
             r.size.y     = centerHeight;
 
-            util::scaleAndCenterInside(spriteBorderLeft, r);
+            util::scaleAndCenterInside(spriteLeft, r);
         }
 
         //
-        sf::Sprite spriteBorderRight(t_context.window_image.borderRight());
-
+        sf::Sprite spriteRight(t_context.window_image.borderRight());
+        spriteRight.setScale(m_scale);
         {
             sf::FloatRect r;
 
             r.position.x =
-                (util::right(spriteBorderTopRight.getGlobalBounds()) -
-                 spriteBorderRight.getGlobalBounds().size.x);
+                (util::right(spriteTopRight.getGlobalBounds()) -
+                 spriteRight.getGlobalBounds().size.x);
 
-            r.position.y = spriteBorderLeft.getPosition().y;
-            r.size.x     = spriteBorderRight.getGlobalBounds().size.x;
+            r.position.y = spriteLeft.getPosition().y;
+            r.size.x     = spriteRight.getGlobalBounds().size.x;
             r.size.y     = centerHeight;
 
-            util::scaleAndCenterInside(spriteBorderRight, r);
+            util::scaleAndCenterInside(spriteRight, r);
         }
 
         //
-        sf::Sprite spriteBorderBotLeft(t_context.window_image.borderBotLeft());
-        spriteBorderBotLeft.setPosition({ t_rect.position.x, util::bottom(spriteBorderLeft) });
+        spriteBotLeft.setPosition({ t_rect.position.x, util::bottom(spriteLeft) });
 
         //
-        sf::Sprite spriteBorderBot(t_context.window_image.borderBot());
-
+        sf::Sprite spriteBot(t_context.window_image.borderBot());
+        spriteBot.setScale(m_scale);
         {
             sf::FloatRect r;
-            r.position.x = util::right(spriteBorderBotLeft);
-
-            r.position.y =
-                (util::bottom(spriteBorderBotLeft) - spriteBorderBot.getGlobalBounds().size.y);
+            r.position.x = util::right(spriteBotLeft);
+            r.position.y = (util::bottom(spriteBotLeft) - spriteBot.getGlobalBounds().size.y);
 
             r.size.x = centerWidth;
-            r.size.y = spriteBorderBot.getGlobalBounds().size.y;
+            r.size.y = spriteBot.getGlobalBounds().size.y;
 
-            util::scaleAndCenterInside(spriteBorderBot, r);
+            util::scaleAndCenterInside(spriteBot, r);
         }
 
         //
-        sf::Sprite spriteBorderBotRight(t_context.window_image.borderBotRight());
+        sf::Sprite spriteBotRight(t_context.window_image.borderBotRight());
+        spriteBotRight.setScale(m_scale);
 
-        spriteBorderBotRight.setPosition(
-            { util::right(spriteBorderBot), spriteBorderBotLeft.getPosition().y });
+        spriteBotRight.setPosition({ util::right(spriteBot), spriteBotLeft.getPosition().y });
 
         //
-        m_sprites.emplace_back(spriteBorderTopLeft);
-        m_sprites.emplace_back(spriteBorderTop);
-        m_sprites.emplace_back(spriteBorderTopRight);
-        m_sprites.emplace_back(spriteBorderLeft);
-        m_sprites.emplace_back(spriteBorderRight);
-        m_sprites.emplace_back(spriteBorderBotLeft);
-        m_sprites.emplace_back(spriteBorderBotRight);
-        m_sprites.emplace_back(spriteBorderBot);
+        m_sprites.emplace_back(spriteTopLeft);
+        m_sprites.emplace_back(spriteTop);
+        m_sprites.emplace_back(spriteTopRight);
+        m_sprites.emplace_back(spriteLeft);
+        m_sprites.emplace_back(spriteRight);
+        m_sprites.emplace_back(spriteBotLeft);
+        m_sprites.emplace_back(spriteBotRight);
+        m_sprites.emplace_back(spriteBot);
     }
 
     void Window::setupBackground(const Context & t_context, const sf::FloatRect & t_rect)
     {
         m_bgRectangle.setFillColor(sf::Color(74, 76, 35));
-        m_bgRectangle.setPosition(t_rect.position + sf::Vector2f{ 4.0f, 4.0f });
-        m_bgRectangle.setSize(t_rect.size - sf::Vector2f{ 8.0f, 8.0f });
+
+        m_bgRectangle.setPosition(
+            t_rect.position + (sf::Vector2f{ m_bgOffset, m_bgOffset } * m_scale));
+
+        m_bgRectangle.setSize(
+            t_rect.size - (sf::Vector2f{ m_bgOffset, m_bgOffset } * m_scale * 2.0f));
 
         //
-        sf::Sprite spriteBgTopLeft(t_context.window_image.bgTopLeft());
-        sf::Sprite spriteBgTop(t_context.window_image.bgTop());
-        sf::Sprite spriteBgTopRight(t_context.window_image.bgTopRight());
+        sf::Sprite spriteTopLeft(t_context.window_image.bgTopLeft());
+        spriteTopLeft.setScale(m_scale);
 
-        const float centerWidth{ ((t_rect.size.x - spriteBgTopLeft.getGlobalBounds().size.x) -
-                                  spriteBgTopRight.getGlobalBounds().size.x) -
-                                 8.0f };
+        sf::Sprite spriteTop(t_context.window_image.bgTop());
+        spriteTop.setScale(m_scale);
 
-        spriteBgTopLeft.setPosition(t_rect.position + sf::Vector2f{ 4.0f, 4.0f });
+        sf::Sprite spriteTopRight(t_context.window_image.bgTopRight());
+        spriteTopRight.setScale(m_scale);
+
+        const float centerWidth{ 1.0f + ((t_rect.size.x - spriteTopLeft.getGlobalBounds().size.x) -
+                                  spriteTopRight.getGlobalBounds().size.x) -
+                                 (m_bgOffset * 2.0f * m_scale.x) };
+
+        spriteTopLeft.setPosition(
+            t_rect.position + (sf::Vector2f{ m_bgOffset, m_bgOffset } * m_scale));
 
         {
             sf::FloatRect r;
-            r.position.x = util::right(spriteBgTopLeft.getGlobalBounds());
-            r.position.y = t_rect.position.y + 4.0f;
+            r.position.x = util::right(spriteTopLeft.getGlobalBounds());
+            r.position.y = t_rect.position.y + (m_bgOffset * m_scale.y);
             r.size.x     = centerWidth;
-            r.size.y     = spriteBgTop.getGlobalBounds().size.y;
+            r.size.y     = spriteTop.getGlobalBounds().size.y;
 
-            util::scaleAndCenterInside(spriteBgTop, r);
+            util::scaleAndCenterInside(spriteTop, r);
         }
 
-        spriteBgTopRight.setPosition({ util::right(spriteBgTop), t_rect.position.y + 4.0f });
+        spriteTopRight.setPosition(
+            { util::right(spriteTop), t_rect.position.y + (m_bgOffset * m_scale.y) });
 
-        const float centerHeight{ ((t_rect.size.y - spriteBgTopLeft.getGlobalBounds().size.y) -
-                                   spriteBgTopRight.getGlobalBounds().size.y) -
-                                  3.0f };
+        spriteTopRight.setScale(m_scale);
+
+        sf::Sprite spriteBotLeft(t_context.window_image.bgBotLeft());
+        spriteBotLeft.setScale(m_scale);
+
+        const float centerHeight{ ((t_rect.size.y - spriteTopLeft.getGlobalBounds().size.y) -
+                                   spriteBotLeft.getGlobalBounds().size.y) -
+                                  (m_bgOffset * 2.0f * m_scale.y) };
 
         //
-        sf::Sprite spriteBgLeft(t_context.window_image.bgLeft());
-
+        sf::Sprite spriteLeft(t_context.window_image.bgLeft());
+        spriteLeft.setScale(m_scale);
         {
             sf::FloatRect r;
-            r.position.x = t_rect.position.x + 4.0f;
-            r.position.y = util::bottom(spriteBgTopLeft);
-            r.size.x     = spriteBgLeft.getGlobalBounds().size.x;
+            r.position.x = t_rect.position.x + (m_bgOffset * m_scale.x);
+            r.position.y = util::bottom(spriteTopLeft);
+            r.size.x     = spriteLeft.getGlobalBounds().size.x;
             r.size.y     = centerHeight;
 
-            util::scaleAndCenterInside(spriteBgLeft, r);
+            util::scaleAndCenterInside(spriteLeft, r);
         }
 
         //
-        sf::Sprite spriteBgRight(t_context.window_image.bgRight());
-
+        sf::Sprite spriteRight(t_context.window_image.bgRight());
+        spriteRight.setScale(m_scale);
         {
             sf::FloatRect r;
 
             r.position.x =
-                (util::right(spriteBgTopRight.getGlobalBounds()) -
-                 spriteBgRight.getGlobalBounds().size.x);
+                (util::right(spriteTopRight.getGlobalBounds()) -
+                 spriteRight.getGlobalBounds().size.x);
 
-            r.position.y = spriteBgLeft.getPosition().y;
-            r.size.x     = spriteBgRight.getGlobalBounds().size.x;
+            r.position.y = spriteLeft.getPosition().y;
+            r.size.x     = spriteRight.getGlobalBounds().size.x;
             r.size.y     = centerHeight;
 
-            util::scaleAndCenterInside(spriteBgRight, r);
+            util::scaleAndCenterInside(spriteRight, r);
         }
 
         //
-        sf::Sprite spriteBgBotLeft(t_context.window_image.bgBotLeft());
-        spriteBgBotLeft.setPosition({ (t_rect.position.x + 4.0f), util::bottom(spriteBgLeft) });
+        spriteBotLeft.setPosition(
+            { (t_rect.position.x + (m_bgOffset * m_scale.x)), util::bottom(spriteLeft) });
 
         //
-        sf::Sprite spriteBgBot(t_context.window_image.bgBot());
-
+        sf::Sprite spriteBot(t_context.window_image.bgBot());
+        spriteBot.setScale(m_scale);
         {
             sf::FloatRect r;
-            r.position.x = util::right(spriteBgBotLeft);
-            r.position.y = (util::bottom(spriteBgBotLeft) - spriteBgBot.getGlobalBounds().size.y);
+            r.position.x = util::right(spriteBotLeft);
+            r.position.y = (util::bottom(spriteBotLeft) - spriteBot.getGlobalBounds().size.y);
             r.size.x     = centerWidth;
-            r.size.y     = spriteBgBot.getGlobalBounds().size.y;
+            r.size.y     = spriteBot.getGlobalBounds().size.y;
 
-            util::scaleAndCenterInside(spriteBgBot, r);
+            util::scaleAndCenterInside(spriteBot, r);
         }
 
         //
-        sf::Sprite spriteBgBotRight(t_context.window_image.bgBotRight());
+        sf::Sprite spriteBotRight(t_context.window_image.bgBotRight());
+        spriteBotRight.setScale(m_scale);
+        spriteBotRight.setPosition({ util::right(spriteBot), spriteBotLeft.getPosition().y });
 
-        spriteBgBotRight.setPosition({ util::right(spriteBgBot), spriteBgBotLeft.getPosition().y });
-
-        m_sprites.emplace_back(spriteBgTopLeft);
-        m_sprites.emplace_back(spriteBgTop);
-        m_sprites.emplace_back(spriteBgTopRight);
-        m_sprites.emplace_back(spriteBgLeft);
-        m_sprites.emplace_back(spriteBgRight);
-        m_sprites.emplace_back(spriteBgBotLeft);
-        m_sprites.emplace_back(spriteBgBotRight);
-        m_sprites.emplace_back(spriteBgBot);
+        m_sprites.emplace_back(spriteTopLeft);
+        m_sprites.emplace_back(spriteTop);
+        m_sprites.emplace_back(spriteTopRight);
+        m_sprites.emplace_back(spriteLeft);
+        m_sprites.emplace_back(spriteRight);
+        m_sprites.emplace_back(spriteBotLeft);
+        m_sprites.emplace_back(spriteBotRight);
+        m_sprites.emplace_back(spriteBot);
     }
 
 } // namespace thornberry
