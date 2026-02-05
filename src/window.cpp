@@ -19,13 +19,14 @@ namespace thornberry
         , m_bgOffset{ 4.0f }
     {}
 
-    const sf::FloatRect Window::setup(const Context & t_context, const sf::FloatRect & t_rect)
+    const sf::FloatRect Window::setup(
+        const Context & t_context, const sf::FloatRect & t_rect, const sf::Color & t_color)
     {
         const float scale{ t_context.screen_layout.calScaleBasedOnResolution(t_context, 1.5f) };
         m_scale.x = scale;
         m_scale.y = scale;
 
-        const sf::FloatRect innerRect{ setupBackground(t_context, t_rect) };
+        const sf::FloatRect innerRect{ setupBackground(t_context, t_rect, t_color) };
         setupBorder(t_context, t_rect);
 
         return innerRect;
@@ -140,15 +141,20 @@ namespace thornberry
         m_sprites.emplace_back(spriteBot);
     }
 
-    const sf::FloatRect
-        Window::setupBackground(const Context & t_context, const sf::FloatRect & t_rect)
+    const sf::FloatRect Window::setupBackground(
+        const Context & t_context, const sf::FloatRect & t_rect, const sf::Color & t_color)
     {
-        m_bgRectangle.setFillColor(sf::Color(74, 76, 35));
+        m_bgRectangle.setFillColor(sf::Color(75, 75, 75));
         m_bgRectangle.setPosition(t_rect.position + (sf::Vector2f{ m_bgOffset, m_bgOffset }));
         m_bgRectangle.setSize(t_rect.size - (sf::Vector2f{ m_bgOffset, m_bgOffset } * 2.0f));
 
+        sf::Color color{t_color};
+        if (sf::Color::Transparent != color)
+        {
+            color.a = 32;
+        }
         m_bgReColorRectangle = m_bgRectangle;
-        m_bgReColorRectangle.setFillColor(sf::Color(127, 0, 255, 32));
+        m_bgReColorRectangle.setFillColor(color);
 
         //
         sf::Sprite spriteTopLeft(t_context.window_image.bgTopLeft());

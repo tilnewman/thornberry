@@ -26,14 +26,18 @@ namespace thornberry
         Window();
 
         // returns the inner rect where text or whatever can be drawn within in the window
-        const sf::FloatRect setup(const Context & t_context, const sf::FloatRect & t_rect);
+        const sf::FloatRect setup(
+            const Context & t_context,
+            const sf::FloatRect & t_rect,
+            const sf::Color & t_color = sf::Color::Transparent);
+
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
       private:
         void setupBorder(const Context & t_context, const sf::FloatRect & t_rect);
 
-        const sf::FloatRect
-            setupBackground(const Context & t_context, const sf::FloatRect & t_rect);
+        const sf::FloatRect setupBackground(
+            const Context & t_context, const sf::FloatRect & t_rect, const sf::Color & t_color);
 
       private:
         std::vector<sf::Sprite> m_sprites;
