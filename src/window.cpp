@@ -19,14 +19,16 @@ namespace thornberry
         , m_bgOffset{ 4.0f }
     {}
 
-    void Window::setup(const Context & t_context, const sf::FloatRect & t_rect)
+    const sf::FloatRect Window::setup(const Context & t_context, const sf::FloatRect & t_rect)
     {
         const float scale{ t_context.screen_layout.calScaleBasedOnResolution(t_context, 1.5f) };
         m_scale.x = scale;
         m_scale.y = scale;
 
-        setupBackground(t_context, t_rect);
+        const sf::FloatRect innerRect{ setupBackground(t_context, t_rect) };
         setupBorder(t_context, t_rect);
+
+        return innerRect;
     }
 
     void Window::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
@@ -138,7 +140,8 @@ namespace thornberry
         m_sprites.emplace_back(spriteBot);
     }
 
-    void Window::setupBackground(const Context & t_context, const sf::FloatRect & t_rect)
+    const sf::FloatRect
+        Window::setupBackground(const Context & t_context, const sf::FloatRect & t_rect)
     {
         m_bgRectangle.setFillColor(sf::Color(74, 76, 35));
 
@@ -251,6 +254,11 @@ namespace thornberry
         m_sprites.emplace_back(spriteBotLeft);
         m_sprites.emplace_back(spriteBotRight);
         m_sprites.emplace_back(spriteBot);
+
+        sf::FloatRect innerRect(m_bgRectangle.getPosition(), m_bgRectangle.getSize());
+        innerRect.position += spriteTopLeft.getGlobalBounds().size;
+        innerRect.size -= (spriteTopLeft.getGlobalBounds().size * 2.0f);
+        return innerRect;
     }
 
 } // namespace thornberry
