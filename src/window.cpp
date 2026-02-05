@@ -14,6 +14,7 @@ namespace thornberry
     Window::Window()
         : m_sprites{}
         , m_bgRectangle{}
+        , m_bgReColorRectangle{}
         , m_scale{}
         , m_bgOffset{ 4.0f }
     {}
@@ -36,6 +37,8 @@ namespace thornberry
         {
             t_target.draw(sprite, t_states);
         }
+
+        t_target.draw(m_bgReColorRectangle, t_states);
     }
 
     void Window::setupBorder(const Context & t_context, const sf::FloatRect & t_rect)
@@ -145,6 +148,9 @@ namespace thornberry
         m_bgRectangle.setSize(
             t_rect.size - (sf::Vector2f{ m_bgOffset, m_bgOffset } * m_scale * 2.0f));
 
+        m_bgReColorRectangle = m_bgRectangle;
+        m_bgReColorRectangle.setFillColor(sf::Color(127, 0, 255, 32));
+
         //
         sf::Sprite spriteTopLeft(t_context.window_image.bgTopLeft());
         spriteTopLeft.setScale(m_scale);
@@ -155,7 +161,8 @@ namespace thornberry
         sf::Sprite spriteTopRight(t_context.window_image.bgTopRight());
         spriteTopRight.setScale(m_scale);
 
-        const float centerWidth{ 1.0f + ((t_rect.size.x - spriteTopLeft.getGlobalBounds().size.x) -
+        const float centerWidth{ 1.0f +
+                                 ((t_rect.size.x - spriteTopLeft.getGlobalBounds().size.x) -
                                   spriteTopRight.getGlobalBounds().size.x) -
                                  (m_bgOffset * 2.0f * m_scale.x) };
 
