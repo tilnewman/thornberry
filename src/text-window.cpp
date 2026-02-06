@@ -53,10 +53,14 @@ namespace thornberry
             m_bgInnerRect = { { 36.0f, 36.0f }, { 424.0f, 414.0f } };
         }
 
+        const float scale{ t_context.screen_layout.calScaleBasedOnResolution(t_context, 0.65f) };
+
         m_bgOuterRect.position = m_spec.position;
         m_bgOuterRect.size     = sf::Vector2f{ m_bgTexture.getSize() };
+        m_bgOuterRect.size *= scale;
 
         m_bgInnerRect.position += m_bgOuterRect.position;
+        m_bgInnerRect.size *= scale;
 
         m_bgSprite.setTexture(m_bgTexture, true);
         util::fitAndCenterInside(m_bgSprite, m_bgOuterRect);
@@ -66,6 +70,7 @@ namespace thornberry
             m_avatarTexture = AvatarImageManager::instance().acquire(m_spec.avatar_image);
             m_avatarSprite.setTexture(m_avatarTexture, true);
             m_avatarSprite.setTextureRect({ { 0, 192 }, { 64, 64 } });
+            m_avatarSprite.setColor(sf::Color(255, 255, 255, 192));
 
             const float avatarScale{ t_context.screen_layout.calScaleBasedOnResolution(
                 t_context, t_context.config.avatar_scale) };
@@ -73,9 +78,9 @@ namespace thornberry
             m_avatarSprite.setScale({ avatarScale, avatarScale });
 
             const sf::Vector2f offset{ m_avatarSprite.getGlobalBounds().size *
-                                       (sf::Vector2f{ 0.35f, 0.25f }) };
+                                       sf::Vector2f{ 0.3f, 0.2f } };
 
-            const float padMult{ 1.2f };
+            const float padMult{ 1.5f };
 
             if (TextWindowBackground::PaperSmall == m_spec.background)
             {
@@ -91,7 +96,7 @@ namespace thornberry
                        (m_avatarSprite.getGlobalBounds().size.x * 0.5f)),
                       m_bgInnerRect.position.y });
 
-                m_avatarSprite.move({ 0.0f, -offset.y });
+                m_avatarSprite.move({ 0.0f, -(offset.y * 1.4f) });
 
                 m_bgInnerRect.position.y += (offset.y * padMult);
                 m_bgInnerRect.size.y -= (offset.y * padMult);
