@@ -40,15 +40,6 @@ namespace thornberry
                   AvatarImage::count)
         {}
 
-        // use this constrcutor when you DON'T know which background you want (auto)
-        // TextWindowSpec(
-        //    const TextLayoutSpec & t_layoutSpec,
-        //    const AvatarImage t_avatarImage = AvatarImage::count)
-        //    : background{ TextWindowBackground::Auto }
-        //    , layout_spec{ t_layoutSpec }
-        //    , avatar_image{ t_avatarImage }
-        //{}
-
         // use this constrcutor when you know which background you want
         TextWindowSpec(
             const sf::Vector2f & t_position,
@@ -78,6 +69,7 @@ namespace thornberry
     {
       public:
         TextWindow();
+        ~TextWindow();
 
         void setup(const Context & t_context, const TextWindowSpec & t_spec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
