@@ -20,6 +20,10 @@ namespace thornberry
     //
     struct TextLayoutSpec
     {
+        TextLayoutSpec()
+            : TextLayoutSpec("", {}, FontSize::Small)
+        {}
+
         TextLayoutSpec(
             const std::string & t_text,
             const sf::FloatRect & t_rect,
@@ -46,7 +50,7 @@ namespace thornberry
     //
     struct TextLayoutResult
     {
-        sf::FloatRect rect_pad{}; // the original from TextLayoutSpec with pad_ratio applied
+        sf::FloatRect rect_pad{};    // the original from TextLayoutSpec with pad_ratio applied
         sf::FloatRect rect_actual{}; // the actual rect containing the text
         std::vector<sf::Text> texts{};
         bool didTextFit() const;
