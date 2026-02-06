@@ -13,6 +13,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include <string>
+#include <string_view>
 
 namespace thornberry
 {
@@ -26,6 +27,18 @@ namespace thornberry
         PaperSmall,
         PaperLarge
     };
+
+    constexpr std::string_view toString(const TextWindowBackground bg) noexcept
+    {
+        if (bg == TextWindowBackground::PaperSmall)
+        {
+            return "PaperSmall";
+        }
+        else
+        {
+            return "PaperLarge";
+        }
+    }
 
     //
     struct TextWindowSpec
@@ -73,6 +86,9 @@ namespace thornberry
 
         void setup(const Context & t_context, const TextWindowSpec & t_spec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
+
+      private:
+        [[nodiscard]] bool setupSizesAndPositions(const Context & t_context, const float t_baseScale);
 
       private:
         TextWindowSpec m_spec;
