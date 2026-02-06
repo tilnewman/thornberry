@@ -14,6 +14,15 @@
 namespace thornberry
 {
 
+    bool TextLayoutResult::didTextFit() const
+    {
+        return (
+            rect_pad.contains(rect_actual.position) &&
+            rect_pad.contains({ util::right(rect_actual), util::bottom(rect_actual) }));
+    }
+
+    //
+
     const TextLayoutResult
         TextLayout::typeset(const Context & t_context, const TextLayoutSpec & t_spec)
     {
@@ -24,8 +33,8 @@ namespace thornberry
 
         // transform words into one sf::Text per line of text that fits into rect_inner
         TextLayoutResult result;
-        result.rect_outer = t_spec.rect;
-        result.rect_inner = util::scaleRectInPlaceCopy(t_spec.rect, (1.0f - t_spec.pad_ratio));
+        result.rect_pad    = util::scaleRectInPlaceCopy(t_spec.rect, (1.0f - t_spec.pad_ratio));
+        result.rect_actual = result.rect_pad;
 
         if (words.empty())
         {
@@ -34,7 +43,7 @@ namespace thornberry
 
         result.texts.reserve(words.size());
 
-        sf::Vector2f pos{ result.rect_inner.position };
+        sf::Vector2f pos{ result.rect_actual.position };
         std::string lineStr;
         sf::Text lineText = t_context.font.makeText(t_spec.font_size, "", t_spec.color);
         lineText.setPosition(pos);
@@ -70,7 +79,7 @@ namespace thornberry
             util::setOriginToPosition(tempText);
             tempText.setPosition(pos);
 
-            if (util::right(tempText) < util::right(result.rect_inner))
+            if (util::right(tempText) < util::right(result.rect_actual))
             {
                 lineText = tempText;
                 lineStr  = tempStr;
@@ -97,6 +106,33 @@ namespace thornberry
         {
             centerTextBlock(result);
         }
+
+        // tighten the rect_actual around the actual text
+        result.rect_actual.position.y = result.texts.front().getGlobalBounds().position.y;
+
+        result.rect_actual.size.y =
+            util::bottom(result.texts.back().getGlobalBounds()) - result.rect_actual.position.y;
+
+        float leftMost{ util::right(result.texts.back().getGlobalBounds()) };
+        float rightMost{ 0.0f };
+        for (const sf::Text & text : result.texts)
+        {
+            const sf::FloatRect bounds{ text.getGlobalBounds() };
+            const float left{ bounds.position.x };
+            if (left < leftMost)
+            {
+                leftMost = left;
+            }
+
+            const float right{ util::right(bounds) };
+            if (right > rightMost)
+            {
+                rightMost = right;
+            }
+        }
+
+        result.rect_actual.position.x = leftMost;
+        result.rect_actual.size.x     = (rightMost - result.rect_actual.position.x);
 
         return result;
     }
@@ -137,8 +173,8 @@ namespace thornberry
         const float height{ util::bottom(result.texts.back()) -
                             result.texts.front().getGlobalBounds().position.y };
 
-        const sf::Vector2f offset{ (result.rect_inner.size.x - width) * 0.5f,
-                                   (result.rect_inner.size.y - height) * 0.5f };
+        const sf::Vector2f offset{ (result.rect_actual.size.x - width) * 0.5f,
+                                   (result.rect_actual.size.y - height) * 0.5f };
 
         for (sf::Text & text : result.texts)
         {
@@ -158,9 +194,9 @@ namespace thornberry
 
         for (sf::Text & text : result.texts)
         {
-            const sf::Vector2f offset{ (result.rect_inner.size.x - text.getGlobalBounds().size.x) *
+            const sf::Vector2f offset{ (result.rect_actual.size.x - text.getGlobalBounds().size.x) *
                                            0.5f,
-                                       (result.rect_inner.size.y - height) * 0.5f };
+                                       (result.rect_actual.size.y - height) * 0.5f };
 
             text.move(offset);
         }

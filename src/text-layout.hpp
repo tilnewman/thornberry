@@ -46,9 +46,10 @@ namespace thornberry
     //
     struct TextLayoutResult
     {
-        sf::FloatRect rect_outer{}; // the original from TextLayoutSpec
-        sf::FloatRect rect_inner{}; // the actual rect containing the text
+        sf::FloatRect rect_pad{}; // the original from TextLayoutSpec with pad_ratio applied
+        sf::FloatRect rect_actual{}; // the actual rect containing the text
         std::vector<sf::Text> texts{};
+        bool didTextFit() const;
     };
 
     //
