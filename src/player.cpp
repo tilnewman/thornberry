@@ -146,11 +146,11 @@ namespace thornberry
         }
         else if (resultPack.npc_opt.has_value())
         {
-            Avatar & avatarBumped{ resultPack.npc_opt->get() };
-            avatarBumped.standFacingPosition(util::center(collisionMapRect()));
+            Npc & npcBumped{ resultPack.npc_opt->get() };
+            npcBumped.standFacingPosition(util::center(collisionMapRect()));
 
             t_context.popup.add(
-                t_context, { "Oh.  Hi.", TextWindowBackground::PaperSmall, avatarBumped.image() });
+                t_context, { "Oh.  Hi.", TextWindowBackground::PaperSmall, npcBumped.image() });
         }
     }
 
