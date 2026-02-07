@@ -23,7 +23,6 @@ namespace thornberry
     //
     enum class TextWindowBackground
     {
-        // Auto, // either PaperSmall or PaperLarge will be auto selected
         PaperSmall,
         PaperLarge
     };
@@ -60,8 +59,8 @@ namespace thornberry
                   {},
                   TextWindowBackground::PaperSmall,
                   "",
-                  FontSize::Small,
                   sf::Color::Black,
+                  FontSize::Small,
                   AvatarImage::count)
         {}
 
@@ -70,8 +69,8 @@ namespace thornberry
             const sf::Vector2f & t_position,
             const TextWindowBackground t_background,
             const std::string & t_text,
-            const FontSize t_fontSize,
-            const sf::Color & t_textColor,
+            const sf::Color & t_textColor = sf::Color(0,0,0,220),
+            const FontSize t_fontSize = FontSize::Small,
             const AvatarImage t_avatarImage = AvatarImage::count)
             : position{ t_position }
             , background{ t_background }

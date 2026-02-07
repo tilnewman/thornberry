@@ -61,7 +61,7 @@ namespace thornberry
         {
             baseScale += 0.05f;
 
-            if (baseScale > 1.0f)
+            if (baseScale > 2.0f)
             {
                 std::cout << "Error: TextWindow(background_image=" << toString(m_spec.background)
                           << ", font_size=" << toString(m_spec.font_size)
