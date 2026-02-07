@@ -56,12 +56,12 @@ namespace thornberry
     {
         TextWindowSpec()
             : TextWindowSpec(
-                  {},
+                  { 0.0f, 0.0f },
                   TextWindowBackground::PaperSmall,
                   "",
-                  sf::Color::Black,
-                  FontSize::Small,
-                  AvatarImage::count)
+                  AvatarImage::count,
+                  sf::Color(0, 0, 0, 192),
+                  FontSize::Small)
         {}
 
         // use this constrcutor when you know which background you want
@@ -69,9 +69,9 @@ namespace thornberry
             const sf::Vector2f & t_position,
             const TextWindowBackground t_background,
             const std::string & t_text,
-            const sf::Color & t_textColor = sf::Color(0,0,0,220),
-            const FontSize t_fontSize = FontSize::Small,
-            const AvatarImage t_avatarImage = AvatarImage::count)
+            const AvatarImage t_avatarImage = AvatarImage::count,
+            const sf::Color & t_textColor   = sf::Color(0, 0, 0, 192),
+            const FontSize t_fontSize       = FontSize::Small)
             : position{ t_position }
             , background{ t_background }
             , text{ t_text }
@@ -99,7 +99,8 @@ namespace thornberry
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
       private:
-        [[nodiscard]] bool setupSizesAndPositions(const Context & t_context, const float t_baseScale);
+        [[nodiscard]] bool
+            setupSizesAndPositions(const Context & t_context, const float t_baseScale);
 
       private:
         TextWindowSpec m_spec;
