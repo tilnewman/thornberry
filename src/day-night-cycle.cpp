@@ -102,16 +102,20 @@ namespace thornberry
         util::scaleAndCenterInside(m_animalCapMiddleSprite, animalCapMiddleRect);
 
         m_animalCapLeftSprite.setPosition(
-            { (m_animalCapMiddleSprite.getPosition().x -
-               (m_animalCapLeftSprite.getGlobalBounds().size.x * 0.5f)),
+            { m_animalCapMiddleSprite.getPosition().x,
               (util::bottom(m_animalCapMiddleSprite) -
                m_animalCapLeftSprite.getGlobalBounds().size.y) });
 
+        m_animalCapLeftSprite.move(
+            { -(m_animalCapLeftSprite.getGlobalBounds().size.x * 0.5f), 0.0f });
+
         m_animalCapRightSprite.setPosition(
-            { (util::right(m_animalCapMiddleSprite) -
-               (m_animalCapRightSprite.getGlobalBounds().size.x * 0.5f)),
+            { util::right(m_animalCapMiddleSprite),
               (util::bottom(m_animalCapMiddleSprite) -
                m_animalCapLeftSprite.getGlobalBounds().size.y) });
+
+        m_animalCapRightSprite.move(
+            { -(m_animalCapRightSprite.getGlobalBounds().size.x * 0.5f), 0.0f });
     }
 
     void DayNightCycle::update(const Context &, const float t_elapsedSec)
