@@ -22,6 +22,12 @@ namespace thornberry
         , m_mapCoverRectangle{}
         , m_dayColor{ sf::Color::Transparent }
         , m_nightColor{ sf::Color(0, 0, 255, 80) }
+        , m_animalCapLeftTexture{}
+        , m_animalCapMiddleTexture{}
+        , m_animalCapRightTexture{}
+        , m_animalCapLeftSprite{ m_animalCapLeftTexture }
+        , m_animalCapMiddleSprite{ m_animalCapMiddleTexture }
+        , m_animalCapRightSprite{ m_animalCapRightTexture }
     {}
 
     void DayNightCycle::setup(const Context & t_context)
@@ -46,7 +52,7 @@ namespace thornberry
         util::setOriginToCenter(m_sprite);
         m_sprite.scale({ 0.65f, 0.65f });
         m_sprite.setRotation(sf::degrees(t_context.random.fromTo(0.0f, 360.0f)));
-        
+
         m_sprite.setPosition(
             { (mapRect.position.x + (mapRect.size.x * 0.5f)), mapRect.position.y * 0.9f });
 
@@ -57,6 +63,55 @@ namespace thornberry
 
         m_cycleCoverRectangle.setSize(
             { m_sprite.getGlobalBounds().size.x, (m_sprite.getGlobalBounds().size.y * 0.5f) });
+
+        util::TextureLoader::load(
+            m_animalCapLeftTexture,
+            (t_context.config.media_path / "image" / "animal-cap" / "animal-cap-left.png"),
+            true);
+
+        util::TextureLoader::load(
+            m_animalCapMiddleTexture,
+            (t_context.config.media_path / "image" / "animal-cap" / "animal-cap-middle.png"),
+            true);
+
+        util::TextureLoader::load(
+            m_animalCapRightTexture,
+            (t_context.config.media_path / "image" / "animal-cap" / "animal-cap-right.png"),
+            true);
+
+        m_animalCapLeftSprite.setTexture(m_animalCapLeftTexture, true);
+        m_animalCapMiddleSprite.setTexture(m_animalCapMiddleTexture, true);
+        m_animalCapRightSprite.setTexture(m_animalCapRightTexture, true);
+
+        const sf::Color animalCapColor{ 192, 192, 192 };
+        m_animalCapLeftSprite.setColor(animalCapColor);
+        m_animalCapMiddleSprite.setColor(animalCapColor);
+        m_animalCapRightSprite.setColor(animalCapColor);
+
+        const float animalCapScale{ t_context.screen_layout.calScaleBasedOnResolution(
+            t_context, 0.2f) };
+
+        m_animalCapLeftSprite.setScale({ animalCapScale, animalCapScale });
+        m_animalCapMiddleSprite.setScale({ animalCapScale, animalCapScale });
+        m_animalCapRightSprite.setScale({ animalCapScale, animalCapScale });
+
+        sf::FloatRect animalCapMiddleRect;
+        animalCapMiddleRect.position = m_cycleCoverRectangle.getPosition();
+        animalCapMiddleRect.size.x   = m_cycleCoverRectangle.getGlobalBounds().size.x;
+        animalCapMiddleRect.size.y   = m_animalCapMiddleSprite.getGlobalBounds().size.y;
+        util::scaleAndCenterInside(m_animalCapMiddleSprite, animalCapMiddleRect);
+
+        m_animalCapLeftSprite.setPosition(
+            { (m_animalCapMiddleSprite.getPosition().x -
+               (m_animalCapLeftSprite.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_animalCapMiddleSprite) -
+               m_animalCapLeftSprite.getGlobalBounds().size.y) });
+
+        m_animalCapRightSprite.setPosition(
+            { (util::right(m_animalCapMiddleSprite) -
+               (m_animalCapRightSprite.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_animalCapMiddleSprite) -
+               m_animalCapLeftSprite.getGlobalBounds().size.y) });
     }
 
     void DayNightCycle::update(const Context &, const float t_elapsedSec)
@@ -89,6 +144,9 @@ namespace thornberry
         {
             t_target.draw(m_sprite, t_states);
             t_target.draw(m_cycleCoverRectangle, t_states);
+            t_target.draw(m_animalCapLeftSprite, t_states);
+            t_target.draw(m_animalCapMiddleSprite, t_states);
+            t_target.draw(m_animalCapRightSprite, t_states);
         }
     }
 

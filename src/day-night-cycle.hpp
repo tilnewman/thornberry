@@ -42,6 +42,12 @@ namespace thornberry
         sf::RectangleShape m_mapCoverRectangle;
         sf::Color m_dayColor;
         sf::Color m_nightColor;
+        sf::Texture m_animalCapLeftTexture;
+        sf::Texture m_animalCapMiddleTexture;
+        sf::Texture m_animalCapRightTexture;
+        sf::Sprite m_animalCapLeftSprite;
+        sf::Sprite m_animalCapMiddleSprite;
+        sf::Sprite m_animalCapRightSprite;
     };
 
 } // namespace thornberry
