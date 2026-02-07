@@ -7,6 +7,7 @@
 #include "config.hpp"
 #include "context.hpp"
 #include "screen-layout.hpp"
+#include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "texture-loader.hpp"
 
@@ -23,9 +24,10 @@ namespace thornberry
         , m_bgSprite{ m_bgTexture }
         , m_avatarTexture{}
         , m_avatarSprite{ m_avatarTexture }
-        , m_bgOuterRect{}
-        , m_bgInnerRect{}
+        , m_imageRect{}
+        , m_textRect{}
         , m_layoutResult{}
+        , m_buttonText{ util::SfmlDefaults::instance().font() }
     {}
 
     TextWindow::~TextWindow()
@@ -75,6 +77,7 @@ namespace thornberry
     void TextWindow::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_target.draw(m_bgSprite, t_states);
+        t_target.draw(m_buttonText, t_states);
 
         if (AvatarImage::count != m_spec.avatar_image)
         {
@@ -92,16 +95,18 @@ namespace thornberry
         const float scale{ t_context.screen_layout.calScaleBasedOnResolution(
             t_context, t_baseScale) };
 
-        m_bgOuterRect.position = m_spec.position;
-        m_bgOuterRect.size     = sf::Vector2f{ m_bgTexture.getSize() };
-        m_bgOuterRect.size *= scale;
+        // the outer rect that defines where the background image will be
+        m_imageRect.position = m_spec.position;
+        m_imageRect.size     = sf::Vector2f{ m_bgTexture.getSize() };
+        m_imageRect.size *= scale;
 
+        // the inner rect that defines where the text will be
         const sf::FloatRect innerRectOrig{ backgroundToInnerRect(m_spec.background) };
-        m_bgInnerRect.position = (m_bgOuterRect.position + (innerRectOrig.position * scale));
-        m_bgInnerRect.size     = (innerRectOrig.size * scale);
+        m_textRect.position = (m_imageRect.position + (innerRectOrig.position * scale));
+        m_textRect.size     = (innerRectOrig.size * scale);
 
         m_bgSprite.setTexture(m_bgTexture, true);
-        util::fitAndCenterInside(m_bgSprite, m_bgOuterRect);
+        util::fitAndCenterInside(m_bgSprite, m_imageRect);
 
         if (AvatarImage::count != m_spec.avatar_image)
         {
@@ -119,29 +124,39 @@ namespace thornberry
 
             if (TextWindowBackground::PaperSmall == m_spec.background)
             {
-                m_avatarSprite.setPosition(m_bgInnerRect.position - offset);
+                m_avatarSprite.setPosition(m_textRect.position - offset);
 
                 const float pad{ offset.x * 1.5f };
-                m_bgInnerRect.position.x += pad;
-                m_bgInnerRect.size.x -= pad;
+                m_textRect.position.x += pad;
+                m_textRect.size.x -= pad;
             }
             else if (TextWindowBackground::PaperLarge == m_spec.background)
             {
                 m_avatarSprite.setPosition(
-                    { (util::center(m_bgOuterRect).x -
+                    { (util::center(m_imageRect).x -
                        (m_avatarSprite.getGlobalBounds().size.x * 0.5f)),
-                      m_bgInnerRect.position.y });
+                      m_textRect.position.y });
 
                 m_avatarSprite.move({ 0.0f, -(offset.y * 1.4f) });
 
-                m_bgInnerRect.size.y = (util::bottom(m_bgInnerRect) - util::bottom(m_avatarSprite));
-                m_bgInnerRect.position.y = util::bottom(m_avatarSprite);
+                m_textRect.size.y     = (util::bottom(m_textRect) - util::bottom(m_avatarSprite));
+                m_textRect.position.y = util::bottom(m_avatarSprite);
             }
         }
 
-        const TextLayoutSpec spec{
-            m_spec.text, m_bgInnerRect, m_spec.font_size, m_spec.text_color
-        };
+        // button at the bottom
+        m_buttonText = t_context.font.makeText(FontSize::Medium, "<close>", sf::Color::Black);
+        m_buttonText.setStyle(sf::Text::Bold);
+        util::setOriginToPosition(m_buttonText);
+
+        m_buttonText.setPosition(
+            { (util::center(m_imageRect).x - (m_buttonText.getGlobalBounds().size.x * 0.5f)), 
+            (util::bottom(m_textRect) - m_buttonText.getGlobalBounds().size.y) });
+
+        m_textRect.size.y -= (m_buttonText.getGlobalBounds().size.y * 1.2f);
+
+        // see if the text fits in the inner rect
+        const TextLayoutSpec spec{ m_spec.text, m_textRect, m_spec.font_size, m_spec.text_color };
 
         m_layoutResult = TextLayout::typeset(t_context, spec);
 

@@ -107,9 +107,10 @@ namespace thornberry
         sf::Sprite m_bgSprite;
         sf::Texture m_avatarTexture;
         sf::Sprite m_avatarSprite;
-        sf::FloatRect m_bgOuterRect;
-        sf::FloatRect m_bgInnerRect;
+        sf::FloatRect m_imageRect;
+        sf::FloatRect m_textRect;
         TextLayoutResult m_layoutResult;
+        sf::Text m_buttonText;
     };
 
 } // namespace thornberry
