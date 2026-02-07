@@ -29,6 +29,9 @@ namespace thornberry
         void add(const Context & t_context, const TextWindowSpec & t_spec);
 
       private:
+        void setFocuses(const Context & t_context);
+
+      private:
         std::vector<TextWindowUPtr_t> m_windows;
     };
 

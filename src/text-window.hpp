@@ -99,6 +99,8 @@ namespace thornberry
         [[nodiscard]] bool isOpen() const noexcept { return m_isOpen; }
         void setup(const Context & t_context, const TextWindowSpec & t_spec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
+        void setFocusOn(const Context & t_context);
+        void setFocusOff(const Context & t_context);
 
         // returns true if the event closed the window
         bool handleEvent(const Context & t_context, const sf::Event & t_event);

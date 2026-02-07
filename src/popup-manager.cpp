@@ -31,6 +31,7 @@ namespace thornberry
         if (m_windows.back()->handleEvent(t_context, t_event))
         {
             m_windows.pop_back();
+            setFocuses(t_context);
         }
     }
 
@@ -38,6 +39,22 @@ namespace thornberry
     {
         TextWindowUPtr_t & windowUPtr{ m_windows.emplace_back(std::make_unique<TextWindow>()) };
         windowUPtr->setup(t_context, t_spec);
+        setFocuses(t_context);
+    }
+
+    void PopupManager::setFocuses(const Context & t_context)
+    {
+        if (m_windows.empty())
+        {
+            return;
+        }
+
+        for (TextWindowUPtr_t & windowUPtr : m_windows)
+        {
+            windowUPtr->setFocusOff(t_context);
+        }
+
+        m_windows.back()->setFocusOn(t_context);
     }
 
 } // namespace thornberry

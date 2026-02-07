@@ -27,6 +27,8 @@ namespace thornberry
         sf::Color map_outline_color{ 127, 127, 127 };
         sf::Color text_button_color{ 0, 0, 0, 127 };
         sf::Color text_button_mouseover_color{ sf::Color::Black };
+        sf::Color text_window_focus_off_color{ 127, 127, 127 };
+        sf::Color text_window_focus_on_color{ sf::Color::White };
         std::string sound_filename_extension{ ".ogg" };
         float music_volume{ 50.0f }; // 0-100
     };

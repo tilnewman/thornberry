@@ -201,4 +201,16 @@ namespace thornberry
         return !m_isOpen;
     }
 
+    void TextWindow::setFocusOn(const Context & t_context)
+    {
+        m_bgSprite.setColor(t_context.config.text_window_focus_on_color);
+        m_avatarSprite.setColor(t_context.config.text_window_focus_on_color);
+    }
+
+    void TextWindow::setFocusOff(const Context & t_context)
+    {
+        m_bgSprite.setColor(t_context.config.text_window_focus_off_color);
+        m_avatarSprite.setColor(t_context.config.text_window_focus_off_color);
+    }
+
 } // namespace thornberry
