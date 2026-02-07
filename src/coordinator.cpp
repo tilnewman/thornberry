@@ -113,29 +113,6 @@ namespace thornberry
         m_dayNightCycleUPtr->setup(*m_contextUPtr);
 
         m_levelUPtr->load(*m_contextUPtr, "house.tmj", "thornberry.tmj");
-
-        // TODO remove after testing
-        const sf::FloatRect popupBounds{ util::scaleRectInPlaceCopy(
-            m_screenLayoutUPtr->screenRect(), 0.65f) };
-
-        const auto townsfolk{ getAvatarImagesTownfolk() };
-
-        for (std::size_t counter{ 0 }; counter < 3; ++counter)
-        {
-            const TextWindowSpec spec(
-                { m_randomUPtr->fromTo(popupBounds.position.x, util::right(popupBounds)),
-                  m_randomUPtr->fromTo(popupBounds.position.y, util::bottom(popupBounds)) },
-                (m_randomUPtr->boolean()) ? TextWindowBackground::PaperSmall
-                                          : TextWindowBackground::PaperLarge,
-                "How many times do I have to say it, you bumbling backwater bumpkin?"
-                " <p> You know, "
-                "sitting here, freezing as we are. I'm reminded of my many years in the frozen "
-                "north "
-                "of Alaska. I was a young man then, but twice as big!",
-                m_randomUPtr->from(townsfolk));
-
-            m_popupManagerUPtr->add(*m_contextUPtr, spec);
-        }
     }
 
     void Coordinator::loop()
