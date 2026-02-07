@@ -40,6 +40,18 @@ namespace thornberry
         }
     }
 
+    inline const sf::FloatRect backgroundToInnerRect(const TextWindowBackground bg) noexcept
+    {
+        if (bg == TextWindowBackground::PaperSmall)
+        {
+            return { { 35.0f, 27.0f }, { 440.0f, 270.0f } };
+        }
+        else
+        {
+            return { { 36.0f, 36.0f }, { 422.0f, 414.0f } };
+        }
+    }
+
     //
     struct TextWindowSpec
     {

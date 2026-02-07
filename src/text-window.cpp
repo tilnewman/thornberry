@@ -92,21 +92,13 @@ namespace thornberry
         const float scale{ t_context.screen_layout.calScaleBasedOnResolution(
             t_context, t_baseScale) };
 
-        if (TextWindowBackground::PaperSmall == m_spec.background)
-        {
-            m_bgInnerRect = { { 35.0f, 27.0f }, { 440.0f, 270.0f } };
-        }
-        else if (TextWindowBackground::PaperLarge == m_spec.background)
-        {
-            m_bgInnerRect = { { 36.0f, 36.0f }, { 424.0f, 414.0f } };
-        }
-
         m_bgOuterRect.position = m_spec.position;
         m_bgOuterRect.size     = sf::Vector2f{ m_bgTexture.getSize() };
         m_bgOuterRect.size *= scale;
 
-        m_bgInnerRect.position += m_bgOuterRect.position;
-        m_bgInnerRect.size *= scale;
+        const sf::FloatRect innerRectOrig{ backgroundToInnerRect(m_spec.background) };
+        m_bgInnerRect.position = (m_bgOuterRect.position + (innerRectOrig.position * scale));
+        m_bgInnerRect.size     = (innerRectOrig.size * scale);
 
         m_bgSprite.setTexture(m_bgTexture, true);
         util::fitAndCenterInside(m_bgSprite, m_bgOuterRect);
@@ -125,14 +117,13 @@ namespace thornberry
             const sf::Vector2f offset{ m_avatarSprite.getGlobalBounds().size *
                                        sf::Vector2f{ 0.3f, 0.2f } };
 
-            const float padMult{ 1.5f };
-
             if (TextWindowBackground::PaperSmall == m_spec.background)
             {
                 m_avatarSprite.setPosition(m_bgInnerRect.position - offset);
 
-                m_bgInnerRect.position.x += (offset.x * padMult);
-                m_bgInnerRect.size.x -= (offset.x * padMult);
+                const float pad{ offset.x * 1.5f };
+                m_bgInnerRect.position.x += pad;
+                m_bgInnerRect.size.x -= pad;
             }
             else if (TextWindowBackground::PaperLarge == m_spec.background)
             {
