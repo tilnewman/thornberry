@@ -6,6 +6,7 @@
 #include "avatar-image-manager.hpp"
 #include "config.hpp"
 #include "context.hpp"
+#include "random.hpp"
 #include "screen-layout.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
@@ -43,6 +44,14 @@ namespace thornberry
     {
         m_spec = t_spec;
 
+        // randomize window position if invalid
+        if ((m_spec.position.x < 0.0f) || (m_spec.position.y < 0.0f))
+        {
+            const sf::FloatRect mapRect{ t_context.screen_layout.mapRect() };
+            m_spec.position.x = mapRect.position.x + t_context.random.zeroTo(mapRect.size.x * 0.5f);
+            m_spec.position.y = mapRect.position.y + t_context.random.zeroTo(mapRect.size.y * 0.5f);
+        }
+
         if (AvatarImage::count != m_spec.avatar_image)
         {
             m_avatarTexture = AvatarImageManager::instance().acquire(m_spec.avatar_image);
@@ -65,6 +74,7 @@ namespace thornberry
         m_buttonText.setStyle(sf::Text::Bold);
         util::setOriginToPosition(m_buttonText);
 
+        // keep trying larger and larger paper image backgrounds until one fits all the text
         float baseScale{ 0.5f };
         while (!setupSizesAndPositions(t_context, baseScale))
         {
