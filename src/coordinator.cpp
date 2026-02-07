@@ -120,7 +120,7 @@ namespace thornberry
 
         const auto townsfolk{ getAvatarImagesTownfolk() };
 
-        for (std::size_t counter{ 0 }; counter < 10; ++counter)
+        for (std::size_t counter{ 0 }; counter < 3; ++counter)
         {
             const TextWindowSpec spec(
                 { m_randomUPtr->fromTo(popupBounds.position.x, util::right(popupBounds)),

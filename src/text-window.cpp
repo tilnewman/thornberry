@@ -107,6 +107,21 @@ namespace thornberry
         m_imageRect.size     = sf::Vector2f{ m_bgTexture.getSize() };
         m_imageRect.size *= scale;
 
+        // if the window is partially offscreen then push it back
+        const sf::FloatRect screenRect{ t_context.screen_layout.screenRect() };
+
+        if (util::right(m_imageRect) > util::right(screenRect))
+        {
+            const float offset{ util::right(m_imageRect) - util::right(screenRect) };
+            m_imageRect.position.x -= offset;
+        }
+
+        if (util::bottom(m_imageRect) > util::bottom(screenRect))
+        {
+            const float offset{ util::bottom(m_imageRect) - util::bottom(screenRect) };
+            m_imageRect.position.y -= offset;
+        }
+
         // the inner rect that defines where the text will be
         const sf::FloatRect innerRectOrig{ backgroundToInnerRect(m_spec.background) };
         m_textRect.position = (m_imageRect.position + (innerRectOrig.position * scale));
