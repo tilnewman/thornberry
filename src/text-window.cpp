@@ -58,6 +58,10 @@ namespace thornberry
                 m_bgTexture, (t_context.config.media_path / "image" / "paper-large.png"), true);
         }
 
+        m_buttonText = t_context.font.makeText(FontSize::Medium, "<close>", sf::Color::Black);
+        m_buttonText.setStyle(sf::Text::Bold);
+        util::setOriginToPosition(m_buttonText);
+
         float baseScale{ 0.5f };
         while (!setupSizesAndPositions(t_context, baseScale))
         {
@@ -144,15 +148,12 @@ namespace thornberry
             }
         }
 
-        // button at the bottom
-        m_buttonText = t_context.font.makeText(FontSize::Medium, "<close>", sf::Color::Black);
-        m_buttonText.setStyle(sf::Text::Bold);
-        util::setOriginToPosition(m_buttonText);
-
+        // place button at the bottom
         m_buttonText.setPosition(
             { (util::center(m_imageRect).x - (m_buttonText.getGlobalBounds().size.x * 0.5f)),
               (util::bottom(m_textRect) - m_buttonText.getGlobalBounds().size.y) });
 
+        // prevent text from overlapping with the button
         m_textRect.size.y -= (m_buttonText.getGlobalBounds().size.y * 1.2f);
 
         // see if the text fits in the inner rect
