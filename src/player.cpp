@@ -35,6 +35,22 @@ namespace thornberry
 
     void Player::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
+        if (const auto * keyRelPtr = t_event.getIf<sf::Event::KeyReleased>())
+        {
+            if (keyRelPtr->scancode == scanCodeFromDirection(m_direction))
+            {
+                m_isAnimating = false;
+                m_anim        = AvatarAnim::None;
+                setAnim();
+                t_context.level.stopWalkSound(t_context);
+            }
+        }
+
+        if (t_context.popup.isThereAPopup())
+        {
+            return;
+        }
+
         if (const auto * keyPressedPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
             if ((keyPressedPtr->scancode == sf::Keyboard::Scancode::Up) &&
@@ -97,16 +113,6 @@ namespace thornberry
                 t_context.level.stopWalkSound(t_context);
             }
         }
-        else if (const auto * keyRelPtr = t_event.getIf<sf::Event::KeyReleased>())
-        {
-            if (keyRelPtr->scancode == scanCodeFromDirection(m_direction))
-            {
-                m_isAnimating = false;
-                m_anim        = AvatarAnim::None;
-                setAnim();
-                t_context.level.stopWalkSound(t_context);
-            }
-        }
     }
 
     void Player::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
@@ -147,10 +153,13 @@ namespace thornberry
         else if (resultPack.npc_opt.has_value())
         {
             Npc & npcBumped{ resultPack.npc_opt->get() };
-            npcBumped.standFacingPosition(util::center(collisionMapRect()));
-
-            t_context.popup.add(
-                t_context, { "Oh.  Hi.", TextWindowBackground::PaperSmall, npcBumped.image() });
+            if (npcBumped.startTalking(t_context, util::center(collisionMapRect())))
+            {
+                t_context.popup.add(
+                    t_context,
+                    TextWindowSpec{
+                        "Oh.  Hi.", TextWindowBackground::PaperSmall, npcBumped.image() });
+            }
         }
     }
 

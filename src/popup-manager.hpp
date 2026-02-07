@@ -27,8 +27,9 @@ namespace thornberry
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void handleEvent(const Context & t_context, const sf::Event & t_event);
         void add(const Context & t_context, const TextWindowSpec & t_spec);
-
-      private:
+        [[nodiscard]] bool isThereAPopup() const noexcept { return !m_windows.empty(); }
+      
+    private:
         void setFocuses(const Context & t_context);
 
       private:

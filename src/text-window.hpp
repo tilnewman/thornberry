@@ -56,7 +56,7 @@ namespace thornberry
     struct TextWindowSpec
     {
         // use this constrcutor when you know which background you want
-        TextWindowSpec(
+        explicit TextWindowSpec(
             const std::string & t_text              = "",
             const TextWindowBackground t_background = TextWindowBackground::PaperSmall,
             const AvatarImage t_avatarImage         = AvatarImage::count,

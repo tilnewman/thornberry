@@ -25,6 +25,7 @@ namespace thornberry
         , m_actionElpasedSec{ 0.0f }
         , m_timeUntilActionChangeSec{ 0.0f }
         , m_walkDirections{}
+        , m_isTalkingWithPlayer{false}
     {}
 
     Npc::Npc(const Npc & t_otherNpc)
@@ -33,6 +34,7 @@ namespace thornberry
         , m_actionElpasedSec{ t_otherNpc.m_actionElpasedSec }
         , m_timeUntilActionChangeSec{ t_otherNpc.m_timeUntilActionChangeSec }
         , m_walkDirections{ t_otherNpc.m_walkDirections }
+        , m_isTalkingWithPlayer{t_otherNpc.m_isTalkingWithPlayer}
     {}
 
     Npc::Npc(Npc & t_otherNpc)
@@ -41,6 +43,7 @@ namespace thornberry
         , m_actionElpasedSec{ t_otherNpc.m_actionElpasedSec }
         , m_timeUntilActionChangeSec{ t_otherNpc.m_timeUntilActionChangeSec }
         , m_walkDirections{ t_otherNpc.m_walkDirections }
+        , m_isTalkingWithPlayer{ t_otherNpc.m_isTalkingWithPlayer }
     {}
 
     Npc::Npc(Npc && t_otherNpc)
@@ -49,6 +52,7 @@ namespace thornberry
         , m_actionElpasedSec{ t_otherNpc.m_actionElpasedSec }
         , m_timeUntilActionChangeSec{ t_otherNpc.m_timeUntilActionChangeSec }
         , m_walkDirections{ t_otherNpc.m_walkDirections }
+        , m_isTalkingWithPlayer{ t_otherNpc.m_isTalkingWithPlayer }
     {}
 
     void Npc::operator=(const Npc & t_otherNpc)
@@ -58,80 +62,92 @@ namespace thornberry
         m_actionElpasedSec         = t_otherNpc.m_actionElpasedSec;
         m_timeUntilActionChangeSec = t_otherNpc.m_timeUntilActionChangeSec;
         m_walkDirections           = t_otherNpc.m_walkDirections;
+        m_isTalkingWithPlayer      = t_otherNpc.m_isTalkingWithPlayer;
     }
 
     void Npc::update(const Context & t_context, const float t_elapsedSec)
     {
         Avatar::update(t_context, t_elapsedSec);
+        updateAction(t_context, t_elapsedSec);
+    }
+
+    void Npc::updateAction(const Context & t_context, const float t_elapsedSec)
+    {
+        if (m_isTalkingWithPlayer)
+        {
+            return;
+        }
 
         m_actionElpasedSec += t_elapsedSec;
-        if (m_actionElpasedSec > m_timeUntilActionChangeSec)
+        if (m_actionElpasedSec < m_timeUntilActionChangeSec)
         {
-            m_actionElpasedSec -= m_timeUntilActionChangeSec;
-            m_timeUntilActionChangeSec = t_context.random.fromTo(3.0f, 7.0f);
+            return;
+        }
 
-            m_action = t_context.random.from(
-                { NpcAction::Wait, NpcAction::Walk, NpcAction::Thank, NpcAction::Turn });
+        m_actionElpasedSec -= m_timeUntilActionChangeSec;
+        m_timeUntilActionChangeSec = t_context.random.fromTo(3.0f, 7.0f);
 
-            if (NpcAction::Wait == m_action)
+        m_action = t_context.random.from(
+            { NpcAction::Wait, NpcAction::Walk, NpcAction::Thank, NpcAction::Turn });
+
+        if (NpcAction::Wait == m_action)
+        {
+            standFacingRandomDirection(t_context);
+        }
+        else if (NpcAction::Turn == m_action)
+        {
+            standFacingRandomDirection(t_context);
+        }
+        else if (NpcAction::Thank == m_action)
+        {
+            m_isAnimating = true;
+            m_anim        = AvatarAnim::Thank;
+            setAnim();
+        }
+        else // Walk
+        {
+            const auto walkTargetOpt{ pickRandomWalkTarget(t_context) };
+            if (walkTargetOpt.has_value())
             {
-                standFacingRandomDirection(t_context);
-            }
-            else if (NpcAction::Turn == m_action)
-            {
-                standFacingRandomDirection(t_context);
-            }
-            else if (NpcAction::Thank == m_action)
-            {
+                // only walk for a short amount of time
+                m_timeUntilActionChangeSec = t_context.random.fromTo(0.3f, 2.0f);
+
+                const sf::Vector2f npcPosition{ util::center(collisionMapRect()) };
+                m_walkDirections.clear();
+                if (walkTargetOpt->x < npcPosition.x)
+                {
+                    m_walkDirections.push_back(AvatarDirection::Left);
+                }
+                else if (walkTargetOpt->x > npcPosition.x)
+                {
+                    m_walkDirections.push_back(AvatarDirection::Right);
+                }
+
+                if (walkTargetOpt->y < npcPosition.y)
+                {
+                    m_walkDirections.push_back(AvatarDirection::Up);
+                }
+                else if (walkTargetOpt->y < npcPosition.y)
+                {
+                    m_walkDirections.push_back(AvatarDirection::Down);
+                }
+
+                if (m_walkDirections.empty())
+                {
+                    m_walkDirections.push_back(AvatarDirection::Left);
+                }
+
+                t_context.random.shuffle(m_walkDirections);
+
                 m_isAnimating = true;
-                m_anim        = AvatarAnim::Thank;
+                m_anim        = AvatarAnim::Walk;
+                m_direction   = m_walkDirections.front();
                 setAnim();
             }
-            else // Walk
+            else
             {
-                const auto walkTargetOpt{ pickRandomWalkTarget(t_context) };
-                if (walkTargetOpt.has_value())
-                {
-                    // only walk for a short amount of time
-                    m_timeUntilActionChangeSec = t_context.random.fromTo(0.3f, 2.0f);
-
-                    const sf::Vector2f npcPosition{ util::center(collisionMapRect()) };
-                    m_walkDirections.clear();
-                    if (walkTargetOpt->x < npcPosition.x)
-                    {
-                        m_walkDirections.push_back(AvatarDirection::Left);
-                    }
-                    else if (walkTargetOpt->x > npcPosition.x)
-                    {
-                        m_walkDirections.push_back(AvatarDirection::Right);
-                    }
-
-                    if (walkTargetOpt->y < npcPosition.y)
-                    {
-                        m_walkDirections.push_back(AvatarDirection::Up);
-                    }
-                    else if (walkTargetOpt->y < npcPosition.y)
-                    {
-                        m_walkDirections.push_back(AvatarDirection::Down);
-                    }
-
-                    if (m_walkDirections.empty())
-                    {
-                        m_walkDirections.push_back(AvatarDirection::Left);
-                    }
-
-                    t_context.random.shuffle(m_walkDirections);
-
-                    m_isAnimating = true;
-                    m_anim        = AvatarAnim::Walk;
-                    m_direction   = m_walkDirections.front();
-                    setAnim();
-                }
-                else
-                {
-                    // if pickRandomTarget() fails, just face a new direction
-                    standFacingRandomDirection(t_context);
-                }
+                // if pickRandomTarget() fails, just face a new direction
+                standFacingRandomDirection(t_context);
             }
         }
     }
@@ -240,6 +256,18 @@ namespace thornberry
 
         // check for collision with other NPCs
         return !t_context.npc.doesRectCollideWithAnyExcept(movedRect, *this);
+    }
+
+    bool Npc::startTalking(const Context&, const sf::Vector2f& t_playerPosition)
+    {
+        if (m_isTalkingWithPlayer)
+        {
+            return false;
+        }
+
+        m_isTalkingWithPlayer = true;
+        Avatar::standFacingPosition(t_playerPosition);
+        return true;
     }
 
 } // namespace thornberry

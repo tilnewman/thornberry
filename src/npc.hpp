@@ -37,8 +37,11 @@ namespace thornberry
         virtual ~Npc() override = default;
 
         void update(const Context & t_context, const float t_elapsedSec) override;
+        bool startTalking(const Context & t_context, const sf::Vector2f & t_playerPosition);
+        void stopTalking() { m_isTalkingWithPlayer = false; }
 
       private:
+        void updateAction(const Context & t_context, const float t_elapsedSec);
         const std::optional<sf::Vector2f> pickRandomWalkTarget(const Context & t_context) const;
         void updateWalkPosition(const Context & t_context, const float t_elapsedSec) override;
         bool isMovedPositionValid(const Context & t_context, const sf::Vector2f & t_move) const;
@@ -48,6 +51,7 @@ namespace thornberry
         float m_actionElpasedSec;
         float m_timeUntilActionChangeSec;
         std::vector<AvatarDirection> m_walkDirections;
+        bool m_isTalkingWithPlayer;
     };
 
     using NpcRefOpt_t = std::optional<std::reference_wrapper<Npc>>;
@@ -73,8 +77,6 @@ namespace thornberry
             : result{ MoveResult::FailNpcCollision }
             , npc_opt{ t_collidingNpc }
         {}
-
-        // explicit operator bool() const { return (MoveResult::Success == result); }
 
         MoveResult result;
         NpcRefOpt_t npc_opt;

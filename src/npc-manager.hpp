@@ -41,6 +41,7 @@ namespace thornberry
             doesRectCollideWithAnyExcept(const sf::FloatRect & t_mapRect, const Npc & t_npc) const;
 
         void setupDrawOrderVectors(const Context & t_context);
+        void stopTalkingToAll();
 
       private:
         [[nodiscard]] const std::optional<sf::Vector2f>

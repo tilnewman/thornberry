@@ -6,6 +6,7 @@
 #include "avatar-image-manager.hpp"
 #include "config.hpp"
 #include "context.hpp"
+#include "npc-manager.hpp"
 #include "random.hpp"
 #include "screen-layout.hpp"
 #include "sfml-defaults.hpp"
@@ -221,6 +222,11 @@ namespace thornberry
             {
                 m_buttonText.setFillColor(t_context.config.text_button_color);
             }
+        }
+
+        if (!m_isOpen)
+        {
+            t_context.npc.stopTalkingToAll();
         }
 
         return !m_isOpen;

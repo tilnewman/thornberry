@@ -115,6 +115,14 @@ namespace thornberry
             });
     }
 
+    void NpcManager::stopTalkingToAll()
+    {
+        for (Npc & npc : m_npcs)
+        {
+            npc.stopTalking();
+        }
+    }
+
     void NpcManager::update(const Context & t_context, const float t_elapsedSec)
     {
         for (Npc & npc : m_npcs)
