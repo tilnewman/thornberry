@@ -7,6 +7,7 @@
 #include "indirect-level.hpp"
 #include "music-player.hpp"
 #include "npc-manager.hpp"
+#include "popup-manager.hpp"
 #include "predraw-animations.hpp"
 #include "screen-layout.hpp"
 #include "sound-player.hpp"
@@ -145,7 +146,11 @@ namespace thornberry
         }
         else if (resultPack.npc_opt.has_value())
         {
-            resultPack.npc_opt->get().standFacingPosition(util::center(collisionMapRect()));
+            Avatar & avatarBumped{ resultPack.npc_opt->get() };
+            avatarBumped.standFacingPosition(util::center(collisionMapRect()));
+
+            t_context.popup.add(
+                t_context, { "Oh.  Hi.", TextWindowBackground::PaperSmall, avatarBumped.image() });
         }
     }
 

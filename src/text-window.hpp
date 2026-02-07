@@ -55,24 +55,14 @@ namespace thornberry
     //
     struct TextWindowSpec
     {
-        TextWindowSpec()
-            : TextWindowSpec(
-                  { 0.0f, 0.0f },
-                  TextWindowBackground::PaperSmall,
-                  "",
-                  AvatarImage::count,
-                  sf::Color(0, 0, 0, 192),
-                  FontSize::Small)
-        {}
-
         // use this constrcutor when you know which background you want
         TextWindowSpec(
-            const sf::Vector2f & t_position,
-            const TextWindowBackground t_background,
-            const std::string & t_text,
-            const AvatarImage t_avatarImage = AvatarImage::count,
-            const sf::Color & t_textColor   = sf::Color(0, 0, 0, 192),
-            const FontSize t_fontSize       = FontSize::Small)
+            const std::string & t_text              = "",
+            const TextWindowBackground t_background = TextWindowBackground::PaperSmall,
+            const AvatarImage t_avatarImage         = AvatarImage::count,
+            const sf::Vector2f & t_position         = { -1.0f, -1.0f },
+            const sf::Color & t_textColor           = sf::Color(0, 0, 0, 192),
+            const FontSize t_fontSize               = FontSize::Small)
             : position{ t_position }
             , background{ t_background }
             , text{ t_text }
