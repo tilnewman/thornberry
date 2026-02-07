@@ -150,16 +150,14 @@ namespace thornberry
         util::setOriginToPosition(m_buttonText);
 
         m_buttonText.setPosition(
-            { (util::center(m_imageRect).x - (m_buttonText.getGlobalBounds().size.x * 0.5f)), 
-            (util::bottom(m_textRect) - m_buttonText.getGlobalBounds().size.y) });
+            { (util::center(m_imageRect).x - (m_buttonText.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_textRect) - m_buttonText.getGlobalBounds().size.y) });
 
         m_textRect.size.y -= (m_buttonText.getGlobalBounds().size.y * 1.2f);
 
         // see if the text fits in the inner rect
         const TextLayoutSpec spec{ m_spec.text, m_textRect, m_spec.font_size, m_spec.text_color };
-
         m_layoutResult = TextLayout::typeset(t_context, spec);
-
         return m_layoutResult.didTextFit();
     }
 
