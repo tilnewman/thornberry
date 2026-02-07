@@ -28,6 +28,7 @@ namespace thornberry
         , m_textRect{}
         , m_layoutResult{}
         , m_buttonText{ util::SfmlDefaults::instance().font() }
+        , m_isOpen{ true }
     {}
 
     TextWindow::~TextWindow()
@@ -58,7 +59,9 @@ namespace thornberry
                 m_bgTexture, (t_context.config.media_path / "image" / "paper-large.png"), true);
         }
 
-        m_buttonText = t_context.font.makeText(FontSize::Medium, "<close>", sf::Color::Black);
+        m_buttonText = t_context.font.makeText(
+            FontSize::Medium, "<close>", t_context.config.text_button_color);
+
         m_buttonText.setStyle(sf::Text::Bold);
         util::setOriginToPosition(m_buttonText);
 
@@ -160,6 +163,42 @@ namespace thornberry
         const TextLayoutSpec spec{ m_spec.text, m_textRect, m_spec.font_size, m_spec.text_color };
         m_layoutResult = TextLayout::typeset(t_context, spec);
         return m_layoutResult.didTextFit();
+    }
+
+    bool TextWindow::handleEvent(const Context & t_context, const sf::Event & t_event)
+    {
+        if (const auto * keyReleasedPtr = t_event.getIf<sf::Event::KeyReleased>())
+        {
+            if (keyReleasedPtr->scancode == sf::Keyboard::Scancode::Escape)
+            {
+                m_isOpen = false;
+            }
+        }
+        else if (const auto * mouseButtonPtr = t_event.getIf<sf::Event::MouseButtonReleased>())
+        {
+            if (mouseButtonPtr->button == sf::Mouse::Button::Left)
+            {
+                const sf::Vector2f position{ mouseButtonPtr->position };
+                if (m_buttonText.getGlobalBounds().contains(position))
+                {
+                    m_isOpen = false;
+                }
+            }
+        }
+        else if (const auto * mouseMovedPtr = t_event.getIf<sf::Event::MouseMoved>())
+        {
+            const sf::Vector2f position{ mouseMovedPtr->position };
+            if (m_buttonText.getGlobalBounds().contains(position))
+            {
+                m_buttonText.setFillColor(t_context.config.text_button_mouseover_color);
+            }
+            else
+            {
+                m_buttonText.setFillColor(t_context.config.text_button_color);
+            }
+        }
+
+        return !m_isOpen;
     }
 
 } // namespace thornberry

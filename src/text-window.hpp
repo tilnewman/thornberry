@@ -11,6 +11,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Window/Event.hpp>
 
 #include <string>
 #include <string_view>
@@ -95,8 +96,12 @@ namespace thornberry
         TextWindow();
         ~TextWindow();
 
+        [[nodiscard]] bool isOpen() const noexcept { return m_isOpen; }
         void setup(const Context & t_context, const TextWindowSpec & t_spec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
+
+        // returns true if the event closed the window
+        bool handleEvent(const Context & t_context, const sf::Event & t_event);
 
       private:
         [[nodiscard]] bool
@@ -112,6 +117,7 @@ namespace thornberry
         sf::FloatRect m_textRect;
         TextLayoutResult m_layoutResult;
         sf::Text m_buttonText;
+        bool m_isOpen;
     };
 
 } // namespace thornberry

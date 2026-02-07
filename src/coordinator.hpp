@@ -14,6 +14,7 @@
 #include "npc-manager.hpp"
 #include "pickup-image-manager.hpp"
 #include "player.hpp"
+#include "popup-manager.hpp"
 #include "predraw-animations.hpp"
 #include "random.hpp"
 #include "screen-layout.hpp"
@@ -67,6 +68,7 @@ namespace thornberry
         std::unique_ptr<PredrawAnimations> m_predrawAnimationsUPtr;
         std::unique_ptr<DayNightCycle> m_dayNightCycleUPtr;
         std::unique_ptr<WindowImageManager> m_windowImageManagerUPtr;
+        std::unique_ptr<PopupManager> m_popupManagerUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 

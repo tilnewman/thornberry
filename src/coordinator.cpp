@@ -7,6 +7,8 @@
 #include "map-textures.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
+#include "text-window.hpp"
+#include "window.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Clock.hpp>
@@ -36,6 +38,7 @@ namespace thornberry
         , m_predrawAnimationsUPtr{}
         , m_dayNightCycleUPtr{}
         , m_windowImageManagerUPtr{}
+        , m_popupManagerUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -71,6 +74,7 @@ namespace thornberry
         m_predrawAnimationsUPtr    = std::make_unique<PredrawAnimations>();
         m_dayNightCycleUPtr        = std::make_unique<DayNightCycle>();
         m_windowImageManagerUPtr   = std::make_unique<WindowImageManager>();
+        m_popupManagerUPtr         = std::make_unique<PopupManager>();
 
         const auto playerImages{ getAvatarImagesPlayer() };
         m_playerUPtr = std::make_unique<Player>(m_randomUPtr->from(playerImages));
@@ -90,7 +94,8 @@ namespace thornberry
             *m_npcManagerUPtr,
             *m_predrawAnimationsUPtr,
             *m_dayNightCycleUPtr,
-            *m_windowImageManagerUPtr);
+            *m_windowImageManagerUPtr,
+            *m_popupManagerUPtr);
 
         m_soundPlayerUPtr->setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayerUPtr->loadAll();
@@ -106,8 +111,20 @@ namespace thornberry
         m_framerateUPtr->setup(*m_contextUPtr);
         m_playerUPtr->setup(*m_contextUPtr);
         m_dayNightCycleUPtr->setup(*m_contextUPtr);
-        
+
         m_levelUPtr->load(*m_contextUPtr, "house.tmj", "thornberry.tmj");
+
+        //TODO remove after testing
+        const TextWindowSpec spec(
+            { 400.0f, 400.0f },
+            TextWindowBackground::PaperSmall,
+            "How many times do I have to say it, you bumbling backwater bumpkin?"
+            " <p> You know, "
+            "sitting here, freezing as we are. I'm reminded of my many years in the frozen north "
+            "of Alaska. I was a young man then, but twice as big!",
+            AvatarImage::girl_dark_ponytail2_whiteblonde2);
+
+        m_popupManagerUPtr->add(*m_contextUPtr, spec);
     }
 
     void Coordinator::loop()
@@ -145,6 +162,7 @@ namespace thornberry
         m_predrawAnimationsUPtr.reset();
         m_dayNightCycleUPtr.reset();
         m_windowImageManagerUPtr.reset();
+        m_popupManagerUPtr.reset();
 
         MapTextureManager::instance().teardown();
         AvatarImageManager::instance().teardown();
@@ -178,6 +196,7 @@ namespace thornberry
 
         m_playerUPtr->handleEvent(*m_contextUPtr, t_event);
         m_levelUPtr->handleEvent(*m_contextUPtr, t_event);
+        m_popupManagerUPtr->handleEvent(*m_contextUPtr, t_event);
     }
 
     void Coordinator::update(const float t_elapsedSec)
@@ -198,6 +217,7 @@ namespace thornberry
         m_dayNightCycleUPtr->drawBeforeMap(*m_contextUPtr, m_renderWindow, m_renderStates);
         m_levelUPtr->draw(*m_contextUPtr, m_renderWindow, m_renderStates);
         m_dayNightCycleUPtr->drawAfterMap(*m_contextUPtr, m_renderWindow, m_renderStates);
+        m_popupManagerUPtr->draw(m_renderWindow, m_renderStates);
         m_framerateUPtr->draw(m_renderWindow, m_renderStates);
 
         m_renderWindow.display();

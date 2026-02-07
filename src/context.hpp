@@ -25,6 +25,7 @@ namespace thornberry
     class PredrawAnimations;
     class DayNightCycle;
     class WindowImageManager;
+    class PopupManager;
 
     //
     struct Context
@@ -44,7 +45,8 @@ namespace thornberry
             NpcManager & t_npcManager,
             PredrawAnimations & t_predrawAnimations,
             DayNightCycle & t_dayNightCycle,
-            const WindowImageManager & t_windowImageManager)
+            const WindowImageManager & t_windowImageManager,
+            PopupManager & t_popupManager)
             : config{ t_config }
             , screen_layout{ t_screenLayout }
             , random{ t_random }
@@ -60,6 +62,7 @@ namespace thornberry
             , predraw_anim{ t_predrawAnimations }
             , time{ t_dayNightCycle }
             , window_image{ t_windowImageManager }
+            , popup{ t_popupManager }
         {}
 
         const Config & config;
@@ -77,6 +80,7 @@ namespace thornberry
         PredrawAnimations & predraw_anim;
         DayNightCycle & time;
         const WindowImageManager & window_image;
+        PopupManager & popup;
     };
 
 } // namespace thornberry
