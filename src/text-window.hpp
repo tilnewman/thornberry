@@ -110,6 +110,8 @@ namespace thornberry
         TextLayoutResult m_layoutResult;
         sf::Text m_buttonText;
         bool m_isOpen;
+        bool m_isMouseMoving;
+        sf::Vector2f m_mouseMovePosition;
     };
 
 } // namespace thornberry

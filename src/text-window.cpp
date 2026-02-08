@@ -31,6 +31,8 @@ namespace thornberry
         , m_layoutResult{}
         , m_buttonText{ util::SfmlDefaults::instance().font() }
         , m_isOpen{ true }
+        , m_isMouseMoving{ false }
+        , m_mouseMovePosition{}
     {}
 
     TextWindow::~TextWindow()
@@ -195,32 +197,64 @@ namespace thornberry
     {
         if (const auto * keyReleasedPtr = t_event.getIf<sf::Event::KeyReleased>())
         {
-            if (keyReleasedPtr->scancode == sf::Keyboard::Scancode::Escape)
+            if ((keyReleasedPtr->scancode == sf::Keyboard::Scancode::Escape) ||
+                (keyReleasedPtr->scancode == sf::Keyboard::Scancode::Space))
             {
                 m_isOpen = false;
             }
         }
-        else if (const auto * mouseButtonPtr = t_event.getIf<sf::Event::MouseButtonReleased>())
+        else if (const auto * mouseButtonRelPtr = t_event.getIf<sf::Event::MouseButtonReleased>())
         {
-            if (mouseButtonPtr->button == sf::Mouse::Button::Left)
+            if (mouseButtonRelPtr->button == sf::Mouse::Button::Left)
             {
-                const sf::Vector2f position{ mouseButtonPtr->position };
+                const sf::Vector2f position{ mouseButtonRelPtr->position };
                 if (m_buttonText.getGlobalBounds().contains(position))
                 {
                     m_isOpen = false;
+                }
+                else
+                {
+                    m_isMouseMoving = false;
+                }
+            }
+        }
+        else if (const auto * mouseButtonPrePtr = t_event.getIf<sf::Event::MouseButtonPressed>())
+        {
+            if (mouseButtonPrePtr->button == sf::Mouse::Button::Left)
+            {
+                const sf::Vector2f position{ mouseButtonPrePtr->position };
+                if (!m_buttonText.getGlobalBounds().contains(position))
+                {
+                    m_isMouseMoving = true;
+                    m_mouseMovePosition = position;
                 }
             }
         }
         else if (const auto * mouseMovedPtr = t_event.getIf<sf::Event::MouseMoved>())
         {
             const sf::Vector2f position{ mouseMovedPtr->position };
-            if (m_buttonText.getGlobalBounds().contains(position))
+            if (m_isMouseMoving)
             {
-                m_buttonText.setFillColor(t_context.config.text_button_mouseover_color);
+                const sf::Vector2f move{ position - m_mouseMovePosition };
+                m_mouseMovePosition = position;
+                m_bgSprite.move(move);
+                m_avatarSprite.move(move);
+                m_buttonText.move(move);
+                for (sf::Text & text : m_layoutResult.texts)
+                {
+                    text.move(move);
+                }
             }
             else
             {
-                m_buttonText.setFillColor(t_context.config.text_button_color);
+                if (m_buttonText.getGlobalBounds().contains(position))
+                {
+                    m_buttonText.setFillColor(t_context.config.text_button_mouseover_color);
+                }
+                else
+                {
+                    m_buttonText.setFillColor(t_context.config.text_button_color);
+                }
             }
         }
 
