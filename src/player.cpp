@@ -152,14 +152,12 @@ namespace thornberry
         }
         else if (resultPack.npc_opt.has_value())
         {
-            Npc & npcBumped{ resultPack.npc_opt->get() };
-            if (npcBumped.startTalking(t_context, util::center(collisionMapRect())))
-            {
-                t_context.popup.add(
-                    t_context,
-                    TextWindowSpec{
-                        "Oh.  Hi.", TextWindowBackground::PaperSmall, npcBumped.image() });
-            }
+            m_isAnimating = false;
+            m_anim        = AvatarAnim::None;
+            setAnim();
+            t_context.level.stopWalkSound(t_context);
+
+            resultPack.npc_opt->get().startTalking(t_context, util::center(collisionMapRect()));
         }
     }
 

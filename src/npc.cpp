@@ -8,6 +8,7 @@
 #include "indirect-level.hpp"
 #include "npc-manager.hpp"
 #include "player.hpp"
+#include "popup-manager.hpp"
 #include "random.hpp"
 #include "screen-layout.hpp"
 
@@ -25,7 +26,7 @@ namespace thornberry
         , m_actionElpasedSec{ 0.0f }
         , m_timeUntilActionChangeSec{ 0.0f }
         , m_walkDirections{}
-        , m_isTalkingWithPlayer{false}
+        , m_isTalkingWithPlayer{ false }
     {}
 
     Npc::Npc(const Npc & t_otherNpc)
@@ -34,7 +35,7 @@ namespace thornberry
         , m_actionElpasedSec{ t_otherNpc.m_actionElpasedSec }
         , m_timeUntilActionChangeSec{ t_otherNpc.m_timeUntilActionChangeSec }
         , m_walkDirections{ t_otherNpc.m_walkDirections }
-        , m_isTalkingWithPlayer{t_otherNpc.m_isTalkingWithPlayer}
+        , m_isTalkingWithPlayer{ t_otherNpc.m_isTalkingWithPlayer }
     {}
 
     Npc::Npc(Npc & t_otherNpc)
@@ -258,7 +259,7 @@ namespace thornberry
         return !t_context.npc.doesRectCollideWithAnyExcept(movedRect, *this);
     }
 
-    bool Npc::startTalking(const Context&, const sf::Vector2f& t_playerPosition)
+    bool Npc::startTalking(const Context & t_context, const sf::Vector2f & t_playerPosition)
     {
         if (m_isTalkingWithPlayer)
         {
@@ -267,7 +268,67 @@ namespace thornberry
 
         m_isTalkingWithPlayer = true;
         Avatar::standFacingPosition(t_playerPosition);
+
+        t_context.popup.add(
+            t_context,
+            TextWindowSpec{ randomGreeting(t_context), TextWindowBackground::PaperSmall, m_image });
+
         return true;
+    }
+
+    const std::string Npc::randomGreeting(const Context& t_context) const
+    { 
+        std::string str;
+        str.reserve(32);
+
+        if (t_context.random.boolean())
+        {
+            if (t_context.random.zeroTo(2) == 0)
+            {
+                str += "Oh. ";
+            }
+
+            // clang-format off
+            switch (t_context.random.zeroTo(3))
+            {
+                case 0: { str += "Hi"; break; }
+                case 1: { str += "Hiya"; break; }
+                case 2: { str += "Hello"; break; }
+                default: { str += "Howdy"; break; }
+            }
+            // clang-format on
+
+            if (t_context.random.zeroTo(3) == 0)
+            {
+                str += " there";
+            }
+
+            if (t_context.random.boolean())
+            {
+                str += '.';
+            }
+            else
+            {
+                str += '!';
+            }
+        }
+        else
+        {
+            // clang-format off
+            switch (t_context.random.zeroTo(6))
+            {
+                case 0: { str += "Greetings."; break; }
+                case 1: { str += "Greetings!"; break; }
+                case 2: { str += "Salutations."; break; }
+                case 3: { str += "Salutations!"; break; }
+                case 4: { str += "Welcome to Thornberry."; break; }
+                case 5: { str += "I'm listening."; break; }
+                default: { str += "Shh. I'm thinking."; break; }
+            }
+            // clang-format on
+        }
+
+        return str;
     }
 
 } // namespace thornberry
