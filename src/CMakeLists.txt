@@ -90,6 +90,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         -Wno-poison-system-directories
         -Wno-defaulted-function-deleted
         -Wno-zero-as-null-pointer-constant
+	-Wno-extra-semi-stmt
         -Woverloaded-virtual
         -Wcast-align
         -Wformat=2
