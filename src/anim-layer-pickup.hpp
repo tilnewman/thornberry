@@ -52,12 +52,11 @@ namespace thornberry
     };
 
     //
-    class AnimLayerPickup : public IIndirectTileLayer
+    class AnimLayerPickup final : public IIndirectTileLayer
     {
       public:
         AnimLayerPickup(const std::vector<PickupParse> & t_parsedPickups);
-
-        virtual ~AnimLayerPickup() override = default;
+        virtual ~AnimLayerPickup() final = default;
 
         void postLevelLoadSetup(const Context & t_context) override;
         void dumpInfo() const override;
