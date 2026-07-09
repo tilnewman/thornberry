@@ -61,7 +61,7 @@ namespace thornberry
       public:
         explicit Avatar(const AvatarImage t_image);
 
-        // implement all constructors to make sure we call AvatarImageManager::acquire()
+        // implement all constructors to make sure we call AvatarImageManager::acquire() once
         Avatar(const Avatar & t_otherAvatar);
         Avatar(Avatar & t_otherAvatar);
         Avatar(Avatar && t_otherAvatar);
