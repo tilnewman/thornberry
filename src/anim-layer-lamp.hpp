@@ -14,46 +14,46 @@ namespace thornberry
 
     //
 
-    struct AnimLayerLampHanging : public AnimLayerBase
+    struct AnimLayerLampHanging final : public AnimLayerBase
     {
         AnimLayerLampHanging(const Context & t_context, const sf::FloatRect & t_mapRect);
-        virtual ~AnimLayerLampHanging() override = default;
+        virtual ~AnimLayerLampHanging() final = default;
     };
 
-    struct AnimLayerLampGobletLarge : public AnimLayerBase
+    struct AnimLayerLampGobletLarge final : public AnimLayerBase
     {
         AnimLayerLampGobletLarge(const Context & t_context, const sf::FloatRect & t_mapRect);
-        virtual ~AnimLayerLampGobletLarge() override = default;
+        virtual ~AnimLayerLampGobletLarge() final = default;
     };
 
-    struct AnimLayerLampGobletMedium : public AnimLayerBase
+    struct AnimLayerLampGobletMedium final : public AnimLayerBase
     {
         AnimLayerLampGobletMedium(const Context & t_context, const sf::FloatRect & t_mapRect);
-        virtual ~AnimLayerLampGobletMedium() override = default;
+        virtual ~AnimLayerLampGobletMedium() final = default;
     };
 
-    struct AnimLayerLampGobletSmall : public AnimLayerBase
+    struct AnimLayerLampGobletSmall final : public AnimLayerBase
     {
         AnimLayerLampGobletSmall(const Context & t_context, const sf::FloatRect & t_mapRect);
-        virtual ~AnimLayerLampGobletSmall() override = default;
+        virtual ~AnimLayerLampGobletSmall() final = default;
     };
 
-    struct AnimLayerLampSingle : public AnimLayerBase
+    struct AnimLayerLampSingle final : public AnimLayerBase
     {
         AnimLayerLampSingle(const Context & t_context, const sf::FloatRect & t_mapRect);
-        virtual ~AnimLayerLampSingle() override = default;
+        virtual ~AnimLayerLampSingle() final = default;
     };
 
-    struct AnimLayerLampTripple : public AnimLayerBase
+    struct AnimLayerLampTripple final : public AnimLayerBase
     {
         AnimLayerLampTripple(const Context & t_context, const sf::FloatRect & t_mapRect);
-        virtual ~AnimLayerLampTripple() override = default;
+        virtual ~AnimLayerLampTripple() final = default;
     };
 
-    struct AnimLayerLampWide : public AnimLayerBase
+    struct AnimLayerLampWide final : public AnimLayerBase
     {
         AnimLayerLampWide(const Context & t_context, const sf::FloatRect & t_mapRect);
-        virtual ~AnimLayerLampWide() override = default;
+        virtual ~AnimLayerLampWide() final = default;
     };
 
 } // namespace thornberry

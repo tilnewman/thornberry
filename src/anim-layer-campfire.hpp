@@ -13,10 +13,10 @@ namespace thornberry
     struct Context;
 
     //
-    struct AnimLayerCampfire : public AnimLayerBase
+    struct AnimLayerCampfire final : public AnimLayerBase
     {
         AnimLayerCampfire(const Context & t_context, const sf::FloatRect & t_mapRect);
-        virtual ~AnimLayerCampfire() override = default;
+        virtual ~AnimLayerCampfire() final = default;
 
         void postLevelLoadSetup(const Context & t_context) override;
     };

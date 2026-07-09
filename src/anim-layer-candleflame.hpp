@@ -13,11 +13,11 @@ namespace thornberry
     struct Context;
 
     //
-    class AnimLayerCandleflame : public AnimLayerBase
+    class AnimLayerCandleflame final : public AnimLayerBase
     {
       public:
         AnimLayerCandleflame(const Context & t_context, const sf::FloatRect & t_mapRect);
-        virtual ~AnimLayerCandleflame() override = default;
+        virtual ~AnimLayerCandleflame() final = default;
     };
 
 } // namespace thornberry
