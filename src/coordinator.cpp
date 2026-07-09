@@ -60,8 +60,10 @@ namespace thornberry
         MapTextureManager::instance().setup();
         AvatarImageManager::instance().setup(m_config);
 
-        m_randomUPtr               = std::make_unique<util::Random>();
-        m_soundPlayerUPtr          = std::make_unique<util::SoundPlayer>(*m_randomUPtr);
+        m_randomUPtr      = std::make_unique<util::Random>();
+        m_soundPlayerUPtr = std::make_unique<util::SoundPlayer>(*m_randomUPtr);
+
+        // this order is not critical
         m_musicPlayerUPtr          = std::make_unique<util::MusicPlayer>();
         m_screenLayoutUPtr         = std::make_unique<ScreenLayout>();
         m_levelUPtr                = std::make_unique<IndirectLevel>();
@@ -102,6 +104,7 @@ namespace thornberry
 
         m_musicPlayerUPtr->setup((m_config.media_path / "music").string());
 
+        // this order is critical
         m_windowImageManagerUPtr->setup(m_config);
         m_predrawAnimationsUPtr->setup(m_config);
         m_smokeParticleEffectsUPtr->setup(m_config);
