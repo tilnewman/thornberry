@@ -68,7 +68,7 @@ namespace thornberry
         m_offscreenRect.position += t_context.level.mapToOffscreenOffset();
 
         util::TextureLoader::load(m_texture, m_texturePath);
-        m_texture.setSmooth((m_textureSetting == TextureSetting::Smooth) ? true : false);
+        m_texture.setSmooth(m_textureSetting == TextureSetting::Smooth);
 
         m_sprite.setTexture(m_texture);
         m_sprite.setTextureRect({ { 0, 0 }, m_cellSize });
