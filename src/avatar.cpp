@@ -33,7 +33,7 @@ namespace thornberry
         , m_blinkElapsedSec{ 0.0f }
         , m_timeUntilBlinkSec{ 0.0f }
         , m_sprites{ AvatarImageManager::instance().acquire(t_image),
-                     AvatarImageManager ::instance().shadowTexture() }
+                     AvatarImageManager::instance().shadowTexture() }
         , m_hurtEnableTimerSec{ 0.0f }
         , m_isHurtAnimating{ false }
         , m_hurtColorCycleTimeSec{ 0.0f }
@@ -138,7 +138,7 @@ namespace thornberry
         m_sprites.shadow.setScale({ shadowScale, shadowScale });
         m_sprites.shadow.setColor(sf::Color(255, 255, 255, 150));
 
-        // position both images relative to each other
+        // position avatar image and shadow image relative to each other
         setPosition({ 0.0f, 0.0f });
     }
 
@@ -269,19 +269,19 @@ namespace thornberry
         sf::RenderTarget & t_target,
         sf::RenderStates t_states) const
     {
-        sf::Sprite tempAvatar{ m_sprites.avatar };
-        tempAvatar.move(t_mapToOffscreenOffset);
+        sf::Sprite tempAvatarSprite{ m_sprites.avatar };
+        tempAvatarSprite.move(t_mapToOffscreenOffset);
 
-        if (!tempAvatar.getGlobalBounds().findIntersection(t_offscreenDrawRect).has_value())
+        if (!tempAvatarSprite.getGlobalBounds().findIntersection(t_offscreenDrawRect).has_value())
         {
             return;
         }
 
-        sf::Sprite tempShadow{ m_sprites.shadow };
-        tempShadow.move(t_mapToOffscreenOffset);
+        sf::Sprite tempShadowSprite{ m_sprites.shadow };
+        tempShadowSprite.move(t_mapToOffscreenOffset);
 
-        t_target.draw(tempShadow, t_states);
-        t_target.draw(tempAvatar, t_states);
+        t_target.draw(tempShadowSprite, t_states);
+        t_target.draw(tempAvatarSprite, t_states);
     }
 
     void Avatar::setAnim()
