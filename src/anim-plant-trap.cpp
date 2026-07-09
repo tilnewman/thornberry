@@ -67,7 +67,7 @@ namespace thornberry
 
         for (PlantTrapAnimation & anim : m_animations)
         {
-            // only track time and discharge if it's visible
+            // only track time and snapping shut if it's visible
             if (!mapOffscreenRect.findIntersection(anim.offscreen_rect).has_value())
             {
                 continue;
