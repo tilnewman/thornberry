@@ -37,7 +37,7 @@ namespace thornberry
     {
         if (const auto * keyRelPtr = t_event.getIf<sf::Event::KeyReleased>())
         {
-            if (keyRelPtr->scancode == scanCodeFromDirection(m_direction))
+            if (keyRelPtr->scancode == toScanCode(m_direction))
             {
                 m_isAnimating = false;
                 m_anim        = AvatarAnim::None;
