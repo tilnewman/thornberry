@@ -57,7 +57,7 @@ namespace thornberry
     void AnimLayerPickup::postLevelLoadSetup(const Context & t_context)
     {
         m_pickups.reserve(m_parsedPickups.size());
-        m_animations.reserve(8); // just a guess
+        m_animations.reserve(8); // just a guess as to how many pickup anims will play at once
 
         for (const PickupParse & parse : m_parsedPickups)
         {
@@ -169,6 +169,7 @@ namespace thornberry
             if (avatarOffscreenRect.findIntersection(pickup.offscreen_rect).has_value())
             {
                 // TODO perform all interactors with player (pickups will be changing things...)
+
                 t_context.sfx.play("pickup");
 
                 // spawn animation
