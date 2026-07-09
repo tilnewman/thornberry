@@ -15,7 +15,6 @@ namespace thornberry
 {
 
     LightningAnimation::LightningAnimation(
-        const Context &,
         const sf::Texture & t_texture,
         const sf::FloatRect & t_offscreenRect,
         const sf::Vector2i & t_cellSize,
@@ -110,7 +109,7 @@ namespace thornberry
         const Context & t_context, const sf::FloatRect & t_offscreenRect)
     {
         m_animations.emplace_back(
-            t_context, m_texture, t_offscreenRect, m_cellSize, t_context.random.fromTo(2.5f, 3.5f));
+            m_texture, t_offscreenRect, m_cellSize, t_context.random.fromTo(2.5f, 3.5f));
     }
 
     void LightningAnimationManager::move(const sf::Vector2f & t_move)
