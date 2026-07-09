@@ -30,6 +30,7 @@ namespace thornberry
         AvatarImageManager();
 
         static AvatarImageManager & instance();
+
         void setup(const Config & t_config);
         const sf::Texture & shadowTexture() const { return *m_shadowTextureUPtr; }
         const sf::Texture & acquire(const AvatarImage & t_image);
