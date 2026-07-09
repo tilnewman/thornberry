@@ -68,7 +68,7 @@ namespace thornberry
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const sf::FloatRect & t_mapRect);
         void move(const sf::Vector2f & t_move);
-        inline void clear() { m_animations.clear(); }
+        inline void clear() noexcept { m_animations.clear(); }
 
       private:
         void interactWithPlayer(
