@@ -196,6 +196,8 @@ namespace thornberry
         }
 
         // grow the offscreen drawing by two tiles in all directions
+        // this prevents any gaps between the onscreen and offscreen when map moves around with
+        // player
         m_offscreenTileRange.position.x -= 2;
         m_offscreenTileRange.position.y -= 2;
         m_offscreenTileRange.size.x += 2;
@@ -210,6 +212,7 @@ namespace thornberry
             m_didOffscreenVertsChange = false;
         }
 
+        // this black color is prominent/important for interior maps
         m_renderTexture.clear(sf::Color::Black);
 
         drawLowerLayers(m_renderTexture, m_renderStates);
@@ -232,6 +235,8 @@ namespace thornberry
 
     void IndirectLevel::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
+        // if the left shift is held down then the arrow keys move which tiles are drawn
+
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
         {
             return;
@@ -289,9 +294,15 @@ namespace thornberry
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states)
     {
         drawToOffscreenTexture(t_context);
+        drawToOnscreenTexture(t_target, t_states);
+    }
 
+    void IndirectLevel::drawToOnscreenTexture(
+        sf::RenderTarget & t_target, sf::RenderStates t_states) const
+    {
         t_target.draw(m_backgroundRectangle, t_states);
 
+        // would caching this sprite speed things up in a meaningful way?
         sf::Sprite sprite(m_renderTexture.getTexture(), sf::IntRect{ m_offscreenDrawRect });
         sprite.setPosition(m_mapScreenPosOffset);
         t_target.draw(sprite, t_states);
