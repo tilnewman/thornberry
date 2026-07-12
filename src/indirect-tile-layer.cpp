@@ -37,7 +37,7 @@ namespace thornberry
             (totalTileCount == m_indexes.size()),
             "index_count=" << m_indexes.size() << " does not equal tile_count=" << totalTileCount);
 
-        // TODO make this guess exact
+        // TODO can we make this guess exact?
         m_verts.reserve((t_indexes.size() / 4_st) * util::verts_per_quad);
     }
 

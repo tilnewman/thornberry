@@ -17,7 +17,14 @@ namespace thornberry
 {
     struct Context;
 
-    //
+    // okay, I can see why IndirectLevel is called "indirect", but not these classes.
+    // I don't really see anything "indirect" about these classes.
+    // TODO rename?
+
+    // IndirectTileLayers are heavywight classes that manage the big load/unload of map tile images
+    // in their constructor/destructor and store their tiles as vert pairs.  Each of these tile
+    // layers is directly loaded from and correlates to the mapping software's "layers".  Each of
+    // these tile layers is the whole map in size.
     struct IIndirectTileLayer
     {
         virtual ~IIndirectTileLayer() = default;
@@ -52,7 +59,7 @@ namespace thornberry
         void dumpInfo() const override;
         void update(const Context &, const float) override {}
 
-        // most tile layers do not interact with the player/avatar
+        // most do not interact with the player/avatar, but this exists for rare exceptions
         void interactWithPlayer(const Context &, const sf::FloatRect &) override {}
 
         void appendVerts(
