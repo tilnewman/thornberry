@@ -3,8 +3,8 @@
 //
 // indirect-level.hpp
 //
-#include "npc.hpp"
 #include "indirect-tile-layer.hpp"
+#include "npc.hpp"
 #include "sfml-util.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
@@ -112,7 +112,8 @@ namespace thornberry
         sf::FloatRect map_rect{};
     };
 
-    //
+    // This class (and many other classes) are called "indirect" because they are not directly drawn
+    // to the screen, but rather drawn to an offscreen texture that is then drawn to the screen.
     class IndirectLevel
     {
       public:
@@ -136,6 +137,8 @@ namespace thornberry
         [[nodiscard]] const sf::Vector2i textureTileSize() const { return m_textureTileSize; }
         [[nodiscard]] const sf::Vector2f screenTileSize() const { return m_screenTileSize; }
         [[nodiscard]] const sf::Vector2f mapScreenPosOffset() const { return m_mapScreenPosOffset; }
+
+        // these return references so that the level loader can populate them
         [[nodiscard]] std::vector<sf::FloatRect> & collisions() { return m_collisions; }
         [[nodiscard]] std::vector<Transition> & transitions() { return m_transitions; }
         [[nodiscard]] std::vector<WalkSound> & walkSounds() { return m_walkSounds; }
@@ -211,32 +214,48 @@ namespace thornberry
 
       private:
         std::string m_name;
-        Locale m_locale;
-        sf::Vector2i m_mapTileCount;
-        sf::Vector2i m_textureTileSize;
-        sf::Vector2f m_screenTileSize;
-        sf::Vector2f m_mapScreenPosOffset;
+
+        Locale m_locale; // determines interiror/exterior (music and whether the sundial is drawn
+
+        sf::Vector2i m_mapTileCount;       // how big is the whole map that was loaded
+        sf::Vector2i m_textureTileSize;    // offscreen tile size
+        sf::Vector2f m_screenTileSize;     // onscreen tile size
+        sf::Vector2f m_mapScreenPosOffset; // where on the screen is the map drawn to
+
         std::vector<sf::FloatRect> m_collisions;    // in map coordinates
         std::vector<Transition> m_transitions;      // in map coordinates
         std::vector<WalkSound> m_walkSounds;        // in map coordinates
         std::vector<sf::FloatRect> m_npcWalkBounds; // in map coordinates
+
+        // lower layers are drawn first, then the player, then upper layers are drawn last
         std::vector<std::unique_ptr<IIndirectTileLayer>> m_lowerTileLayers;
         std::vector<std::unique_ptr<IIndirectTileLayer>> m_upperTileLayers;
 
-        sf::IntRect m_offscreenTileRange;
+        // the offscreen texture
         sf::RenderTexture m_renderTexture;
         sf::RenderStates m_renderStates;
-        bool m_didOffscreenVertsChange;
+
+        // which map tiles will be drawn offscreen
+        sf::IntRect m_offscreenTileRange;
         sf::FloatRect m_offscreenDrawRect;
+
+        // the offscreen background (will be visible if m_isMapRectBigEnoughHoriz/Vert)
         sf::RectangleShape m_backgroundRectangle;
 
+        // dirty flag for the offscreen verts, so we don't have to re-append them every frame
+        bool m_didOffscreenVertsChange;
+
+        // lots of special cases to handle when the offscreen map fits horiz/vert onscreen
         bool m_isMapRectBigEnoughHoriz;
         bool m_isMapRectBigEnoughVert;
+
+        // these rects trigger movement of the map when the avatar walks on them
         sf::FloatRect m_moveScreenRectLeft;
         sf::FloatRect m_moveScreenRectRight;
         sf::FloatRect m_moveScreenRectUp;
         sf::FloatRect m_moveScreenRectDown;
 
+        // this changes as the player walks on different grasses/dirt/etc.
         std::string m_walkSoundEffectName;
     };
 

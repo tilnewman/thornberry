@@ -36,12 +36,12 @@ namespace thornberry
         , m_npcWalkBounds{}
         , m_lowerTileLayers{}
         , m_upperTileLayers{}
-        , m_offscreenTileRange{}
         , m_renderTexture{}
         , m_renderStates{}
-        , m_didOffscreenVertsChange{ false }
+        , m_offscreenTileRange{}
         , m_offscreenDrawRect{}
         , m_backgroundRectangle{}
+        , m_didOffscreenVertsChange{ false }
         , m_isMapRectBigEnoughHoriz{ false }
         , m_isMapRectBigEnoughVert{ false }
         , m_moveScreenRectLeft{}
@@ -83,7 +83,7 @@ namespace thornberry
         m_backgroundRectangle.setOutlineColor(t_context.config.map_outline_color);
         m_backgroundRectangle.setOutlineThickness(1.0f);
 
-        // create moveMap Rects
+        // create moveMap rects
         const sf::FloatRect innerScreenRect{ util::scaleRectInPlaceCopy(
             screenRect, t_context.config.avatar_walk_inner_map_ratio) };
 
