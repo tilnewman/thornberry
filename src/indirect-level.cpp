@@ -399,7 +399,7 @@ namespace thornberry
         const sf::FloatRect & t_playerMapRect,
         const sf::Vector2f & t_move)
     {
-        // start with map coordinates for collision and transition detection
+        // start in map coordinates, see below for conversion to screen coordinates
         sf::FloatRect playerRect{ t_playerMapRect };
         playerRect.position += t_move;
 
@@ -435,7 +435,7 @@ namespace thornberry
         // allow the avatar to interact with animation layers (pickups, etc...)
         interactWithAll(t_context, playerRect);
 
-        // this avatarRect needs to still be in map coordinates for this
+        // (this avatarRect needs to still be in map coordinates for this)
         playWalkSound(t_context, playerRect);
 
         // change to screen coordinates for everything else
@@ -531,7 +531,7 @@ namespace thornberry
 
     bool IndirectLevel::doesIntersetWithCollision(const sf::FloatRect & t_rect) const
     {
-        // linear search for now since there will likely never be very many of them (<500)
+        // linear search for now since there will likely never be more than 500
         for (const sf::FloatRect & collisionRect : m_collisions)
         {
             if (collisionRect.findIntersection(t_rect).has_value())
@@ -575,6 +575,7 @@ namespace thornberry
     const std::optional<Transition>
         IndirectLevel::findIntersectingExitTransition(const sf::FloatRect & t_rect) const
     {
+        // linear search for now since there will likely never be more than 10
         for (const Transition & transition : m_transitions)
         {
             if ((transition.direction == TransitionDirection::Exit) &&
@@ -608,6 +609,7 @@ namespace thornberry
         }
 
         // select the walk sound that has the smallest rect
+        // this doesn't guarantee that is the top-most rect but it works surprisingly well
         std::sort(
             std::begin(possibleWalkSounds),
             std::end(possibleWalkSounds),
@@ -625,7 +627,6 @@ namespace thornberry
         if (sfxFilename != m_walkSoundEffectName)
         {
             stopWalkSound(t_context);
-
             m_walkSoundEffectName = sfxFilename;
             t_context.music.start(sfxFilename);
         }
@@ -654,6 +655,7 @@ namespace thornberry
 
     bool IndirectLevel::isInsideAnyNpcWalkBounds(const sf::FloatRect & t_rect) const
     {
+        // linear search for now since there will likely never be more than 50
         for (const sf::FloatRect & walkBound : m_npcWalkBounds)
         {
             const sf::Vector2f topLeft{ t_rect.position };
