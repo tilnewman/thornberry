@@ -47,7 +47,7 @@ namespace thornberry
         parseLocale(t_context, json);
 
         // everything else in the level file is saved in "layers"
-        // which are parsed in order from back to front
+        // which are parsed in order from back to front (lower to upper)
         parseLayers(t_context, json);
     }
 
