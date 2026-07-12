@@ -166,6 +166,7 @@ namespace thornberry
             return (m_mapScreenPosOffset + mapToOffscreenOffset());
         }
 
+        // the map loader calls this to set things up very eqarly in the process of loading
         void setLevelDetails(
             const std::string & t_name,
             const sf::Vector2i & t_mapTileCount,
@@ -190,6 +191,7 @@ namespace thornberry
         void drawLowerLayers(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void drawUpperLayers(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void drawToOffscreenTexture(const Context & t_context);
+        void drawToOnscreenTexture(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         [[nodiscard]] bool doesIntersetWithCollision(const sf::FloatRect & t_rect) const;
 
@@ -227,7 +229,7 @@ namespace thornberry
         std::vector<WalkSound> m_walkSounds;        // in map coordinates
         std::vector<sf::FloatRect> m_npcWalkBounds; // in map coordinates
 
-        // lower layers are drawn first, then the player, then upper layers are drawn last
+        // lower layers draw first, then pre anims, then player/nps, then upper layers, post anims
         std::vector<std::unique_ptr<IIndirectTileLayer>> m_lowerTileLayers;
         std::vector<std::unique_ptr<IIndirectTileLayer>> m_upperTileLayers;
 
@@ -239,7 +241,7 @@ namespace thornberry
         sf::IntRect m_offscreenTileRange;
         sf::FloatRect m_offscreenDrawRect;
 
-        // the offscreen background (will be visible if m_isMapRectBigEnoughHoriz/Vert)
+        // the onscreen map background (will be visible if m_isMapRectBigEnoughHoriz/Vert)
         sf::RectangleShape m_backgroundRectangle;
 
         // dirty flag for the offscreen verts, so we don't have to re-append them every frame
