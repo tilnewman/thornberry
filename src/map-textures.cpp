@@ -32,7 +32,7 @@ namespace thornberry
 
     void MapTextureManager::teardown()
     {
-        for (std::size_t imageIndex(0); imageIndex < static_cast<std::size_t>(TileImage::Count);
+        for (std::size_t imageIndex{ 0 }; imageIndex < static_cast<std::size_t>(TileImage::Count);
              ++imageIndex)
         {
             const TileTexture & tileTexture{ m_tileTextures.at(imageIndex) };
