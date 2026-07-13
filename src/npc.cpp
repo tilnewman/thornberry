@@ -129,7 +129,7 @@ namespace thornberry
                 {
                     m_walkDirections.push_back(AvatarDirection::Up);
                 }
-                else if (walkTargetOpt->y < npcPosition.y)
+                else if (walkTargetOpt->y > npcPosition.y)
                 {
                     m_walkDirections.push_back(AvatarDirection::Down);
                 }
