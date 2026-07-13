@@ -23,6 +23,7 @@ namespace thornberry
         void update(const Context & t_context, const float t_elapsedSec);
         void clear() { m_npcs.clear(); }
 
+        // the draws are split into upper and lower so that the player can be drawn in between
         void drawUpper(
             const sf::Vector2f & t_mapToOffscreenOffset,
             const sf::FloatRect & t_offscreenDrawRect,
@@ -63,6 +64,7 @@ namespace thornberry
         std::vector<Npc> m_npcs;
 
         // these vectors hold copes of the sprites in m_npcs in map coordinates
+        // remember these are in map coordinates
         std::vector<AvatarSprites> m_upperSprites;
         std::vector<AvatarSprites> m_lowerSprites;
     };
