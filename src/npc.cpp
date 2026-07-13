@@ -165,7 +165,7 @@ namespace thornberry
         const std::vector<sf::FloatRect> & walkBounds{ t_context.level.npcWalkBounds() };
 
         std::vector<sf::FloatRect> intersectingWalkBounds;
-        intersectingWalkBounds.reserve(8);
+        intersectingWalkBounds.reserve(8); // just a guess of how many overlapping walkbounds
 
         const sf::FloatRect collMapRect{ collisionMapRect() };
 
