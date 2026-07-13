@@ -29,20 +29,26 @@ namespace thornberry
     {
         m_npcs.clear();
 
+        const std::string levelName{ t_context.level.name() };
+
         // if the map artist didn't lay down any walk bounds then we can't place any NPCs
         if (t_context.level.npcWalkBounds().empty())
         {
+            std::cerr << "NpcManager::postLevelLoadSetup() - no NPC walk bounds found in level: "
+                      << levelName << std::endl;
+
             return;
         }
 
-        const std::string levelName{ t_context.level.name() };
         if (levelName == "house.tmj")
         {
+            // just one monk in the house
             const auto monkImages{ getAvatarImagesMonk() };
             randomPlaceNpc(t_context, t_context.random.from(monkImages));
         }
         else if (levelName == "thornberry.tmj")
         {
+            // ten random townfolk in the village
             const std::size_t npcCount{ 10 };
             m_npcs.reserve(npcCount);
 
@@ -72,6 +78,10 @@ namespace thornberry
         }
         else
         {
+            std::cerr << "NpcManager::randomPlaceNpc() - failed to find a random available "
+                         "spawn position for the NPC "
+                      << toString(t_image) << ", in map " << t_context.level.name() << std::endl;
+
             return false;
         }
     }
@@ -100,6 +110,7 @@ namespace thornberry
             }
         }
 
+        // these sorts are required to ensure that the draw order is correct for overlapping NPCs
         std::sort(
             std::begin(m_lowerSprites),
             std::end(m_lowerSprites),
@@ -130,6 +141,9 @@ namespace thornberry
             npc.update(t_context, t_elapsedSec);
         }
 
+        // TODO only re-setup the draw vectors if needed. The problem is that the player could have
+        // moved as well as the NPCs. So in addition to a new NPC::Update() we would also need to
+        // check if the player moved during this update...
         setupDrawOrderVectors(t_context);
     }
 
@@ -167,6 +181,7 @@ namespace thornberry
         sf::Sprite tempAvatar{ t_sprites.avatar };
         tempAvatar.move(t_mapToOffscreenOffset);
 
+        // don't draw if offscreen
         if (!tempAvatar.getGlobalBounds().findIntersection(t_offscreenDrawRect).has_value())
         {
             return;
@@ -187,6 +202,7 @@ namespace thornberry
         const std::vector<sf::FloatRect> & walkBounds{ t_context.level.npcWalkBounds() };
         if (walkBounds.empty())
         {
+            // the caller will log an error message if this happens
             return {};
         }
 
