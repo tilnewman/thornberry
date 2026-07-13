@@ -93,6 +93,7 @@ namespace thornberry
 
         if (NpcAction::Wait == m_action)
         {
+            // um...why change direction if you're just going to wait?
             standFacingRandomDirection(t_context);
         }
         else if (NpcAction::Turn == m_action)
@@ -133,9 +134,14 @@ namespace thornberry
                     m_walkDirections.push_back(AvatarDirection::Down);
                 }
 
+                // if the above logic fails then just walk in random direction
                 if (m_walkDirections.empty())
                 {
-                    m_walkDirections.push_back(AvatarDirection::Left);
+                    m_walkDirections.push_back(t_context.random.from(
+                        { AvatarDirection::Left,
+                          AvatarDirection::Right,
+                          AvatarDirection::Up,
+                          AvatarDirection::Down }));
                 }
 
                 t_context.random.shuffle(m_walkDirections);
@@ -276,8 +282,8 @@ namespace thornberry
         return true;
     }
 
-    const std::string Npc::randomGreeting(const Context& t_context) const
-    { 
+    const std::string Npc::randomGreeting(const Context & t_context) const
+    {
         std::string str;
         str.reserve(32);
 
