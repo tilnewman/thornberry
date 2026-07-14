@@ -6,6 +6,7 @@
 #include "context.hpp"
 #include "font.hpp"
 #include "indirect-level.hpp"
+#include "npc-manager.hpp"
 #include "player.hpp"
 #include "screen-layout.hpp"
 #include "sfml-defaults.hpp"
@@ -45,6 +46,12 @@ namespace thornberry
             str += t_context.level.name();
             str += ", ";
             str += toString(t_context.player.image());
+
+            const auto spriteCountsPair{ t_context.npc.spriteCounts() };
+            str += ", spritePosCache=";
+            str += std::to_string(spriteCountsPair.first);
+            str += "/";
+            str += std::to_string(spriteCountsPair.second);
 
             m_text.setString(str);
             util::setOriginToPosition(m_text);
