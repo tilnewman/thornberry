@@ -30,6 +30,7 @@ namespace thornberry
         // only the most recent window handles events
         if (m_windows.back()->handleEvent(t_context, t_event))
         {
+            // for now, all events close the popup
             m_windows.pop_back();
             setFocuses(t_context);
         }
