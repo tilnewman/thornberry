@@ -192,8 +192,11 @@ namespace thornberry
 
     void Coordinator::update(const float t_elapsedSec)
     {
+        // update the level before player and npcs
         m_levelUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_playerUPtr->update(*m_contextUPtr, t_elapsedSec);
+
+        // this order is NOT critical
         m_npcManagerUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_smokeParticleEffectsUPtr->update(*m_contextUPtr, t_elapsedSec);
         m_predrawAnimationsUPtr->update(*m_contextUPtr, t_elapsedSec);
@@ -205,6 +208,7 @@ namespace thornberry
     {
         m_renderWindow.clear(m_config.background_color);
 
+        // this order is critical
         m_dayNightCycleUPtr->drawBeforeMap(*m_contextUPtr, m_renderWindow, m_renderStates);
         m_levelUPtr->draw(*m_contextUPtr, m_renderWindow, m_renderStates);
         m_dayNightCycleUPtr->drawAfterMap(*m_contextUPtr, m_renderWindow, m_renderStates);
