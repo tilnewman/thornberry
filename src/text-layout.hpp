@@ -4,6 +4,7 @@
 // text-layout.hpp
 //
 #include "font.hpp"
+#include "sfml-util.hpp"
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -53,7 +54,13 @@ namespace thornberry
         sf::FloatRect rect_pad{};    // the original from TextLayoutSpec with pad_ratio applied
         sf::FloatRect rect_actual{}; // the actual rect containing the text
         std::vector<sf::Text> texts{};
-        bool didTextFit() const;
+
+        [[nodiscard]] inline bool didTextFit() const
+        {
+            return (
+                rect_pad.contains(rect_actual.position) &&
+                rect_pad.contains({ util::right(rect_actual), util::bottom(rect_actual) }));
+        }
     };
 
     //

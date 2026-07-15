@@ -6,22 +6,12 @@
 #include "text-layout.hpp"
 
 #include "context.hpp"
-#include "sfml-util.hpp"
 
 #include <algorithm>
 #include <sstream>
 
 namespace thornberry
 {
-
-    bool TextLayoutResult::didTextFit() const
-    {
-        return (
-            rect_pad.contains(rect_actual.position) &&
-            rect_pad.contains({ util::right(rect_actual), util::bottom(rect_actual) }));
-    }
-
-    //
 
     const TextLayoutResult
         TextLayout::typeset(const Context & t_context, const TextLayoutSpec & t_spec)
