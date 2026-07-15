@@ -23,7 +23,8 @@ namespace thornberry
         [[nodiscard]] const sf::FloatRect & screenRect() const noexcept { return m_screenRect; }
         [[nodiscard]] const sf::FloatRect & mapRect() const noexcept { return m_mapRect; }
 
-        float calScaleBasedOnResolution(const Context & t_context, const float t_scale) const;
+        [[nodiscard]] float
+            calScaleBasedOnResolution(const Context & t_context, const float t_scale) const;
 
       private:
         sf::FloatRect m_screenRect;
