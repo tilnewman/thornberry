@@ -196,16 +196,10 @@ namespace thornberry
 
     constexpr bool isTileImageShadow(const TileImage t_image) noexcept
     {
-        if ((t_image == TileImage::InteriorShadow) || (t_image == TileImage::MountainShadow) ||
+        return (
+            (t_image == TileImage::InteriorShadow) || (t_image == TileImage::MountainShadow) ||
             (t_image == TileImage::ObjectShadow) || (t_image == TileImage::TownShadow) ||
-            (t_image == TileImage::TownWallShadow))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+            (t_image == TileImage::TownWallShadow));
     }
 
     inline std::string toTileImageFilename(const TileImage t_image)
