@@ -193,7 +193,7 @@ namespace thornberry
 
     void Npc::updateWalkPosition(const Context & t_context, const float t_elapsedSec)
     {
-        const float walkAmount{ t_context.screen_layout.calScaleBasedOnResolution(
+        const float walkAmount{ t_context.screen_layout.scaleBasedOnResolution(
             t_context, (t_context.config.avatar_walk_speed * t_elapsedSec)) };
 
         const auto isWalkingInDirection = [&](const AvatarDirection dir) {

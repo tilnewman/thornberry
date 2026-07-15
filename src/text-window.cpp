@@ -112,7 +112,7 @@ namespace thornberry
 
     bool TextWindow::setupSizesAndPositions(const Context & t_context, const float t_baseScale)
     {
-        const float scale{ t_context.screen_layout.calScaleBasedOnResolution(
+        const float scale{ t_context.screen_layout.scaleBasedOnResolution(
             t_context, t_baseScale) };
 
         // the outer rect that defines where the background image will be
@@ -149,7 +149,7 @@ namespace thornberry
             m_avatarSprite.setTextureRect({ { 0, 192 }, { 64, 64 } });
             m_avatarSprite.setColor(sf::Color(255, 255, 255, 192));
 
-            const float avatarScale{ t_context.screen_layout.calScaleBasedOnResolution(
+            const float avatarScale{ t_context.screen_layout.scaleBasedOnResolution(
                 t_context, t_context.config.avatar_scale) };
 
             m_avatarSprite.setScale({ avatarScale, avatarScale });

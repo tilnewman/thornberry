@@ -88,7 +88,7 @@ namespace thornberry
         m_animalCapMiddleSprite.setColor(animalCapColor);
         m_animalCapRightSprite.setColor(animalCapColor);
 
-        const float animalCapScale{ t_context.screen_layout.calScaleBasedOnResolution(
+        const float animalCapScale{ t_context.screen_layout.scaleBasedOnResolution(
             t_context, 0.2f) };
 
         m_animalCapLeftSprite.setScale({ animalCapScale, animalCapScale });

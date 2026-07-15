@@ -122,7 +122,7 @@ namespace thornberry
         // setup the avatar sprite
         util::setOriginToCenter(m_sprites.avatar);
 
-        const float avatarScale{ t_context.screen_layout.calScaleBasedOnResolution(
+        const float avatarScale{ t_context.screen_layout.scaleBasedOnResolution(
             t_context, t_context.config.avatar_scale) };
 
         m_sprites.avatar.setScale({ avatarScale, avatarScale });

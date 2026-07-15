@@ -34,7 +34,7 @@ namespace thornberry
         sprite.setColor(colors::randomVibrant(t_context.random));
         util::setOriginToCenter(sprite);
 
-        const float scale{ t_context.screen_layout.calScaleBasedOnResolution(t_context, 0.25f) };
+        const float scale{ t_context.screen_layout.scaleBasedOnResolution(t_context, 0.25f) };
         sprite.setScale({ scale, scale });
 
         sf::FloatRect spawnRect{ util::scaleRectInPlaceCopy(t_offscreenRect, 0.75f) };
@@ -134,7 +134,7 @@ namespace thornberry
                     color.a = alpha;
                     particle.sprite.setColor(color);
 
-                    const float scaleMax{ t_context.screen_layout.calScaleBasedOnResolution(
+                    const float scaleMax{ t_context.screen_layout.scaleBasedOnResolution(
                         t_context, 0.25f) };
 
                     const float scaleMin{ 0.05f };

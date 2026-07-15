@@ -25,7 +25,7 @@ namespace thornberry
         util::scaleRectInPlace(m_mapRect, 0.45f);
     }
 
-    float ScreenLayout::calScaleBasedOnResolution(
+    float ScreenLayout::scaleBasedOnResolution(
         const Context & t_context, const float t_scale) const
     {
         // This is the resolution on my macbook originally used when coding started.

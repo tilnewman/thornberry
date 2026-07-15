@@ -116,7 +116,7 @@ namespace thornberry
             ((textureTileSize.x > 0) && (textureTileSize.y > 0)),
             "The level file had invalid t_context.level.texture_tile_size values!");
 
-        const float scale{ t_context.screen_layout.calScaleBasedOnResolution(
+        const float scale{ t_context.screen_layout.scaleBasedOnResolution(
             t_context, t_context.config.map_tile_scale) };
 
         const sf::Vector2f screenTileSize{ sf::Vector2f{ textureTileSize } * scale };
@@ -377,7 +377,7 @@ namespace thornberry
         const sf::IntRect rect{ { t_json["x"], t_json["y"] },
                                 { t_json["width"], t_json["height"] } };
 
-        const float scale{ t_context.screen_layout.calScaleBasedOnResolution(
+        const float scale{ t_context.screen_layout.scaleBasedOnResolution(
             t_context, t_context.config.map_tile_scale) };
 
         sf::FloatRect mapRect{ rect };

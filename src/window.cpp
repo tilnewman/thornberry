@@ -22,7 +22,7 @@ namespace thornberry
     const sf::FloatRect Window::setup(
         const Context & t_context, const sf::FloatRect & t_rect, const sf::Color & t_color)
     {
-        const float scale{ t_context.screen_layout.calScaleBasedOnResolution(t_context, 1.5f) };
+        const float scale{ t_context.screen_layout.scaleBasedOnResolution(t_context, 1.5f) };
         m_scale.x = scale;
         m_scale.y = scale;
 

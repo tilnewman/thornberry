@@ -133,7 +133,7 @@ namespace thornberry
                 {
                     particle.sprite.rotate(sf::degrees(particle.rotation_speed * t_elapsedSec));
 
-                    const float scaleMax{ t_context.screen_layout.calScaleBasedOnResolution(
+                    const float scaleMax{ t_context.screen_layout.scaleBasedOnResolution(
                         t_context, 0.5f) };
 
                     const float ageLimitHalfSec{ particle.age_limit_sec * 0.5f };

@@ -50,7 +50,7 @@ namespace thornberry
 
         util::setOriginToCenter(sprite);
         sprite.setRotation(sf::degrees(t_context.random.fromTo(0.0f, 360.0f)));
-        const float scale{ t_context.screen_layout.calScaleBasedOnResolution(t_context, 0.4f) };
+        const float scale{ t_context.screen_layout.scaleBasedOnResolution(t_context, 0.4f) };
         sprite.setScale({ scale, scale });
 
         sf::FloatRect posRect{ util::scaleRectInPlaceCopy(t_offscreenRect, 0.5f) };
@@ -133,7 +133,7 @@ namespace thornberry
                     particle.sprite.rotate(sf::degrees(particle.rotation_speed * t_elapsedSec));
                     particle.sprite.move({ 0.0f, -(particle.speed * t_elapsedSec) });
 
-                    const float scaleMax{ t_context.screen_layout.calScaleBasedOnResolution(
+                    const float scaleMax{ t_context.screen_layout.scaleBasedOnResolution(
                         t_context, 0.4f) };
 
                     const float scaleMin{ 0.2f };
