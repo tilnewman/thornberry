@@ -108,15 +108,19 @@ namespace thornberry
     }
 
     void IndirectLevel::setLevelDetails(
+        const Context & t_context,
         const std::string & t_name,
         const sf::Vector2i & t_mapTileCount,
-        const sf::Vector2i & t_textureTileSize,
-        const sf::Vector2f & t_screenTileSize)
+        const sf::Vector2i & t_textureTileSize)
     {
         m_name            = t_name;
         m_mapTileCount    = t_mapTileCount;
         m_textureTileSize = t_textureTileSize;
-        m_screenTileSize  = t_screenTileSize;
+
+        const float scale{ t_context.screen_layout.scaleBasedOnResolution(
+            t_context, t_context.config.map_tile_scale) };
+
+        m_screenTileSize = (sf::Vector2f{ m_textureTileSize } * scale);
     }
 
     void IndirectLevel::load(

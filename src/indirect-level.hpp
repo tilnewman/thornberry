@@ -166,12 +166,12 @@ namespace thornberry
             return (m_mapScreenPosOffset + mapToOffscreenOffset());
         }
 
-        // the map loader calls this to set things up very eqarly in the process of loading
+        // the map loader calls this to set things up very early in the process of loading
         void setLevelDetails(
+            const Context & t_context,
             const std::string & t_name,
             const sf::Vector2i & t_mapTileCount,
-            const sf::Vector2i & t_textureTileSize,
-            const sf::Vector2f & t_screenTileSize);
+            const sf::Vector2i & t_textureTileSize);
 
         // returns true if the avatar will move by t_move amount
         [[nodiscard]] const MoveResultPack playerMove(

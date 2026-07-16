@@ -92,7 +92,7 @@ namespace thornberry
         catch (...)
         {
             std::cout
-                << "LevelFileLoader::parseLocale() found no 'properties' in the map file: " 
+                << "LevelFileLoader::parseLocale() found no 'properties' in the map file: "
                 << m_pathStr
                 << ".  Add a 'locale' property to the map.  Ignoring this for now and setting the "
                    "music and day/night cycle to None.\n";
@@ -116,12 +116,7 @@ namespace thornberry
             ((textureTileSize.x > 0) && (textureTileSize.y > 0)),
             "The level file had invalid t_context.level.texture_tile_size values!");
 
-        const float scale{ t_context.screen_layout.scaleBasedOnResolution(
-            t_context, t_context.config.map_tile_scale) };
-
-        const sf::Vector2f screenTileSize{ sf::Vector2f{ textureTileSize } * scale };
-
-        t_context.level.setLevelDetails(t_name, mapTileCount, textureTileSize, screenTileSize);
+        t_context.level.setLevelDetails(t_context, t_name, mapTileCount, textureTileSize);
     }
 
     void LevelFileLoader::parseTilesets(
