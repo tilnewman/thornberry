@@ -31,15 +31,6 @@ namespace thornberry
 
         const std::string levelName{ t_context.level.name() };
 
-        // if the map artist didn't lay down any walk bounds then we can't place any NPCs
-        if (t_context.level.npcWalkBounds().empty())
-        {
-            std::cerr << "NpcManager::postLevelLoadSetup() - no NPC walk bounds found in level: "
-                      << levelName << std::endl;
-
-            return;
-        }
-
         if (levelName == "house.tmj")
         {
             // just one monk in the house
@@ -63,6 +54,17 @@ namespace thornberry
         std::sort(std::begin(m_npcs), std::end(m_npcs), [](const Npc & a, const Npc & b) {
             return (a.getSprites().avatar.getPosition().y < b.getSprites().avatar.getPosition().y);
         });
+
+        
+        // if the map artist didn't lay down any walk bounds then we can't place any NPCs
+        if (!m_npcs.empty() && t_context.level.npcWalkBounds().empty())
+        {
+            std::cerr << "NpcManager::postLevelLoadSetup() - no NPC walk bounds found in level: "
+                      << levelName << ".  So NPCs are being removed." << std::endl;
+
+            m_npcs.clear();
+        }
+
     }
 
     bool NpcManager::randomPlaceNpc(const Context & t_context, const AvatarImage & t_image)
