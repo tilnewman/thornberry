@@ -38,8 +38,8 @@ namespace thornberry
 
         [[nodiscard]] const NpcRefOpt_t doesRectCollideWithAny(const sf::FloatRect & t_mapRect);
 
-        [[nodiscard]] bool
-            doesRectCollideWithAnyExcept(const sf::FloatRect & t_mapRect, const Npc & t_npc) const;
+        [[nodiscard]] const NpcRefOpt_t
+            doesRectCollideWithAnyExcept(const sf::FloatRect & t_mapRect, const Npc & t_npc);
 
         void setupDrawOrderVectors(const Context & t_context);
         void stopTalkingToAll();

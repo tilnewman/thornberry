@@ -293,12 +293,12 @@ namespace thornberry
         return {};
     }
 
-    bool NpcManager::doesRectCollideWithAnyExcept(
-        const sf::FloatRect & t_mapRect, const Npc & t_npc) const
+    const NpcRefOpt_t
+        NpcManager::doesRectCollideWithAnyExcept(const sf::FloatRect & t_mapRect, const Npc & t_npc)
     {
         // all of this function is in map coordinates
 
-        for (const Npc & npc : m_npcs)
+        for (Npc & npc : m_npcs)
         {
             if (&npc == &t_npc)
             {
@@ -310,11 +310,11 @@ namespace thornberry
                         Avatar::makeAvatarToAvatarCollisionRect(npc.collisionMapRect()))
                     .has_value())
             {
-                return true;
+                return { npc };
             }
         }
 
-        return false;
+        return {};
     }
 
 } // namespace thornberry

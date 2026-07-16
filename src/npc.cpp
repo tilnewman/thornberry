@@ -261,8 +261,13 @@ namespace thornberry
             return false;
         }
 
-        // check for collision with other NPCs
-        return !t_context.npc.doesRectCollideWithAnyExcept(movedRect, *this);
+        // check for collision with other NPCs except this one
+        if (t_context.npc.doesRectCollideWithAnyExcept(movedRect, *this).has_value())
+        {
+            return false;
+        }
+
+        return true;
     }
 
     bool Npc::startTalking(const Context & t_context, const sf::Vector2f & t_playerPosition)
