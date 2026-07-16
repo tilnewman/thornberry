@@ -3,21 +3,23 @@
 //
 #include "alpha-masking.hpp"
 
+#include "config.hpp"
 #include "texture-loader.hpp"
 
 namespace thornberry
 {
 
     bool AlphaMasking::loadAndApplyMasks(
+        const Config & t_config,
         sf::Texture & t_texture,
+        const sf::Color & t_transparentMask,
         const std::string & t_path,
-        const sf::Color & t_maskColor,
         const bool t_willApplyShadowMasks)
     {
         sf::Image image;
         if (util::TextureLoader::load(image, t_path))
         {
-            applyMasks(image, t_maskColor, t_willApplyShadowMasks);
+            applyMasks(t_config, image, t_transparentMask, t_willApplyShadowMasks);
             return t_texture.loadFromImage(image);
         }
         else
@@ -27,7 +29,10 @@ namespace thornberry
     }
 
     void AlphaMasking::applyMasks(
-        sf::Image & t_image, const sf::Color & t_maskColor, const bool t_willApplyShadowMasks)
+        const Config & t_config,
+        sf::Image & t_image,
+        const sf::Color & t_transparentMask,
+        const bool t_willApplyShadowMasks)
     {
         const sf::Vector2u imageSize{ t_image.getSize() };
         for (unsigned y{ 0 }; y < imageSize.y; ++y)
@@ -36,32 +41,25 @@ namespace thornberry
             {
                 const sf::Vector2u pixelPos{ x, y };
                 const sf::Color color{ t_image.getPixel(pixelPos) };
-                if (color == t_maskColor)
+                if (color == t_transparentMask)
                 {
                     t_image.setPixel(pixelPos, sf::Color::Transparent);
                 }
                 else if (t_willApplyShadowMasks)
                 {
-                    if (color == sf::Color::Black)
+                    if (color == t_config.mask_color_shadow_dark)
                     {
-                        // black is the darkest shadow color
-                        t_image.setPixel(pixelPos, sf::Color(0, 0, 0, 124));
+                        t_image.setPixel(pixelPos, t_config.shadow_color_dark);
                     }
-                    else if (color == sf::Color(127, 0, 127))
+                    else if (
+                        (color == t_config.mask_color_shadow_medium) ||
+                        (color == t_config.mask_color_shadow_medium2))
                     {
-                        // this half-magenta color is the medium shadow
-                        t_image.setPixel(pixelPos, sf::Color(0, 0, 0, 87));
+                        t_image.setPixel(pixelPos, t_config.shadow_color_medium);
                     }
-                    else if (color == sf::Color(151, 0, 147))
+                    else if (color == t_config.mask_color_shadow_light)
                     {
-                        // This half-magenta variant shouldn't be needed, but
-                        // until I fix all the shadow images out there that use it...
-                        t_image.setPixel(pixelPos, sf::Color(0, 0, 0, 87));
-                    }
-                    else if (color == sf::Color(255, 0, 255))
-                    {
-                        // the magenta color is the lightest shadow color
-                        t_image.setPixel(pixelPos, sf::Color(0, 0, 0, 50));
+                        t_image.setPixel(pixelPos, t_config.shadow_color_light);
                     }
                 }
             }

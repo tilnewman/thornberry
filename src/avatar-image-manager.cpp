@@ -31,9 +31,10 @@ namespace thornberry
         m_mediaPath = t_config.media_path;
 
         AlphaMasking::loadAndApplyMasks(
+            t_config,
             *m_shadowTextureUPtr,
+            t_config.mask_color_transparent,
             (t_config.media_path / "image" / "avatar" / "avatar-shadow.png").string(),
-            t_config.background_mask_color,
             true);
 
         // prevent this vector from ever resizing

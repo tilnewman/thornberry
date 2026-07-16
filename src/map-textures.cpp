@@ -73,7 +73,10 @@ namespace thornberry
             if (tileTexture.transparent_color != sf::Color::Transparent)
             {
                 AlphaMasking::applyMasks(
-                    image, tileTexture.transparent_color, isTileImageShadow(t_tileImage));
+                    t_context.config,
+                    image,
+                    tileTexture.transparent_color,
+                    isTileImageShadow(t_tileImage));
             }
 
             M_CHECK(

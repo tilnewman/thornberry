@@ -11,19 +11,25 @@
 namespace thornberry
 {
 
+    struct Config;
+
     class AlphaMasking
     {
       public:
         AlphaMasking() = default;
 
         static bool loadAndApplyMasks(
+            const Config & t_config,
             sf::Texture & t_texture,
+            const sf::Color & t_transparentMask,
             const std::string & t_path,
-            const sf::Color & t_maskColor,
             const bool t_willApplyShadowMasks);
 
         static void applyMasks(
-            sf::Image & t_image, const sf::Color & t_maskColor, const bool t_willApplyShadowMasks);
+            const Config & t_config,
+            sf::Image & t_image,
+            const sf::Color & t_transparentMask,
+            const bool t_willApplyShadowMasks);
     };
 
 } // namespace thornberry

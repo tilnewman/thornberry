@@ -30,9 +30,17 @@ namespace thornberry
         sf::Color background_color{ 30, 30, 30 };
         sf::Color map_outline_color{ 127, 127, 127 };
 
-        // Almost all the images are PNGs that support transparency, but some are from artists that
-        // didn't seem to want to use it and they used this color as a transparency placeholder.
-        sf::Color background_mask_color{ 75, 99, 127 };
+        // Images are PNGs that support transparency, but some are from artists that didn't seem to
+        // want to use it and they used these colors as transparent/semi-transparent placeholders.
+        sf::Color mask_color_transparent{ 75, 99, 127 };
+        sf::Color mask_color_shadow_dark{ 0, 0, 0 };
+        sf::Color mask_color_shadow_medium{ 127, 0, 127 };
+        sf::Color mask_color_shadow_medium2{ 151, 0, 147 }; // some artists used it...
+        sf::Color mask_color_shadow_light{ 255, 0, 255 };
+        //
+        sf::Color shadow_color_dark{ 0, 0, 0, 124 };
+        sf::Color shadow_color_medium{ 0, 0, 0, 87 };
+        sf::Color shadow_color_light{ 0, 0, 0, 50 };
 
         sf::Color text_button_color{ 0, 0, 0, 127 };
         sf::Color text_button_mouseover_color{ 0, 0, 0, 192 };
