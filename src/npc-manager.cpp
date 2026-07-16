@@ -232,7 +232,8 @@ namespace thornberry
         const sf::FloatRect playerRect{ Avatar::makeAvatarToAvatarCollisionRect(
             t_context.player.collisionMapRect()) };
 
-        // this trying x1000 times was just a guess that is more than ample
+        // Trying 1000 times was just a guess that is more than ample,
+        // even when filling a map with hundreds of NPCs for testing.
         for (std::size_t counter{ 0 }; counter < 1000; ++counter)
         {
             const auto randomPositionOpt{ pickRandomSpawnPosition(t_context) };
@@ -241,7 +242,7 @@ namespace thornberry
                 break;
             }
 
-            // all NPCs and the player are the same size so steal the player's size to make this
+            // NPCs are the same size as the player, so use player's size even though this is a NPC
             sf::FloatRect randomRect({ *randomPositionOpt, playerRect.size });
             randomRect.position -= (playerRect.size * 0.5f); // because sprite origin is centered
             util::scaleRectInPlace(randomRect, 1.2f); // this grow seems to help prevent overlap
@@ -268,9 +269,9 @@ namespace thornberry
             return *randomPositionOpt;
         }
 
-        std::cerr << "NpcManager::findRandomAvailableSpawnPosition() failed to find a free space "
-                     "to place an NPC!\n";
-
+        // should never really get here
+        // Caller is responsible for logging this failure case because only they will know WHICH NPC
+        // failed to be placed and that will mean everything when reading about this afterwards.
         return {};
     }
 
