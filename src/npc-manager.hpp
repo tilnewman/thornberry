@@ -44,12 +44,6 @@ namespace thornberry
         void setupDrawOrderVectors(const Context & t_context);
         void stopTalkingToAll();
 
-        // TODO remove after testing
-        inline const std::pair<std::size_t, std::size_t> spriteCounts() const noexcept
-        {
-            return { m_lowerSprites.size(), m_upperSprites.size() };
-        }
-
       private:
         [[nodiscard]] const std::optional<sf::Vector2f>
             pickRandomSpawnPosition(const Context & t_context) const;
