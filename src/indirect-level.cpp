@@ -134,8 +134,10 @@ namespace thornberry
         const sf::Vector2u renderTextureSize{ m_screenTileSize *
                                               sf::Vector2f{ m_offscreenTileRange.size } };
 
+        const bool didTextureResizeSucceed{ m_renderTexture.resize(renderTextureSize) };
+
         M_CHECK(
-            m_renderTexture.resize(renderTextureSize),
+            didTextureResizeSucceed,
             "IndirectLevel::load(\"" << t_filenameToLoad
                                      << "\") failed to sf::RenderTexture::resize("
                                      << renderTextureSize << ")!");
@@ -196,8 +198,7 @@ namespace thornberry
         }
 
         // grow the offscreen drawing by two tiles in all directions
-        // this prevents any gaps between the onscreen and offscreen when map moves around with
-        // player
+        // prevents gaps between the onscreen and offscreen area when map moves
         m_offscreenTileRange.position.x -= 2;
         m_offscreenTileRange.position.y -= 2;
         m_offscreenTileRange.size.x += 2;
