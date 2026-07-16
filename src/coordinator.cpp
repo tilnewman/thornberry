@@ -78,6 +78,7 @@ namespace thornberry
         m_windowImageManagerUPtr   = std::make_unique<WindowImageManager>();
         m_popupManagerUPtr         = std::make_unique<PopupManager>();
 
+        // TODO query player for which avatar they want to use. For now just pick a random one.
         const auto playerImages{ getAvatarImagesPlayer() };
         m_playerUPtr = std::make_unique<Player>(m_randomUPtr->from(playerImages));
 
@@ -104,7 +105,7 @@ namespace thornberry
 
         m_musicPlayerUPtr->setup((m_config.media_path / "music").string());
 
-        // this order is critical
+        // this order IS critical
         m_windowImageManagerUPtr->setup(m_config);
         m_predrawAnimationsUPtr->setup(m_config);
         m_smokeParticleEffectsUPtr->setup(m_config);
