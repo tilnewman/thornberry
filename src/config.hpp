@@ -28,14 +28,19 @@ namespace thornberry
         float avatar_walk_moves_map_ratio{ 0.4f };
 
         sf::Color background_color{ 30, 30, 30 };
-        sf::Color background_mask_color{ 75, 99, 127 };
         sf::Color map_outline_color{ 127, 127, 127 };
+
+        // Almost all the images are PNGs that support transparency, but some are from artists that
+        // didn't seem to want to use it and they used this color as a transparency placeholder.
+        sf::Color background_mask_color{ 75, 99, 127 };
+
         sf::Color text_button_color{ 0, 0, 0, 127 };
-        sf::Color text_button_mouseover_color{ sf::Color::Black };
+        sf::Color text_button_mouseover_color{ 0, 0, 0, 192 };
         sf::Color text_window_focus_off_color{ 127, 127, 127 };
         sf::Color text_window_focus_on_color{ sf::Color::White };
-        std::string sound_filename_extension{ ".ogg" };
+
         float music_volume{ 50.0f }; // 0-100
+        std::string sound_filename_extension{ ".ogg" };
     };
 
 } // namespace thornberry
