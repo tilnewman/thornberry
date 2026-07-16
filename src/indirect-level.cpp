@@ -237,7 +237,6 @@ namespace thornberry
     void IndirectLevel::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         // if the left shift is held down then the arrow keys move which tiles are drawn
-
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
         {
             return;
@@ -303,7 +302,6 @@ namespace thornberry
     {
         t_target.draw(m_backgroundRectangle, t_states);
 
-        // would caching this sprite speed things up in a meaningful way?
         sf::Sprite sprite(m_renderTexture.getTexture(), sf::IntRect{ m_offscreenDrawRect });
         sprite.setPosition(m_mapScreenPosOffset);
         t_target.draw(sprite, t_states);
@@ -412,7 +410,7 @@ namespace thornberry
                 t_context.sfx.play(transitionOpt->sfx_name);
             }
 
-            // m_name gets changed by load() so don't pass a reference to it, pass a copy
+            // m_name gets changed by load() so don't pass a ref to it, pass a ref to a copy
             const std::string nameCopy{ m_name };
             load(t_context, nameCopy, transitionOpt->map_filename);
 
@@ -433,10 +431,10 @@ namespace thornberry
             return MoveResultPack{ npcRefOpt.value().get() };
         }
 
-        // allow the avatar to interact with animation layers (pickups, etc...)
+        // allow the player to interact with animation layers (pickups, etc...)
         interactWithAll(t_context, playerRect);
 
-        // (this avatarRect needs to still be in map coordinates for this)
+        // (this playerRect needs to still be in map coordinates for this)
         playWalkSound(t_context, playerRect);
 
         // change to screen coordinates for everything else
