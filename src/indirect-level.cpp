@@ -54,9 +54,9 @@ namespace thornberry
         m_lowerTileLayers.reserve(16);
         m_upperTileLayers.reserve(16);
         m_collisions.reserve(512);
-        m_transitions.reserve(8);
-        m_walkSounds.reserve(32);
-        m_npcWalkBounds.reserve(32);
+        m_transitions.reserve(32);
+        m_walkSounds.reserve(64);
+        m_npcWalkBounds.reserve(128);
     }
 
     void IndirectLevel::reset(const Context & t_context)
