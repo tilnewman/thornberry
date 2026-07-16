@@ -55,7 +55,6 @@ namespace thornberry
             return (a.getSprites().avatar.getPosition().y < b.getSprites().avatar.getPosition().y);
         });
 
-        
         // if the map artist didn't lay down any walk bounds then we can't place any NPCs
         if (!m_npcs.empty() && t_context.level.npcWalkBounds().empty())
         {
@@ -64,7 +63,6 @@ namespace thornberry
 
             m_npcs.clear();
         }
-
     }
 
     bool NpcManager::randomPlaceNpc(const Context & t_context, const AvatarImage & t_image)
