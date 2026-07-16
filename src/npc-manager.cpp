@@ -98,13 +98,14 @@ namespace thornberry
 
         const sf::FloatRect playerRect{ t_context.player.collisionMapRect() };
         const sf::Vector2f mapToOffscreenOffset{ t_context.level.mapToOffscreenOffset() };
+        const sf::FloatRect offscreenRect{ t_context.level.offscreenRect() };
 
         for (const Npc & npc : m_npcs)
         {
             // skip all that are offscreen
             sf::FloatRect npcRect{ npc.getSprites().avatar.getGlobalBounds() };
             npcRect.position += mapToOffscreenOffset;
-            if (!npcRect.findIntersection(t_context.level.offscreenRect()).has_value())
+            if (!npcRect.findIntersection(offscreenRect).has_value())
             {
                 continue;
             }
