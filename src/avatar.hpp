@@ -205,6 +205,18 @@ namespace thornberry
             return rect;
         }
 
+        [[nodiscard]] static inline const sf::FloatRect
+            makeFootstepRect(const sf::FloatRect & t_avatarRect) noexcept
+        {
+            sf::FloatRect footstepRect{ t_avatarRect };
+
+            const float adjustment{ footstepRect.size.y * 0.85f };
+            footstepRect.size.y -= adjustment;
+            footstepRect.position.y += adjustment;
+
+            return footstepRect;
+        }
+
         [[nodiscard]] const AvatarSprites & getSprites() const noexcept { return m_sprites; }
 
         void standFacingRandomDirection(const Context & t_context);

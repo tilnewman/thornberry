@@ -591,7 +591,7 @@ namespace thornberry
     void IndirectLevel::playWalkSound(
         const Context & t_context, const sf::FloatRect & t_avatarMapRect)
     {
-        const sf::FloatRect footstepRect{ makeFootstepAvatarRect(t_avatarMapRect) };
+        const sf::FloatRect footstepRect{ Avatar::makeFootstepRect(t_avatarMapRect) };
 
         // find all walk sounds intersecting
         std::vector<WalkSound> possibleWalkSounds;
@@ -639,18 +639,6 @@ namespace thornberry
             t_context.music.stop(m_walkSoundEffectName);
             m_walkSoundEffectName.clear();
         }
-    }
-
-    const sf::FloatRect
-        IndirectLevel::makeFootstepAvatarRect(const sf::FloatRect & t_avatarRect) const
-    {
-        sf::FloatRect footstepRect{ t_avatarRect };
-
-        const float adjustment{ footstepRect.size.y * 0.85f };
-        footstepRect.size.y -= adjustment;
-        footstepRect.position.y += adjustment;
-
-        return footstepRect;
     }
 
     bool IndirectLevel::isInsideAnyNpcWalkBounds(const sf::FloatRect & t_rect) const

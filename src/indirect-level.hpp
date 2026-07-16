@@ -207,9 +207,6 @@ namespace thornberry
 
         void playWalkSound(const Context & t_context, const sf::FloatRect & t_avatarMapRect);
 
-        [[nodiscard]] const sf::FloatRect
-            makeFootstepAvatarRect(const sf::FloatRect & t_avatarRect) const;
-
         void moveAll(const Context & t_context, const sf::Vector2f & t_move);
 
         void interactWithAll(const Context & t_context, const sf::FloatRect & t_avatarMapRect);
