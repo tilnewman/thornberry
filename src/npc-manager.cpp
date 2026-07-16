@@ -102,9 +102,9 @@ namespace thornberry
         for (const Npc & npc : m_npcs)
         {
             // skip all that are offscreen
-            sf::FloatRect tempRect{ npc.getSprites().avatar.getGlobalBounds() };
-            tempRect.position += mapToOffscreenOffset;
-            if (!tempRect.findIntersection(t_context.level.offscreenRect()).has_value())
+            sf::FloatRect npcRect{ npc.getSprites().avatar.getGlobalBounds() };
+            npcRect.position += mapToOffscreenOffset;
+            if (!npcRect.findIntersection(t_context.level.offscreenRect()).has_value())
             {
                 continue;
             }
