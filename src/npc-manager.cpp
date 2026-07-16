@@ -151,9 +151,9 @@ namespace thornberry
             npc.update(t_context, t_elapsedSec);
         }
 
-        // TODO only re-setup the draw vectors if needed. The problem is that the player could have
-        // moved as well as the NPCs. So in addition to a new NPC::Update() we would also need to
-        // check if the player moved during this update...
+        // TODO only re-setup the draw vectors if needed.
+        // The problem is how  many things could have changed, such as the player or NPCs moving or
+        // the offscreen map pos changing (shift-arrow keys).
         setupDrawOrderVectors(t_context);
     }
 
