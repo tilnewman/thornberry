@@ -3,13 +3,14 @@
 //
 #include "alpha-masking.hpp"
 
+#include "check-macros.hpp"
 #include "config.hpp"
 #include "texture-loader.hpp"
 
 namespace thornberry
 {
 
-    bool AlphaMasking::loadAndApplyMasks(
+    void AlphaMasking::loadAndApplyMasks(
         const Config & t_config,
         sf::Texture & t_texture,
         const sf::Color & t_transparentMask,
@@ -17,15 +18,17 @@ namespace thornberry
         const bool t_willApplyShadowMasks)
     {
         sf::Image image;
-        if (util::TextureLoader::load(image, t_path))
-        {
-            applyMasks(t_config, image, t_transparentMask, t_willApplyShadowMasks);
-            return t_texture.loadFromImage(image);
-        }
-        else
-        {
-            return false;
-        }
+        const bool loadSuccess{ util::TextureLoader::load(image, t_path) };
+        M_CHECK(loadSuccess, "sf::Image::load() failed for image \"" << t_path << "\"");
+
+        applyMasks(t_config, image, t_transparentMask, t_willApplyShadowMasks);
+
+        const bool textureLoadSuccess{ t_texture.loadFromImage(image) };
+
+        M_CHECK(
+            textureLoadSuccess,
+            "sf::Texture::loadFromImage() failed for image \""
+                << t_path << "\" of size " << image.getSize().x << "x" << image.getSize().y);
     }
 
     void AlphaMasking::applyMasks(

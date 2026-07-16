@@ -18,7 +18,7 @@ namespace thornberry
       public:
         AlphaMasking() = default;
 
-        static bool loadAndApplyMasks(
+        static void loadAndApplyMasks(
             const Config & t_config,
             sf::Texture & t_texture,
             const sf::Color & t_transparentMask,
