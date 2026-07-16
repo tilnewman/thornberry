@@ -85,7 +85,7 @@ namespace thornberry
 
         // create moveMap rects
         const sf::FloatRect innerScreenRect{ util::scaleRectInPlaceCopy(
-            screenRect, t_context.config.avatar_walk_inner_map_ratio) };
+            screenRect, t_context.config.avatar_walk_moves_map_ratio) };
 
         m_moveScreenRectUp = { screenRect.position,
                                { screenRect.size.x,

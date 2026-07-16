@@ -21,7 +21,10 @@ namespace thornberry
         float map_tile_scale{ 1.0f };
         float avatar_scale{ 1.6f };
         float avatar_walk_speed{ 80.0f };
-        float avatar_walk_inner_map_ratio{ 0.4f };
+
+        // how close to the edge of the map will the avatar have to be before the map starts moving
+        float avatar_walk_moves_map_ratio{ 0.4f };
+
         sf::Color background_color{ 30, 30, 30 };
         sf::Color background_mask_color{ 75, 99, 127 };
         sf::Color map_outline_color{ 127, 127, 127 };
