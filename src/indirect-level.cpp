@@ -143,7 +143,7 @@ namespace thornberry
                                      << renderTextureSize << ")!");
 
         performPostLoadSetupOnAll(t_context);
-        // dumpInfo(t_filename);
+        // dumpInfo(t_filenameToLoad);
     }
 
     void IndirectLevel::setupOffscreenTileRange(
@@ -236,6 +236,15 @@ namespace thornberry
 
     void IndirectLevel::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
+        // TODO remove after testing
+        if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
+        {
+            if (keyPtr->scancode == sf::Keyboard::Scancode::D)
+            {
+                dumpInfo("test");
+            }
+        }
+
         // if the left shift is held down then the arrow keys move which tiles are drawn
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
         {

@@ -55,7 +55,7 @@ namespace thornberry
 
     void IndirectTileLayer::dumpInfo() const
     {
-        std::cout << "\tIndirectTileLayer Quads:  " << m_image << ", possible=" << m_indexes.size()
+        std::cout << "\tIndirectTileLayer Quads for " << m_image << ": possible=" << m_indexes.size()
                   << ", actual=" << (m_verts.size() / util::verts_per_quad) << '\n';
     }
 
