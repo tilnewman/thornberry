@@ -18,6 +18,8 @@ namespace thornberry
         std::filesystem::path media_path{};
         sf::VideoMode video_mode{ { 4112u, 2580u }, 32u };
         unsigned framerate_limit{ 0 };
+
+        // minor tweaks to these values are fine, but they should all be scaled together
         float map_tile_scale{ 1.0f };
         float avatar_scale{ 1.6f };
         float avatar_walk_speed{ 80.0f };
