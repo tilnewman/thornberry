@@ -190,7 +190,6 @@ namespace sf
 
 namespace util
 {
-
     // floor
 
     template <typename T>
@@ -291,6 +290,15 @@ namespace util
     [[nodiscard]] const sf::Vector2f centerLocal(const T & thing)
     {
         return center(thing.getLocalBounds());
+    }
+
+    [[nodiscard]] inline bool
+        contains(const sf::FloatRect & outer, const sf::FloatRect & inner) noexcept
+    {
+        return (
+            outer.contains(inner.position) && outer.contains({ right(inner), inner.position.y }) &&
+            outer.contains({ inner.position.x, bottom(inner) }) &&
+            outer.contains({ right(inner), bottom(inner) }));
     }
 
     template <typename T>

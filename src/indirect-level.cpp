@@ -655,16 +655,10 @@ namespace thornberry
 
     bool IndirectLevel::isInsideAnyNpcWalkBounds(const sf::FloatRect & t_rect) const
     {
-        // linear search for now since there will likely never be more than 50
+        // linear search since there will likely never be more than 50
         for (const sf::FloatRect & walkBound : m_npcWalkBounds)
         {
-            const sf::Vector2f topLeft{ t_rect.position };
-            const sf::Vector2f topRight{ util::right(t_rect), t_rect.position.y };
-            const sf::Vector2f botLeft{ t_rect.position.x, util::bottom(t_rect) };
-            const sf::Vector2f botRight{ util::right(t_rect), util::bottom(t_rect) };
-
-            if (walkBound.contains(topLeft) && walkBound.contains(topRight) &&
-                walkBound.contains(botLeft) && walkBound.contains(botRight))
+            if (util::contains(walkBound, t_rect))
             {
                 return true;
             }
