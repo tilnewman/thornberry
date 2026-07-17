@@ -21,7 +21,7 @@ namespace thornberry
         , m_cycleCoverRectangle{}
         , m_mapCoverRectangle{}
         , m_dayColor{ sf::Color::Transparent }
-        , m_nightColor{ sf::Color(0, 0, 255, 80) }
+        , m_nightColor{}
         , m_animalCapLeftTexture{}
         , m_animalCapMiddleTexture{}
         , m_animalCapRightTexture{}
@@ -32,6 +32,8 @@ namespace thornberry
 
     void DayNightCycle::setup(const Context & t_context)
     {
+        m_nightColor = t_context.config.night_map_overlay_color;
+
         util::TextureLoader::load(
             m_texture,
             (t_context.config.media_path / "image" / "day-night-cycle" / "disc.png"),

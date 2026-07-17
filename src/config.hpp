@@ -48,6 +48,8 @@ namespace thornberry
         sf::Color text_window_focus_off_color{ 127, 127, 127 };
         sf::Color text_window_focus_on_color{ sf::Color::White };
 
+        sf::Color night_map_overlay_color{ 0, 0, 255, 80 };
+
         float music_volume{ 50.0f }; // 0-100
         std::string sound_filename_extension{ ".ogg" };
     };
