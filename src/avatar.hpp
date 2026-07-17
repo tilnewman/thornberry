@@ -53,6 +53,7 @@ namespace thornberry
         Blink
     };
 
+    // each animation has its own speed because they have different number of frames
     [[nodiscard]] constexpr float toTimeBetweenFrames(const AvatarAnim t_anim) noexcept
     {
         // clang-format off
@@ -70,6 +71,7 @@ namespace thornberry
         // clang-format on
     }
 
+    // animation frames, in order
     [[nodiscard]] inline const std::vector<int>
         animAndDirectionToCells(const AvatarAnim t_anim, const AvatarDirection t_direction)
     {
@@ -175,8 +177,7 @@ namespace thornberry
         Avatar(Avatar & t_otherAvatar);
         Avatar(Avatar && t_otherAvatar);
 
-        // only including this because it won't be generated since move constructor is defined
-        // above
+        // only included because it won't be generated since move constructor is defined above
         void operator=(const Avatar & t_otherAvatar);
 
         virtual ~Avatar();

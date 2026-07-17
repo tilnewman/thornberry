@@ -38,7 +38,7 @@ namespace thornberry
         sf::Color mask_color_shadow_medium{ 127, 0, 127 };
         sf::Color mask_color_shadow_medium2{ 151, 0, 147 }; // some artists used it...
         sf::Color mask_color_shadow_light{ 255, 0, 255 };
-        //
+        // ...and here are the actual semi-transparent colors they translate into
         sf::Color shadow_color_dark{ 0, 0, 0, 124 };
         sf::Color shadow_color_medium{ 0, 0, 0, 87 };
         sf::Color shadow_color_light{ 0, 0, 0, 50 };
