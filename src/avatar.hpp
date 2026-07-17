@@ -33,13 +33,33 @@ namespace thornberry
         // clang-format off
         switch (t_dir)
         {
-            case AvatarDirection::Up:       return sf::Keyboard::Scancode ::Up;
+            case AvatarDirection::Up:       return sf::Keyboard::Scancode::Up;
             case AvatarDirection::Down:     return sf::Keyboard::Scancode::Down;
             case AvatarDirection::Left:     return sf::Keyboard::Scancode::Left;
             case AvatarDirection::Right:
             default:                        return sf::Keyboard::Scancode::Right;
         }
         // clang-format on}
+    }
+
+    [[nodiscard]] constexpr AvatarDirection fromScanCode(const sf::Keyboard::Scancode t_code) noexcept
+    {
+        if (t_code == sf::Keyboard::Scancode::Up)
+        {
+            return AvatarDirection::Up;
+        }
+        else if (t_code == sf::Keyboard::Scancode::Down)
+        {
+            return AvatarDirection::Down;
+        }
+        else if (t_code == sf::Keyboard::Scancode::Left)
+        {
+            return AvatarDirection::Left;
+        }
+        else
+        {
+            return AvatarDirection::Right;
+        }
     }
 
     //
