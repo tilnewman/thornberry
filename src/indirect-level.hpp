@@ -112,8 +112,8 @@ namespace thornberry
         sf::FloatRect map_rect{};
     };
 
-    // This class (and many other classes) are called "indirect" because they are not directly drawn
-    // to the screen, but rather drawn to an offscreen texture that is then drawn to the screen.
+    // This class (and other classes) are called "indirect" because they are not directly drawn
+    // to the screen, but rather drawn to an offscreen texture.
     class IndirectLevel
     {
       public:
@@ -214,12 +214,12 @@ namespace thornberry
       private:
         std::string m_name;
 
-        Locale m_locale; // determines interiror/exterior (music and whether the sundial is drawn
+        Locale m_locale; // determines interiror/exterior (music and whether the sundial is drawn)
 
         sf::Vector2i m_mapTileCount;       // how big is the whole map that was loaded
         sf::Vector2i m_textureTileSize;    // offscreen tile size
         sf::Vector2f m_screenTileSize;     // onscreen tile size
-        sf::Vector2f m_mapScreenPosOffset; // where on the screen is the map drawn to
+        sf::Vector2f m_mapScreenPosOffset; // map to onscreen position offset
 
         std::vector<sf::FloatRect> m_collisions;    // in map coordinates
         std::vector<Transition> m_transitions;      // in map coordinates
@@ -254,7 +254,7 @@ namespace thornberry
         sf::FloatRect m_moveScreenRectUp;
         sf::FloatRect m_moveScreenRectDown;
 
-        // this changes as the player walks on different grasses/dirt/etc.
+        // this changes as the player walks on different things like grass/dirt/stone/etc.
         std::string m_walkSoundEffectName;
     };
 
