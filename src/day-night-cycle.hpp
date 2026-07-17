@@ -36,9 +36,9 @@ namespace thornberry
             sf::RenderStates & t_states) const;
 
       private:
-        sf::Texture m_texture;
-        sf::Sprite m_sprite;
-        sf::RectangleShape m_cycleCoverRectangle;
+        sf::Texture m_discTexture;
+        sf::Sprite m_discSprite;
+        sf::RectangleShape m_discCoverRectangle;
         sf::RectangleShape m_mapCoverRectangle;
         sf::Color m_dayColor;
         sf::Color m_nightColor;

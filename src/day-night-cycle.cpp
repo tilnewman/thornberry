@@ -16,9 +16,9 @@ namespace thornberry
 {
 
     DayNightCycle::DayNightCycle()
-        : m_texture{}
-        , m_sprite{ m_texture }
-        , m_cycleCoverRectangle{}
+        : m_discTexture{}
+        , m_discSprite{ m_discTexture }
+        , m_discCoverRectangle{}
         , m_mapCoverRectangle{}
         , m_dayColor{ sf::Color::Transparent }
         , m_nightColor{}
@@ -34,40 +34,38 @@ namespace thornberry
     {
         m_nightColor = t_context.config.night_map_overlay_color;
 
-        util::TextureLoader::load(
-            m_texture,
-            (t_context.config.media_path / "image" / "day-night-cycle" / "disc.png"),
-            true);
-
-        m_sprite.setTexture(m_texture, true);
-
+        // setup the day/night map overlay rectangle
         const sf::FloatRect mapRect{ t_context.screen_layout.mapRect() };
-
         m_mapCoverRectangle.setFillColor(m_nightColor);
         m_mapCoverRectangle.setPosition(mapRect.position);
         m_mapCoverRectangle.setSize(mapRect.size);
 
-        sf::FloatRect rect;
-        rect.position.x = 0.0f;
-        rect.position.y = 0.0f;
-        rect.size       = mapRect.position;
+        // setup the disc image (except for random starting rotation, see comment below)
+        util::TextureLoader::load(
+            m_discTexture,
+            (t_context.config.media_path / "image" / "day-night-cycle" / "disc.png"),
+            true);
 
-        util::fitAndCenterInside(m_sprite, rect);
-        util::setOriginToCenter(m_sprite);
-        m_sprite.scale({ 0.65f, 0.65f });
-        m_sprite.setRotation(sf::degrees(t_context.random.fromTo(0.0f, 360.0f)));
+        m_discSprite.setTexture(m_discTexture, true);
 
-        m_sprite.setPosition(
+        const float discScale{ t_context.screen_layout.scaleBasedOnResolution(t_context, 0.5f) };
+        util::setOriginToCenter(m_discSprite);
+        m_discSprite.scale({ discScale, discScale });
+        
+        m_discSprite.setPosition(
             { (mapRect.position.x + (mapRect.size.x * 0.5f)), mapRect.position.y * 0.9f });
 
-        m_cycleCoverRectangle.setFillColor(t_context.config.background_color);
+        // setup the rectangle that covers up the bottom half of the disc
+        m_discCoverRectangle.setFillColor(t_context.config.background_color);
 
-        m_cycleCoverRectangle.setPosition(
-            { m_sprite.getGlobalBounds().position.x, m_sprite.getPosition().y });
+        m_discCoverRectangle.setPosition(
+            { m_discSprite.getGlobalBounds().position.x, m_discSprite.getPosition().y });
 
-        m_cycleCoverRectangle.setSize(
-            { m_sprite.getGlobalBounds().size.x, (m_sprite.getGlobalBounds().size.y * 0.5f) });
+        m_discCoverRectangle.setSize(
+            { m_discSprite.getGlobalBounds().size.x,
+              (m_discSprite.getGlobalBounds().size.y * 0.5f) });
 
+        // setup the platform and animal statue endcaps
         util::TextureLoader::load(
             m_animalCapLeftTexture,
             (t_context.config.media_path / "image" / "day-night-cycle" / "animal-cap-left.png"),
@@ -100,8 +98,8 @@ namespace thornberry
         m_animalCapRightSprite.setScale({ animalCapScale, animalCapScale });
 
         sf::FloatRect animalCapMiddleRect;
-        animalCapMiddleRect.position = m_cycleCoverRectangle.getPosition();
-        animalCapMiddleRect.size.x   = m_cycleCoverRectangle.getGlobalBounds().size.x;
+        animalCapMiddleRect.position = m_discCoverRectangle.getPosition();
+        animalCapMiddleRect.size.x   = m_discCoverRectangle.getGlobalBounds().size.x;
         animalCapMiddleRect.size.y   = m_animalCapMiddleSprite.getGlobalBounds().size.y;
         util::scaleAndCenterInside(m_animalCapMiddleSprite, animalCapMiddleRect);
 
@@ -120,17 +118,21 @@ namespace thornberry
 
         m_animalCapRightSprite.move(
             { -(m_animalCapRightSprite.getGlobalBounds().size.x * 0.5f), 0.0f });
+
+        // the discSprite width needs to be used in several calculations but those will be wrong if
+        // we rotate the disc first, espcially at random, so rotate last
+        m_discSprite.setRotation(sf::degrees(t_context.random.fromTo(0.0f, 360.0f)));
     }
 
     void DayNightCycle::update(const Context &, const float t_elapsedSec)
     {
-        m_sprite.rotate(sf::degrees(t_elapsedSec * 0.5f));
-        if (m_sprite.getRotation().asDegrees() > 360.0f)
+        m_discSprite.rotate(sf::degrees(t_elapsedSec * 0.5f));
+        if (m_discSprite.getRotation().asDegrees() > 360.0f)
         {
-            m_sprite.setRotation(sf::degrees(0.0f));
+            m_discSprite.setRotation(sf::degrees(0.0f));
         }
 
-        const float degrees{ m_sprite.getRotation().asDegrees() };
+        const float degrees{ m_discSprite.getRotation().asDegrees() };
         if (degrees < 180.0f)
         {
             const float ratio{ degrees / 180.0f };
@@ -150,8 +152,8 @@ namespace thornberry
     {
         if (t_context.level.locale() == Locale::Exterior)
         {
-            t_target.draw(m_sprite, t_states);
-            t_target.draw(m_cycleCoverRectangle, t_states);
+            t_target.draw(m_discSprite, t_states);
+            t_target.draw(m_discCoverRectangle, t_states);
             t_target.draw(m_animalCapLeftSprite, t_states);
             t_target.draw(m_animalCapMiddleSprite, t_states);
             t_target.draw(m_animalCapRightSprite, t_states);
