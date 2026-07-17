@@ -42,7 +42,10 @@ namespace thornberry
 
       private:
         void updateAction(const Context & t_context, const float t_elapsedSec);
-        const std::optional<sf::Vector2f> pickRandomWalkTarget(const Context & t_context) const;
+
+        [[nodiscard]] const std::optional<sf::Vector2f>
+            pickRandomWalkTarget(const Context & t_context) const;
+
         void updateWalkPosition(const Context & t_context, const float t_elapsedSec) override;
         bool isMovedPositionValid(const Context & t_context, const sf::Vector2f & t_move) const;
         [[nodiscard]] const std::string randomGreeting(const Context & t_context) const;
