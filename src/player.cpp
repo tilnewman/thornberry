@@ -103,12 +103,6 @@ namespace thornberry
 
     void Player::updateWalkAnimation(const Context & t_context)
     {
-        if (m_walkDirections.empty())
-        {
-            stopWalking(t_context);
-            return;
-        }
-
         // remove opposing directions
         if (m_walkDirections.contains(AvatarDirection::Up) &&
             m_walkDirections.contains(AvatarDirection::Down))
