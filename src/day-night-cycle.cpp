@@ -33,7 +33,9 @@ namespace thornberry
     void DayNightCycle::setup(const Context & t_context)
     {
         util::TextureLoader::load(
-            m_texture, (t_context.config.media_path / "image" / "day-night-cycle.png"), true);
+            m_texture,
+            (t_context.config.media_path / "image" / "day-night-cycle" / "disc.png"),
+            true);
 
         m_sprite.setTexture(m_texture, true);
 
@@ -66,17 +68,17 @@ namespace thornberry
 
         util::TextureLoader::load(
             m_animalCapLeftTexture,
-            (t_context.config.media_path / "image" / "animal-cap" / "animal-cap-left.png"),
+            (t_context.config.media_path / "image" / "day-night-cycle" / "animal-cap-left.png"),
             true);
 
         util::TextureLoader::load(
             m_animalCapMiddleTexture,
-            (t_context.config.media_path / "image" / "animal-cap" / "animal-cap-middle.png"),
+            (t_context.config.media_path / "image" / "day-night-cycle" / "animal-cap-middle.png"),
             true);
 
         util::TextureLoader::load(
             m_animalCapRightTexture,
-            (t_context.config.media_path / "image" / "animal-cap" / "animal-cap-right.png"),
+            (t_context.config.media_path / "image" / "day-night-cycle" / "animal-cap-right.png"),
             true);
 
         m_animalCapLeftSprite.setTexture(m_animalCapLeftTexture, true);
