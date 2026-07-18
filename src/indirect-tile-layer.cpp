@@ -71,6 +71,7 @@ namespace thornberry
         const sf::Vector2i &, // t_textureTileSize
         const sf::Vector2f & t_screenTileSize)
     {
+        // use the optimized version, leave the other (unused) version for reference
         appendVertsReduced(t_mapTileRange, t_screenTileSize);
     }
 
@@ -123,8 +124,7 @@ namespace thornberry
     }
 
     void IndirectTileLayer::appendVertsReduced(
-        const sf::IntRect & t_mapTileRange,
-        const sf::Vector2f & t_screenTileSize)
+        const sf::IntRect & t_mapTileRange, const sf::Vector2f & t_screenTileSize)
     {
         m_verts.clear();
 
