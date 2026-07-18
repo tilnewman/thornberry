@@ -26,7 +26,7 @@ namespace thornberry
 
     void MapTextureManager::setup()
     {
-        // size only this once to prevent any re-allocations
+        // size only this once and prevent any resizing/reallocations except for teardown()
         m_tileTextures.resize(static_cast<std::size_t>(TileImage::Count));
     }
 
@@ -66,21 +66,25 @@ namespace thornberry
             // load into an image first so that alpha masking can be applied if needed
             sf::Image image;
 
-            M_CHECK(
-                util::TextureLoader::load(image, path),
-                "TileImage " << toString(t_tileImage) << " at \"" << path << "\" failed to load!");
+            const bool fileLoadSuccess{ util::TextureLoader::load(image, path) };
 
-            if (tileTexture.transparent_color != sf::Color::Transparent)
+            M_CHECK(
+                fileLoadSuccess,
+                "TileImage " << toString(t_tileImage) << " at \"" << path
+                             << "\" failed to load from file!");
+
+            const bool hasShadowMasks{ isTileImageShadow(t_tileImage) };
+
+            if ((tileTexture.transparent_color != sf::Color::Transparent) || hasShadowMasks)
             {
                 AlphaMasking::applyMasks(
-                    t_context.config,
-                    image,
-                    tileTexture.transparent_color,
-                    isTileImageShadow(t_tileImage));
+                    t_context.config, image, tileTexture.transparent_color, hasShadowMasks);
             }
 
+            const bool textureLoadSuccess{ tileTexture.texture.loadFromImage(image) };
+
             M_CHECK(
-                tileTexture.texture.loadFromImage(image),
+                textureLoadSuccess,
                 "TileImage " << toString(t_tileImage) << " at \"" << path
                              << "\" failed to sf::Texture::loadFromImage()!");
 
