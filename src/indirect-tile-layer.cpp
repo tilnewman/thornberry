@@ -38,11 +38,14 @@ namespace thornberry
             "raw_index_count=" << m_rawIndexes.size()
                                << " does not equal tile_count=" << totalTileCount);
 
-        // just guesses based on what I know is in the averag map
+        // just a guess based on what I know is in the average map
         const std::size_t reserveCount{ (t_indexes.size() / 4_st) * util::verts_per_quad };
         m_verts.reserve(reserveCount);
         m_mapTiles.reserve(reserveCount);
 
+        // Many layers have large amounts of empty space because of how humans and the map authoring
+        // software works, and this function skips over those empty spaces and pre-computes some
+        // things to speed up the appendVerts() process.
         createReducedMapTiles(t_context.level.mapTileCount(), t_context.level.textureTileSize());
     }
 
