@@ -45,6 +45,22 @@ namespace thornberry
             const sf::Vector2f & t_screenTileSize) = 0;
     };
 
+    struct MapTile
+    {
+        MapTile()
+            : position{}
+            , texture_rect{}
+        {}
+
+        MapTile(const sf::Vector2i & t_position, const sf::IntRect & t_textureRect)
+            : position{ t_position }
+            , texture_rect{ t_textureRect }
+        {}
+
+        sf::Vector2i position;
+        sf::IntRect texture_rect;
+    };
+
     //
     class IndirectTileLayer : public IIndirectTileLayer
     {
@@ -72,10 +88,38 @@ namespace thornberry
         void move(const sf::Vector2f &) override {}
 
       private:
+        // version 1: translates raw indexes into verts that get drawn
+        // this original version is not in use, but will likely need to be referenced
+        void appendVertsRaw(
+            const sf::IntRect & t_mapTileRange,
+            const sf::Vector2i & t_mapTileCount,
+            const sf::Vector2i & t_textureTileSize,
+            const sf::Vector2f & t_screenTileSize);
+
+        // version 2:L translates the reduced indexes in m_mapTiles into verts that get drawn
+        void appendVertsReduced(
+            const sf::IntRect & t_mapTileRange,
+            const sf::Vector2f & t_screenTileSize);
+
+        void createReducedMapTiles(
+            const sf::Vector2i & t_mapTileCount, const sf::Vector2i & t_textureTileSize);
+
+      private:
         TileImage m_image;
+
+        // used by the map authoring software (Tiled)
         int m_textureGID;
+
+        // size of the layer/texture/image in map tiles
         sf::Vector2i m_textureTileCount;
-        std::vector<int> m_indexes;
+
+        // one int for each map tile in xy order over the whole map
+        std::vector<int> m_rawIndexes;
+
+        // optimized version of the m_rawIndexes
+        std::vector<MapTile> m_mapTiles;
+
+        // minially complete verts to be drawn for this layer
         std::vector<sf::Vertex> m_verts;
     };
 
