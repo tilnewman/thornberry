@@ -194,7 +194,7 @@ namespace thornberry
         // clang-format on
     }
 
-    constexpr bool isTileImageShadow(const TileImage t_image) noexcept
+    constexpr bool hasShadowMasks(const TileImage t_image) noexcept
     {
         return (
             (t_image == TileImage::InteriorShadow) || (t_image == TileImage::MountainShadow) ||

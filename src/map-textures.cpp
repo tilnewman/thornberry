@@ -73,12 +73,12 @@ namespace thornberry
                 "TileImage " << toString(t_tileImage) << " at \"" << path
                              << "\" failed to load from file!");
 
-            const bool hasShadowMasks{ isTileImageShadow(t_tileImage) };
+            const bool isShadowMaskedImage{ hasShadowMasks(t_tileImage) };
 
-            if ((tileTexture.transparent_color != sf::Color::Transparent) || hasShadowMasks)
+            if ((tileTexture.transparent_color != sf::Color::Transparent) || isShadowMaskedImage)
             {
                 AlphaMasking::applyMasks(
-                    t_context.config, image, tileTexture.transparent_color, hasShadowMasks);
+                    t_context.config, image, tileTexture.transparent_color, isShadowMaskedImage);
             }
 
             const bool textureLoadSuccess{ tileTexture.texture.loadFromImage(image) };
