@@ -55,7 +55,8 @@ namespace thornberry
 
     void IndirectTileLayer::dumpInfo() const
     {
-        std::cout << "\tIndirectTileLayer Quads for " << m_image << ": possible=" << m_indexes.size()
+        std::cout << "\tIndirectTileLayer Quads for " << m_image
+                  << ": possible=" << m_indexes.size()
                   << ", actual=" << (m_verts.size() / util::verts_per_quad) << '\n';
     }
 
@@ -100,8 +101,7 @@ namespace thornberry
                 const float posY{ static_cast<float>(y - t_mapTileRange.position.y) *
                                   t_screenTileSize.y };
 
-                const sf::Vector2f screenPos{ sf::Vector2f(posX, posY) };
-                const sf::FloatRect screenRect{ screenPos, t_screenTileSize };
+                const sf::FloatRect screenRect{ sf::Vector2f(posX, posY), t_screenTileSize };
 
                 util::appendTriangleVerts(screenRect, textureRect, m_verts);
             }
